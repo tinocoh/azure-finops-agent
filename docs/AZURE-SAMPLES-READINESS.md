@@ -198,14 +198,17 @@ State of the repository before this work, and the resolution applied.
 These cannot be completed from the source tree and must be done by a repository administrator as
 part of the transfer:
 
-1. **Rename** the repository to `azure-finops-agent` so it matches `azure.yaml:name` and the README
-   `urlFragment`.
-2. **Flip visibility to public.** Before doing so, run a history scan — sanitizing the working tree
-   does not remove customer references from previous commits. Use
-   `git log -p | grep -i <term>` and, if hits exist, rewrite history with
-   [`git filter-repo`](https://github.com/newren/git-filter-repo) or publish from a squashed
-   orphan commit.
-3. **Enable** secret scanning and push protection in repository security settings.
-4. **Run `azd up` and `azd down`** end to end against a clean subscription and record the result.
-5. **Submit** the template for review at <https://forms.office.com/r/cy1ACkEGK5>. Only Microsoft
+1. **Flip visibility to public.** This repository is currently in an Enterprise Managed
+   Organization that rejects public repositories. The source tree and `main` history are ready,
+   but publication requires moving or transferring to an organization that permits public repos
+   (or directly into `Azure-Samples`).
+2. **Run `azd up` and `azd down`** end to end against a clean subscription and record the result.
+3. **Submit** the template for review at <https://forms.office.com/r/cy1ACkEGK5>. Only Microsoft
    employees and approved partners may publish into the curated Azure-Samples collections.
+
+Completed admin actions:
+
+- Repository renamed to `azure-finops-agent`.
+- `main` rewritten to a clean, customer-neutral root commit before publication.
+- Issues, discussions, topics, description, homepage, Code Security, secret scanning, push
+  protection, and Dependabot security updates enabled.
