@@ -1,0 +1,71 @@
+name: Validate AZD template
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "infra/**"
+      - "azure.yaml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "infra/**"
+      - "azure.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bicep:
+    name: Bicep lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Bicep for linting
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+            az config set bicep.use_binary_from_path=false
+            az bicep build --file infra/main.bicep --stdout > /dev/null
+            az bicep build --file infra/main.test.bicep --stdout > /dev/null
+
+  psrule:
+    name: PSRule security analysis
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run PSRule analysis
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports
+          az config set bicep.use_binary_from_path=false
+          az bicep build --file infra/main.test.bicep --outfile reports/main.test.json
+          pwsh -NoLogo -NoProfile -Command "Install-Module -Name PSRule.Rules.Azure -Repository PSGallery -Scope CurrentUser -Force; Invoke-PSRule -InputPath reports/main.test.json -Module PSRule.Rules.Azure -Baseline Azure.Pillar.Security -OutputFormat Sarif -OutputPath reports/ps-rule-results.sarif -ErrorAction Stop"
+        env:
+          PSRULE_CONFIGURATION_AZURE_BICEP_FILE_EXPANSION: 'true'
+          PSRULE_CONFIGURATION_AZURE_BICEP_FILE_EXPANSION_TIMEOUT: '30'
+          PSRULE_AZURE_PARAMETER_FILE_EXPANSION: 'true'
+
+      - name: Upload PSRule report artifact
+        uses: actions/upload-artifact@v4
+        if: success() || failure()
+        with:
+          name: psrule-results
+          path: reports/ps-rule-results.sarif
+
+      - name: Upload results to security tab
+        uses: github/codeql-action/upload-sarif@v4
+        if: github.repository_owner == 'Azure-Samples' && (success() || failure())
+        with:
+          sarif_file: reports/ps-rule-results.sarif

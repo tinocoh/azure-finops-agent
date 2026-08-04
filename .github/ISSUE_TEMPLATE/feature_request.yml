@@ -1,0 +1,45 @@
+name: Feature request
+description: Suggest an improvement to this sample
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - agent (.NET API and Vue SPA)
+        - cost-mcp (MCP server)
+        - finopsazure-analyzer (FastAPI and React)
+        - infra (Bicep / azd)
+        - documentation
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the FinOps scenario that is difficult or impossible today.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and this is not a duplicate
+          required: true

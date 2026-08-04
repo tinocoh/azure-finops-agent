@@ -1,0 +1,4175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Azure FinOps Agent · Customer Overview</title>
+    <meta
+      name="description"
+      content="An AI-powered FinOps & InfraOps agent for Azure. Customer overview deck."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        font-family:
+          "Segoe UI",
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: #ffffff;
+        color: #1a1a1a;
+      }
+
+      :root {
+        --azure-blue: #0078d4;
+        --azure-blue-dark: #106ebe;
+        --azure-blue-darker: #005a9e;
+        --azure-blue-light: #50e6ff;
+        --azure-blue-pale: #deecf9;
+        --azure-cyan: #00bcf2;
+        --ink: #1a1a1a;
+        --ink-soft: #4a4a4a;
+        --ink-mute: #767676;
+        --line: #e1e1e1;
+        --bg-soft: #f5f9fd;
+        --bg-blue: #f0f6fc;
+      }
+
+      .deck {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4vh 5vw;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(60px);
+        transition:
+          opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+          visibility 0s linear 0.6s;
+      }
+      .slide.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+        transition:
+          opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+          visibility 0s linear 0s;
+      }
+      .slide.prev {
+        transform: translateX(-60px);
+      }
+
+      .slide .anim {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .slide.active .anim {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .slide.active .anim.d1 {
+        transition-delay: 0.08s;
+      }
+      .slide.active .anim.d2 {
+        transition-delay: 0.2s;
+      }
+      .slide.active .anim.d3 {
+        transition-delay: 0.32s;
+      }
+      .slide.active .anim.d4 {
+        transition-delay: 0.44s;
+      }
+      .slide.active .anim.d5 {
+        transition-delay: 0.56s;
+      }
+      .slide.active .anim.d6 {
+        transition-delay: 0.68s;
+      }
+      .slide.active .anim.d7 {
+        transition-delay: 0.8s;
+      }
+
+      h2.section-title {
+        font-size: clamp(1.9rem, 3.4vw, 3rem);
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+        color: var(--ink);
+      }
+      h2.section-title em {
+        font-style: normal;
+        color: var(--azure-blue);
+      }
+      .section-lead {
+        color: var(--ink-soft);
+        font-size: 1.05rem;
+        margin-bottom: 1.5rem;
+        max-width: 820px;
+      }
+
+      .content {
+        width: 100%;
+        max-width: 1240px;
+      }
+
+      /* ========== Slide 0: Statement opener ========== */
+      .s0 {
+        background:
+          radial-gradient(
+            ellipse at 20% 30%,
+            rgba(0, 120, 212, 0.08),
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 80% 70%,
+            rgba(0, 188, 242, 0.08),
+            transparent 60%
+          ),
+          #ffffff;
+      }
+      .s0 .content {
+        text-align: center;
+        max-width: 1200px;
+      }
+      .s0 .s0-eyebrow {
+        font-size: clamp(0.78rem, 0.9vw, 0.95rem);
+        font-weight: 700;
+        letter-spacing: 0.3em;
+        color: var(--azure-blue);
+        text-transform: uppercase;
+        margin-bottom: 1.4rem;
+      }
+      .s0 .s0-quote {
+        font-size: clamp(1.5rem, 2.4vw, 2.4rem);
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.015em;
+        color: var(--ink);
+        margin-bottom: 1rem;
+      }
+      .s0 .s0-quote em {
+        font-style: normal;
+        color: var(--azure-blue);
+      }
+      .s0 .s0-why {
+        font-size: clamp(1.6rem, 2.6vw, 2.6rem);
+        font-weight: 800;
+        color: var(--azure-blue);
+        margin: 0.6rem 0;
+      }
+      .s0 .s0-punch {
+        font-size: clamp(1.3rem, 2.1vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -0.015em;
+        color: var(--azure-blue-darker);
+        padding: 1rem 1.8rem;
+        background: var(--bg-blue);
+        border-left: 5px solid var(--azure-blue);
+        border-radius: 10px;
+        display: inline-block;
+        margin-top: 1.4rem;
+        max-width: 1000px;
+      }
+
+      /* ========== Slide 1: Hero ========== */
+      .s1 {
+        background:
+          radial-gradient(
+            ellipse at 15% 20%,
+            rgba(0, 120, 212, 0.035),
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse at 85% 80%,
+            rgba(0, 188, 242, 0.035),
+            transparent 55%
+          ),
+          #ffffff;
+      }
+      .s1::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0, 120, 212, 0.018) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 120, 212, 0.018) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          black 25%,
+          transparent 75%
+        );
+        -webkit-mask-image: radial-gradient(
+          ellipse at center,
+          black 25%,
+          transparent 75%
+        );
+      }
+      /* Slide 1 — content offset and footer use clamp so they hold shape across heights */
+      .s1 .content {
+        text-align: center;
+        max-width: 1100px;
+        position: relative;
+        transform: translateY(clamp(-12vh, -10vh, -3vh));
+      }
+      .s1-footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: clamp(10vh, 22vh, 28vh);
+        text-align: center;
+        z-index: 4;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        line-height: 1.35;
+      }
+      .s1-footer .s1-footer-line {
+        font-size: clamp(1.6rem, 2.7vw, 2.7rem);
+        color: var(--ink);
+        letter-spacing: -0.01em;
+      }
+      .s1-footer .s1-footer-line em {
+        font-style: normal;
+        color: var(--azure-blue);
+      }
+      .s1-footer .s1-footer-sub {
+        margin-top: clamp(0.4rem, 0.8vh, 0.85rem);
+        font-size: clamp(1rem, 1.35vw, 1.35rem);
+        font-weight: 700;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+      }
+      .s1 h1 {
+        font-size: clamp(2.6rem, 7vw, 6rem);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.035em;
+        color: var(--ink);
+        margin-bottom: 1.4rem;
+      }
+      .s1 h1 span {
+        background: linear-gradient(
+          135deg,
+          #005a9e 0%,
+          #0078d4 50%,
+          #0098e0 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+      .s1 .tagline {
+        font-size: clamp(1.15rem, 1.45vw, 1.4rem);
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        color: var(--azure-blue);
+        margin-bottom: 0.4rem;
+        text-transform: uppercase;
+      }
+      .s1 .tagline-sub {
+        font-size: clamp(0.85rem, 1vw, 1rem);
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        color: var(--ink-mute);
+        margin-bottom: 1.4rem;
+        text-transform: uppercase;
+      }
+      .s1 .sub {
+        font-size: clamp(1rem, 1.25vw, 1.2rem);
+        color: var(--ink-soft);
+        max-width: 680px;
+        margin: 0 auto 2.4rem;
+        line-height: 1.6;
+      }
+
+      /* Slide 1 — centered "market signal" text (shows on first click, hides when title appears) */
+      .s1-signal {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 4vh 5vw clamp(4vh, 16vh, 22vh);
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        font-size: clamp(1.05rem, 1.25vw, 1.3rem);
+        font-weight: 500;
+        color: var(--ink);
+        line-height: 1.5;
+        text-align: center;
+        overflow: visible;
+        pointer-events: none;
+      }
+      .s1-signal > * {
+        max-width: min(880px, 92vw);
+        pointer-events: auto;
+        width: 100%;
+      }
+      /* When the title (or any later step inside .content) is revealed, hide the signal */
+      .s1:has(.content [data-step].revealed) .s1-signal {
+        opacity: 0 !important;
+        transform: scale(0.94) !important;
+        pointer-events: none;
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) !important;
+      }
+      /* Override the generic [data-step] translateY so it stays centered */
+      .s1-signal[data-step] {
+        transform: translateY(8px) !important;
+      }
+      .s1-signal[data-step].revealed {
+        transform: translateY(0) !important;
+      }
+      .s1-signal::before {
+        content: none;
+      }
+      .s1-signal .s1-signal-head {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        margin-bottom: 0.9rem;
+      }
+      .s1-signal .dot {
+        position: relative;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #e3342f;
+        box-shadow: 0 0 0 0 rgba(227, 52, 47, 0.55);
+        animation: s1DotPulse 1.6s ease-out infinite;
+        flex: 0 0 auto;
+      }
+      .s1-signal .label {
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        font-size: 0.85em;
+        font-weight: 800;
+        color: var(--azure-blue);
+      }
+      .s1-signal .lede {
+        font-size: 1.45em;
+        font-weight: 800;
+        line-height: 1.25;
+        margin-bottom: 1.4rem;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+      }
+      .s1-signal .lede em {
+        font-style: normal;
+        color: var(--azure-blue);
+      }
+      .s1-signal blockquote {
+        position: relative;
+        margin: 0 auto 2.6rem;
+        padding: 0.5rem 0;
+        border: none;
+        font-size: clamp(1.9rem, 2.8vw, 2.9rem);
+        font-weight: 700;
+        color: var(--ink);
+        font-style: italic;
+        line-height: 1.3;
+        max-width: 1000px;
+        letter-spacing: -0.01em;
+      }
+      .s1-signal .s1-hero-img {
+        display: block;
+        width: 100%;
+        max-width: min(1100px, 92vw);
+        height: auto;
+        max-height: clamp(28vh, 38vh, 44vh);
+        object-fit: contain;
+        margin: 0 auto -0.6rem;
+      }
+      .s1-signal blockquote:last-of-type {
+        margin-bottom: 2rem;
+      }
+      .s1-signal blockquote cite {
+        display: block;
+        margin-top: 0.45rem;
+        font-size: 0.44em;
+        font-style: normal;
+        font-weight: 600;
+        color: var(--ink-mute);
+        letter-spacing: 0.01em;
+      }
+      .s1-signal blockquote cite a {
+        color: var(--azure-blue);
+        text-decoration: none;
+        border-bottom: 1px dotted rgba(0, 120, 212, 0.5);
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .s1-signal blockquote cite a:hover {
+        color: var(--azure-blue-darker);
+        border-bottom-color: var(--azure-blue-darker);
+      }
+      .s1-signal .sources {
+        margin-top: 0.6rem;
+        padding-top: 0;
+        border-top: none;
+        font-size: 0.62em;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--ink-mute);
+        text-transform: uppercase;
+      }
+      .s1-signal .sources a {
+        color: var(--azure-blue);
+        text-decoration: none;
+        margin-right: 0.4rem;
+      }
+      .s1-signal .sources a:hover {
+        text-decoration: underline;
+      }
+      @keyframes s1DotPulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(227, 52, 47, 0.55);
+        }
+        70% {
+          box-shadow: 0 0 0 12px rgba(227, 52, 47, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(227, 52, 47, 0);
+        }
+      }
+      @keyframes s1SignalGlow {
+        0%,
+        100% {
+          box-shadow:
+            0 14px 44px rgba(0, 120, 212, 0.16),
+            0 0 0 5px rgba(0, 120, 212, 0.04);
+        }
+        50% {
+          box-shadow:
+            0 18px 56px rgba(0, 120, 212, 0.28),
+            0 0 0 7px rgba(0, 188, 242, 0.09);
+        }
+      }
+      @keyframes s1SignalSweep {
+        0% {
+          background-position: 220% 0;
+        }
+        100% {
+          background-position: -120% 0;
+        }
+      }
+      @media (max-width: 900px) {
+        .s1-signal {
+          position: static;
+          margin: 0 auto 1.5rem;
+          max-width: 92%;
+        }
+      }
+
+      /* ========== Slide 2: Problem ========== */
+      .s2 {
+        background: #fff;
+      }
+      .s2 .section-title {
+        font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+      }
+      .s2 .section-lead {
+        font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+        color: var(--ink);
+        font-weight: 500;
+        margin-bottom: 2.4rem;
+      }
+      .s2 .grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .s2 .pain-card {
+        padding: 1.5rem 1rem;
+      }
+      .s2 .pain-card .ico {
+        width: 52px;
+        height: 52px;
+        margin-bottom: 0.9rem;
+      }
+      .s2 .pain-card .ico svg {
+        width: 26px;
+        height: 26px;
+      }
+      .s2 .pain-card h3 {
+        font-size: clamp(1rem, 1.1vw, 1.2rem);
+        margin-bottom: 0.45rem;
+      }
+      .s2 .pain-card p {
+        font-size: clamp(0.82rem, 0.9vw, 0.95rem);
+        line-height: 1.45;
+      }
+      .pain-card {
+        padding: 2rem 1.6rem;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+      .pain-card:hover {
+        border-color: var(--azure-blue);
+        box-shadow: 0 8px 24px rgba(0, 120, 212, 0.1);
+        transform: translateY(-3px);
+      }
+      .pain-card .ico {
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+        background: var(--bg-blue);
+        color: var(--azure-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.2rem;
+      }
+      .pain-card .ico svg {
+        width: 32px;
+        height: 32px;
+      }
+      .pain-card h3 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 0.6rem;
+        color: var(--ink);
+      }
+      .pain-card p {
+        color: var(--ink-soft);
+        font-size: 1rem;
+        line-height: 1.55;
+      }
+      .s2 .punchline,
+      .s3 .punchline {
+        text-align: center;
+        font-weight: 600;
+        color: var(--azure-blue-darker);
+        padding: 1.1rem 1.6rem;
+        background: var(--bg-blue);
+        border-left: 4px solid var(--azure-blue);
+        border-radius: 8px;
+        max-width: 760px;
+        margin: 0 auto;
+      }
+      .s2 .punchline.tier1,
+      .s3 .punchline.tier1 {
+        font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+      }
+      .s2 .punchline.tier2,
+      .s3 .punchline.tier2 {
+        font-size: clamp(1.4rem, 2vw, 1.8rem);
+        font-weight: 700;
+        background: #e0f2fe;
+        border-left-color: var(--azure-blue-dark);
+      }
+      .s2 .punchline.tier3,
+      .s3 .punchline.tier3 {
+        font-size: clamp(1.6rem, 2.3vw, 2rem);
+        font-weight: 700;
+        background: #bae6fd;
+        border-left-color: var(--azure-blue-dark);
+      }
+      .s2 .punchline.tier4 {
+        font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+        font-weight: 800;
+        color: #fff;
+        background: linear-gradient(
+          135deg,
+          var(--azure-blue) 0%,
+          var(--azure-blue-darker) 100%
+        );
+        border-left-color: var(--azure-cyan);
+        box-shadow: 0 12px 30px rgba(0, 120, 212, 0.25);
+        letter-spacing: -0.01em;
+      }
+      .s2 .punchline-stack,
+      .s3 .punchline-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 2rem;
+      }
+
+      /* ========== Slides 2 & 3: Storytelling stage (cards + big image) ========== */
+      .s2,
+      .s3 {
+        align-items: flex-start;
+        padding-top: 5vh;
+      }
+      .s2 .content,
+      .s3 .content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        max-width: 1480px;
+      }
+      .s2-stage,
+      .s3-stage {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.25fr);
+        gap: 2.4rem;
+        align-items: center;
+        flex: 1;
+        min-height: 0;
+        margin-top: 1rem;
+      }
+      .s2-left,
+      .s3-left {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        min-width: 0;
+      }
+      .s2-left .pain-card,
+      .s3-left .pain-card {
+        display: flex;
+        align-items: center;
+        gap: 1.15rem;
+        text-align: left;
+        padding: 0.6rem 0;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        transition: none;
+      }
+      .s2-left .pain-card:hover,
+      .s3-left .pain-card:hover {
+        border: none;
+        box-shadow: none;
+        transform: none;
+      }
+      .s2-left .pain-card .ico,
+      .s3-left .pain-card .ico {
+        margin: 0;
+        flex: 0 0 auto;
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+      }
+      .s2-left .pain-card .ico svg,
+      .s3-left .pain-card .ico svg {
+        width: 30px;
+        height: 30px;
+      }
+      .s2-left .pain-card .card-text,
+      .s3-left .pain-card .card-text {
+        min-width: 0;
+      }
+      .s2-left .pain-card h3,
+      .s3-left .pain-card h3 {
+        font-size: clamp(1.4rem, 1.7vw, 1.8rem);
+        margin: 0 0 0.3rem;
+      }
+      .s2-left .pain-card p,
+      .s3-left .pain-card p {
+        font-size: clamp(1.05rem, 1.2vw, 1.25rem);
+        margin: 0;
+        line-height: 1.45;
+      }
+      .s2-left .punchline-stack,
+      .s3-left .punchline-stack {
+        margin-top: 0.9rem;
+        gap: 0.65rem;
+      }
+      .s2-left .punchline,
+      .s3-left .punchline {
+        margin: 0;
+        max-width: none;
+        padding: 0.95rem 1.25rem;
+        text-align: left;
+        font-size: clamp(1.1rem, 1.35vw, 1.4rem);
+      }
+      .s2-left .punchline.tier2,
+      .s3-left .punchline.tier2 {
+        font-size: clamp(1.25rem, 1.55vw, 1.6rem);
+      }
+      .s2-left .punchline.tier3,
+      .s3-left .punchline.tier3 {
+        font-size: clamp(1.4rem, 1.75vw, 1.8rem);
+      }
+      .s2-right,
+      .s3-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        min-height: 0;
+      }
+      .s2-storyimg,
+      .s3-storyimg {
+        width: 100%;
+        max-width: min(820px, 82vh);
+        aspect-ratio: 1 / 1;
+        object-fit: contain;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        opacity: 0;
+        transform: scale(0.96);
+        transition:
+          opacity 0.45s ease,
+          transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .s2-storyimg.is-visible,
+      .s3-storyimg.is-visible {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .s2-storyimg.swap,
+      .s3-storyimg.swap {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+
+      /* ========== Slide 3 (centered, no images): same pain-card style as slide 2 ========== */
+      .s3.s3-centered {
+        align-items: center;
+        padding-top: 5vh;
+      }
+      .s3.s3-centered .content {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      .s3-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
+        margin-top: 1.4rem;
+        max-width: 980px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .s3-grid .pain-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+        text-align: left;
+        padding: 0.65rem 0;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        transition: none;
+      }
+      .s3-grid .pain-card:hover {
+        border: none;
+        box-shadow: none;
+        transform: none;
+      }
+      .s3-grid .pain-card .ico {
+        margin: 0;
+        flex: 0 0 auto;
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+      }
+      .s3-grid .pain-card .ico svg {
+        width: 34px;
+        height: 34px;
+      }
+      .s3-grid .pain-card .card-text {
+        min-width: 0;
+      }
+      .s3-grid .pain-card h3 {
+        font-size: clamp(1.35rem, 1.6vw, 1.7rem);
+        margin: 0 0 0.4rem;
+        line-height: 1.25;
+      }
+      .s3-grid .pain-card p {
+        font-size: clamp(1.05rem, 1.15vw, 1.25rem);
+        margin: 0;
+        line-height: 1.5;
+        color: var(--ink-soft);
+      }
+      .s3.s3-centered .punchline {
+        margin-top: 1.4rem;
+        line-height: 1.7;
+      }
+      .s3.s3-centered .punchline br {
+        content: "";
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+      @media (max-width: 720px) {
+        .s3-grid {
+          gap: 1rem;
+        }
+      }
+
+      /* ========== Slide 3 (legacy): Solution image at bottom ========== */
+      .s3 .content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .s3 .solution-img-wrap {
+        margin-top: auto;
+        display: flex;
+        justify-content: center;
+        padding-top: 1.4rem;
+      }
+      .s3 .solution-img {
+        width: 100%;
+        max-width: min(540px, 44vh);
+        aspect-ratio: 1 / 1;
+        object-fit: contain;
+        border-radius: 22px;
+        background: #fff;
+        box-shadow: 0 16px 40px rgba(0, 30, 80, 0.08);
+      }
+
+      /* Step-reveal: hidden until revealed by presenter advance.
+         Higher specificity + !important so it wins over .slide.active .anim */
+      .slide [data-step] {
+        opacity: 0 !important;
+        transform: translateY(16px) !important;
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
+        pointer-events: none;
+      }
+      .slide [data-step].revealed {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        pointer-events: auto;
+      }
+
+      /* ========== Slide 3: What it is ========== */
+      .s3 {
+        background: #fff;
+      }
+      .s3 .section-title {
+        font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+      }
+      .s3 .section-lead {
+        font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+        color: var(--ink);
+        font-weight: 500;
+        margin-bottom: 2.4rem;
+      }
+      .s3 .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.4rem;
+        margin-top: 1.5rem;
+      }
+
+      /* ========== Slide 4: Architecture ========== */
+      .s4 {
+        background: #fff;
+        padding: 1vh 2vw;
+      }
+      .s4 .content {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        max-width: none;
+        width: 100%;
+        height: 100%;
+      }
+      .s4 .section-title {
+        font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+      }
+      .s4 .section-lead {
+        font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+        color: var(--ink);
+        font-weight: 500;
+      }
+      .s4-header {
+        max-width: 1500px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+      .s4-header .section-lead {
+        margin-bottom: 0;
+      }
+      .s4-oss {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 0.7rem 1.1rem;
+        background: var(--bg-blue);
+        border: 1px solid var(--azure-blue-pale);
+        border-left: 4px solid var(--azure-blue);
+        border-radius: 10px;
+        flex-shrink: 0;
+        max-width: 520px;
+      }
+      .s4-oss svg {
+        flex-shrink: 0;
+        color: var(--ink);
+      }
+      .s4-oss .s4-oss-text {
+        line-height: 1.25;
+      }
+      .s4-oss .s4-oss-title {
+        font-size: clamp(0.95rem, 1.05vw, 1.1rem);
+        font-weight: 800;
+        color: var(--azure-blue-darker);
+        letter-spacing: -0.005em;
+      }
+      .s4-oss .s4-oss-sub {
+        font-size: clamp(0.78rem, 0.9vw, 0.92rem);
+        font-weight: 500;
+        color: var(--ink-soft);
+        margin-top: 0.15rem;
+      }
+      .arch-wrap {
+        width: 100%;
+        max-width: none;
+        margin: 0 auto;
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+      }
+      .arch-svg {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        display: block;
+      }
+      .region-box {
+        fill: var(--bg-soft);
+        stroke: var(--line);
+        stroke-width: 1.5;
+      }
+      .region-label {
+        fill: var(--ink-mute);
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-family: "Segoe UI", sans-serif;
+      }
+      .node-box {
+        fill: #fff;
+        stroke: var(--line);
+        stroke-width: 1.5;
+      }
+      .node-stack {
+        fill: #fff;
+        stroke: var(--line);
+        stroke-width: 1.2;
+        opacity: 0.55;
+      }
+      .node-stack.s2 {
+        opacity: 0.32;
+      }
+      .node-box.primary {
+        stroke: var(--azure-blue);
+        stroke-width: 2;
+      }
+      .node-icon-bg {
+        fill: var(--azure-blue);
+      }
+      .node-title {
+        fill: var(--ink);
+        font-size: 17px;
+        font-weight: 700;
+        font-family: "Segoe UI", sans-serif;
+      }
+      .node-sub {
+        fill: var(--ink-mute);
+        font-size: 13.5px;
+        font-family: "Segoe UI", sans-serif;
+      }
+      .node-title-c {
+        fill: var(--ink);
+        font-size: 11px;
+        font-weight: 600;
+        text-anchor: middle;
+        font-family: "Segoe UI", sans-serif;
+      }
+      .conn {
+        fill: none;
+        stroke: var(--azure-blue);
+        stroke-width: 1.6;
+        opacity: 0.45;
+        stroke-dasharray: 4 4;
+      }
+      .conn.telemetry {
+        stroke: var(--ink-mute);
+        stroke-width: 1.2;
+        opacity: 0.35;
+        stroke-dasharray: 2 4;
+      }
+      .conn-label {
+        fill: var(--ink-mute);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-anchor: middle;
+        font-family: "Segoe UI", sans-serif;
+      }
+      .flow-particle {
+        fill: var(--azure-cyan);
+        animation: flow 3s linear infinite;
+        offset-rotate: 0deg;
+      }
+      .fp1 {
+        animation-delay: 0s;
+      }
+      .fp2 {
+        animation-delay: 0.6s;
+      }
+      .fp3 {
+        animation-delay: 1.2s;
+      }
+      .fp4 {
+        animation-delay: 1.8s;
+      }
+      .fp5 {
+        animation-delay: 2.4s;
+      }
+      @keyframes flow {
+        0% {
+          offset-distance: 0%;
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          offset-distance: 100%;
+          opacity: 0;
+        }
+      }
+      .legend-row {
+        display: flex;
+        gap: 1.75rem;
+        margin: 1.4rem auto 0;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.82rem;
+        color: var(--ink-soft);
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 1100px;
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        width: max-content;
+      }
+      .legend-row .item {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        white-space: nowrap;
+      }
+      .legend-row .ico {
+        width: 14px;
+        height: 14px;
+        background: var(--azure-blue);
+        border-radius: 3px;
+        display: inline-block;
+      }
+      .legend-row .ico.flow {
+        background: var(--azure-cyan);
+        border-radius: 50%;
+      }
+
+      /* ========== Slide 5: Use cases / Capabilities ========== */
+      .s5 {
+        background: var(--bg-soft);
+      }
+      .s5 .section-title {
+        font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+      }
+      .s5 .section-lead {
+        font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+        color: var(--ink);
+        margin-bottom: 2.4rem;
+      }
+      .s5 .maturity {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+        margin-top: 1rem;
+      }
+      .stage {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 2rem 1.75rem;
+        border-top: 5px solid var(--azure-blue);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      .stage:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(0, 120, 212, 0.1);
+      }
+      .stage:nth-child(2) {
+        border-top-color: var(--azure-blue-dark);
+      }
+      .stage:nth-child(3) {
+        border-top-color: var(--azure-blue-darker);
+      }
+      .stage .badge {
+        display: inline-block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--azure-blue);
+        background: var(--bg-blue);
+        padding: 5px 12px;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+      .stage h3 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.3rem;
+        color: var(--ink);
+        letter-spacing: -0.02em;
+      }
+      .stage .desc {
+        font-size: 1rem;
+        color: var(--ink-mute);
+        margin-bottom: 1.4rem;
+      }
+      .stage ul {
+        list-style: none;
+      }
+      .stage ul li {
+        padding: 0.7rem 0;
+        font-size: 1.05rem;
+        color: var(--ink-soft);
+        border-top: 1px solid var(--line);
+        display: flex;
+        gap: 0.7rem;
+        align-items: flex-start;
+      }
+      .stage ul li:first-child {
+        border-top: none;
+      }
+      .stage ul li::before {
+        content: "→";
+        color: var(--azure-blue);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* ========== Slide 5b: Proof video ========== */
+      .s5b {
+        background: #fff;
+      }
+      .s5b .section-title {
+        font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+      }
+      .s5b .section-lead {
+        font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+        color: var(--ink);
+        margin-bottom: 2rem;
+      }
+      .s5b .proof-wrap {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 2rem;
+        align-items: center;
+      }
+      .s5b .video-frame {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 */
+        border-radius: 14px;
+        overflow: hidden;
+        background: #000;
+        box-shadow: 0 16px 40px rgba(0, 120, 212, 0.18);
+        border: 1px solid var(--line);
+      }
+      .s5b .video-frame iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      .s5b .proof-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+      }
+      .s5b .proof-stat {
+        padding: 1.5rem 1.6rem;
+        background: linear-gradient(180deg, #ffffff 0%, var(--bg-blue) 100%);
+        border: 1px solid var(--azure-blue-pale);
+        border-left: 5px solid var(--azure-blue);
+        border-radius: 12px;
+      }
+      .s5b .proof-num {
+        display: block;
+        font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+        font-weight: 800;
+        color: var(--azure-blue-darker);
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+      }
+      .s5b .proof-label {
+        display: block;
+        margin-top: 0.35rem;
+        font-size: 0.95rem;
+        color: var(--ink-soft);
+      }
+
+      /* ========== Slide 6: Security ========== */
+      .s6 {
+        background: #fff;
+      }
+      .s6 .section-title {
+        font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+      }
+      .s6 .section-lead {
+        font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+        color: var(--ink);
+        margin-bottom: 2.4rem;
+      }
+      .s6 .sec-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      .sec-panel {
+        padding: 2.6rem 2.4rem;
+        border-radius: 18px;
+      }
+      .sec-panel.ok {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        border: 1px solid var(--azure-blue-pale);
+      }
+      .sec-panel.no {
+        background: #fff5f5;
+        border: 1px solid #fed7d7;
+      }
+      .sec-panel h3 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 1.4rem;
+        letter-spacing: -0.01em;
+      }
+      .sec-panel.ok h3 {
+        color: var(--azure-blue-darker);
+      }
+      .sec-panel.no h3 {
+        color: #c53030;
+      }
+      .sec-panel ul {
+        list-style: none;
+      }
+      .sec-panel li {
+        padding: 1.6rem 0;
+        font-size: 1.7rem;
+        font-weight: 600;
+        line-height: 1.35;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+      }
+      .sec-panel li:first-child {
+        border-top: none;
+      }
+      .sec-panel li .mark {
+        flex-shrink: 0;
+        width: 32px;
+        font-weight: 800;
+        font-size: 2rem;
+        line-height: 1;
+      }
+      .sec-panel.ok li .mark {
+        color: var(--azure-blue);
+      }
+      .sec-panel.no li .mark {
+        color: #c53030;
+      }
+      .sec-panel li span {
+        color: var(--ink);
+      }
+      .sec-foot {
+        margin-top: 2rem;
+        padding: 1.3rem 1.6rem;
+        background: var(--bg-blue);
+        border-left: 4px solid var(--azure-blue);
+        border-radius: 8px;
+        font-size: 1.05rem;
+        color: var(--ink);
+        line-height: 1.55;
+        text-align: center;
+      }
+      .sec-foot strong {
+        color: var(--azure-blue-darker);
+      }
+
+      /* ========== Slide 6b: Why this wins ========== */
+      .s6b {
+        background:
+          radial-gradient(
+            ellipse at 20% 30%,
+            rgba(0, 120, 212, 0.08),
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 80% 70%,
+            rgba(0, 188, 242, 0.08),
+            transparent 60%
+          ),
+          #ffffff;
+      }
+      .s6b .content {
+        max-width: 1480px;
+      }
+      .s6b .section-title {
+        font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+      }
+      .s6b .section-lead {
+        font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+        color: var(--ink);
+        font-weight: 500;
+        margin-bottom: 2rem;
+      }
+      .s6b-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1.4rem;
+      }
+      .s6b-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        padding: 1.6rem 1.5rem;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fff;
+        text-align: left;
+      }
+      .s6b-card .crit {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--azure-blue);
+      }
+      .s6b-card h3 {
+        font-size: clamp(1.25rem, 1.4vw, 1.55rem);
+        font-weight: 800;
+        margin: 0;
+        color: var(--ink);
+        line-height: 1.2;
+      }
+      .s6b-card p {
+        font-size: clamp(1rem, 1.05vw, 1.15rem);
+        color: var(--ink-soft);
+        line-height: 1.5;
+        margin: 0;
+      }
+      .s6b-punch {
+        margin-top: 2rem;
+        font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+        font-weight: 800;
+        letter-spacing: -0.015em;
+        color: var(--azure-blue-darker);
+        padding: 1.4rem 1.8rem;
+        background: var(--bg-blue);
+        border-left: 5px solid var(--azure-blue);
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      /* ========== Slide 7: Get started ========== */
+      .s7 {
+        background: linear-gradient(
+          135deg,
+          var(--azure-blue) 0%,
+          var(--azure-blue-darker) 100%
+        );
+        color: #fff;
+      }
+      .s7::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          black 30%,
+          transparent 80%
+        );
+        -webkit-mask-image: radial-gradient(
+          ellipse at center,
+          black 30%,
+          transparent 80%
+        );
+      }
+      .s7 .content {
+        text-align: center;
+        max-width: 1000px;
+        position: relative;
+      }
+      .s7 .pre {
+        font-size: 0.78rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 1.2rem;
+      }
+      .s7 h2 {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        margin-bottom: 1.2rem;
+      }
+      .s7 p {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.92);
+        line-height: 1.6;
+        max-width: 760px;
+        margin: 0 auto 2rem;
+      }
+      .s7 .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+        margin: 3rem 0 2rem;
+      }
+      .s7 .step {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 1.8rem 1.6rem;
+        border-radius: 14px;
+        text-align: left;
+      }
+      .s7 .step .num {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+      .s7 .step h4 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin: 0.6rem 0 0.4rem;
+        color: #fff;
+        letter-spacing: -0.01em;
+      }
+      .s7 .step p {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin: 0;
+        line-height: 1.5;
+      }
+      .s7 .step code {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 3px 9px;
+        border-radius: 5px;
+        font-family: "Consolas", monospace;
+        font-size: 0.92rem;
+      }
+      .s7 .cta-row {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+      .s7 .cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1.05rem 2.2rem;
+        border-radius: 10px;
+        background: #fff;
+        color: var(--azure-blue-darker);
+        font-weight: 700;
+        font-size: 1.05rem;
+        text-decoration: none;
+        border: 0;
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .s7 .cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      }
+      .s7 .cta.secondary {
+        background: transparent;
+        color: #fff;
+        border: 1.5px solid rgba(255, 255, 255, 0.6);
+      }
+      /* "Pitch this deck" banner on slide 7 */
+      .pitch-banner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        margin: 3rem auto 0;
+        padding: 1.4rem 2rem;
+        max-width: 720px;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 14px;
+        transition: all 0.25s ease;
+      }
+      .pitch-banner:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.45);
+        transform: translateY(-2px);
+      }
+      .pitch-eyebrow {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .pitch-title {
+        font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: -0.015em;
+        line-height: 1.2;
+      }
+      .pitch-link {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #fff;
+        opacity: 0.9;
+        font-family: "Consolas", "Menlo", monospace;
+      }
+
+      /* ========== Navigation chrome ========== */
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: rgba(0, 120, 212, 0.08);
+        z-index: 100;
+      }
+      .progress-bar {
+        height: 100%;
+        background: var(--azure-blue);
+        width: 0%;
+        transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      /* Glowing nav arrows in left/right corners */
+      .nav-arrow {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 120, 212, 0.18);
+        color: var(--azure-blue);
+        cursor: pointer;
+        z-index: 60;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        box-shadow:
+          0 0 0 0 rgba(0, 120, 212, 0.45),
+          0 8px 24px rgba(0, 120, 212, 0.15);
+        animation: arrowGlow 2.4s ease-in-out infinite;
+        transition:
+          transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+          background 0.3s ease,
+          color 0.3s ease;
+      }
+      .nav-arrow svg {
+        width: 16px;
+        height: 16px;
+      }
+      .nav-arrow.left {
+        left: 1.5rem;
+      }
+      .nav-arrow.right {
+        right: 1.5rem;
+      }
+      .nav-arrow:hover {
+        background: var(--azure-blue);
+        color: #fff;
+        transform: translateY(-50%) scale(1.1);
+        animation: none;
+        box-shadow: 0 12px 32px rgba(0, 120, 212, 0.4);
+      }
+      .nav-arrow:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+      @keyframes arrowGlow {
+        0%,
+        100% {
+          box-shadow:
+            0 0 0 0 rgba(0, 120, 212, 0.35),
+            0 6px 18px rgba(0, 120, 212, 0.15);
+        }
+        50% {
+          box-shadow:
+            0 0 0 9px rgba(0, 120, 212, 0),
+            0 6px 18px rgba(0, 120, 212, 0.25);
+        }
+      }
+      /* Hide left arrow on first slide, right on last */
+      body:has(.s1.active) .nav-arrow.left,
+      body:has(.s7.active) .nav-arrow.right {
+        opacity: 0;
+        pointer-events: none;
+      }
+      /* Dark variants on the gradient last slide */
+      body:has(.s7.active) .nav-arrow {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.35);
+        color: #fff;
+      }
+      body:has(.s7.active) .nav-arrow:hover {
+        background: #fff;
+        color: var(--azure-blue-darker);
+      }
+
+      /* Fullscreen toggle (top-right corner) */
+      .fs-toggle {
+        position: fixed;
+        top: 1.4rem;
+        right: 1.4rem;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(0, 120, 212, 0.15);
+        color: var(--ink-mute);
+        cursor: pointer;
+        z-index: 65;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        transition: all 0.25s ease;
+      }
+      .fs-toggle svg {
+        width: 18px;
+        height: 18px;
+      }
+      .fs-toggle .fs-exit {
+        display: none;
+      }
+      body.is-fullscreen .fs-toggle .fs-enter {
+        display: none;
+      }
+      body.is-fullscreen .fs-toggle .fs-exit {
+        display: block;
+      }
+      .fs-toggle:hover {
+        background: var(--azure-blue);
+        color: #fff;
+        border-color: var(--azure-blue);
+      }
+      body:has(.s7.active) .fs-toggle {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.35);
+        color: #fff;
+      }
+      .dots {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+        z-index: 60;
+      }
+      .dot-nav {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(0, 120, 212, 0.25);
+        border: 0;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.3s ease;
+      }
+      .dot-nav.active {
+        background: var(--azure-blue);
+        width: 28px;
+        border-radius: 4px;
+      }
+      .s7 .dot-nav {
+        background: rgba(255, 255, 255, 0.4);
+      }
+      .s7 .dot-nav.active {
+        background: #fff;
+      }
+      .counter {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 2rem;
+        font-size: 0.8rem;
+        color: var(--ink-mute);
+        letter-spacing: 0.15em;
+        z-index: 60;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Persistent corner links (bottom-left) */
+      .corner-links {
+        position: fixed;
+        bottom: 1.4rem;
+        left: 1.5rem;
+        display: flex;
+        gap: 0.6rem;
+        z-index: 60;
+      }
+      .corner-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.45rem 0.85rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--ink-soft);
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(0, 120, 212, 0.15);
+        border-radius: 999px;
+        transition: all 0.2s ease;
+      }
+      .corner-link:hover {
+        background: var(--azure-blue);
+        color: #fff;
+        border-color: var(--azure-blue);
+        transform: translateY(-1px);
+      }
+      /* Inverted on slide 7 (gradient bg) */
+      body:has(.s7.active) .corner-link {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.35);
+        color: #fff;
+      }
+      body:has(.s7.active) .corner-link:hover {
+        background: #fff;
+        color: var(--azure-blue-darker);
+      }
+      .s7 ~ * .counter,
+      body:has(.s7.active) .counter {
+        color: rgba(255, 255, 255, 0.85);
+      }
+      /* Fullscreen video slide: hide all overlay chrome */
+      body:has(.s-video.active) .corner-links,
+      body:has(.s-video.active) .progress,
+      body:has(.s-video.active) .counter,
+      body:has(.s-video.active) .nav,
+      body:has(.s-video.active) .nav-arrow,
+      body:has(.s-video.active) .dots,
+      body:has(.s-video.active) .hint {
+        display: none !important;
+      }
+      .brand-mark {
+        position: fixed;
+        top: 1.4rem;
+        left: 2rem;
+        z-index: 60;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--azure-blue);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+      .brand-mark .logo {
+        width: 26px;
+        height: 26px;
+        display: inline-block;
+      }
+      body:has(.s7.active) .brand-mark {
+        color: #fff;
+      }
+      body:has(.s7.active) .brand-mark .logo {
+        filter: brightness(0) invert(1);
+      }
+      /* Clean hero - hide all chrome on the title slide */
+      body:has(.s1.active) .brand-mark,
+      body:has(.s1.active) .counter,
+      body:has(.s1.active) .progress {
+        display: none;
+      }
+      .hint {
+        position: fixed;
+        bottom: 4rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.78rem;
+        color: var(--ink-mute);
+        z-index: 60;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+      }
+      .hint kbd {
+        display: inline-block;
+        padding: 1px 6px;
+        margin: 0 2px;
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 0.72rem;
+        color: var(--ink-soft);
+      }
+      .hint.fade {
+        opacity: 0;
+      }
+      body:has(.s7.active) .hint {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      body:has(.s7.active) .hint kbd {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: #fff;
+      }
+
+      @media (max-width: 900px) {
+        .s2 .grid,
+        .s3 .grid,
+        .s5 .maturity,
+        .s7 .steps {
+          grid-template-columns: 1fr;
+        }
+        .s5b .proof-wrap,
+        .s6 .sec-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        .counter,
+        .brand-mark {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="deck" id="deck">
+      <!-- ========== Slide 1: Hero ========== -->
+      <section class="slide s1 active">
+        <aside class="s1-signal" data-step>
+          <img
+            class="s1-hero-img"
+            src="sam-finops-images/0.png"
+            alt="FinOps team grilled by leadership about cloud spending"
+          />
+          <blockquote>
+            "800 developer licenses for truck drivers?"
+            <cite
+              >Global enterprise customer, 2025<br />$250/user/month · $2.4M
+              wasted for a year</cite
+            >
+          </blockquote>
+          <blockquote>
+            Global enterprise "needs to exercise greater discipline on
+            spending."
+            <cite>CEO of a Fortune 500 enterprise, 2025</cite>
+          </blockquote>
+        </aside>
+        <div class="content">
+          <div data-step>
+            <h1 style="line-height: 1.05">
+              Your AI agent for<br />Azure <span>FinOps</span>.
+            </h1>
+          </div>
+          <div data-step>
+            <p
+              class="tagline anim d4"
+              style="font-size: 1.85em; font-weight: 700; line-height: 1.25"
+            >
+              <span>Understand</span>
+              <span> · Forecast</span>
+              <span> · Optimize</span>
+            </p>
+          </div>
+          <div
+            class="anim d6"
+            style="margin-top: 4rem; text-align: center; line-height: 1.15"
+          >
+            <div style="display: inline-block; text-align: left">
+              <div data-step>
+                <div
+                  style="
+                    font-size: 0.95em;
+                    font-weight: 700;
+                    letter-spacing: 0.18em;
+                    text-transform: uppercase;
+                    opacity: 0.7;
+                    margin-bottom: 0.4rem;
+                  "
+                >
+                  In pilot
+                </div>
+                <div
+                  style="
+                    font-size: 3.6em;
+                    font-weight: 800;
+                    margin: 0.1em 0;
+                    letter-spacing: -0.02em;
+                  "
+                >
+                  Global logistics leader
+                </div>
+              </div>
+              <div
+                data-step
+                style="
+                  font-size: 3.6em;
+                  font-weight: 800;
+                  margin: 0 0;
+                  letter-spacing: -0.02em;
+                "
+              >
+                Global pharma leader
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="s1-footer anim d6" data-step>
+          <div class="s1-footer-line">
+            Let's <em>change the narrative</em>, and rebuild <em>trust</em>.
+          </div>
+          <div class="s1-footer-sub">
+            Free · Open Source · Built by Microsoft
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 2: Problem ========== -->
+      <section class="slide s2">
+        <div class="content">
+          <h2 class="section-title anim d1">
+            Problem. FinOps is a <em>painful job</em>.
+          </h2>
+          <p class="section-lead anim d2">And you're always behind.</p>
+          <div class="s2-stage">
+            <div class="s2-left">
+              <div class="pain-card" data-step data-img="1">
+                <div class="ico">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="18" y1="20" x2="18" y2="10" />
+                    <line x1="12" y1="20" x2="12" y2="4" />
+                    <line x1="6" y1="20" x2="6" y2="14" />
+                    <line x1="3" y1="22" x2="21" y2="22" />
+                  </svg>
+                </div>
+                <div class="card-text">
+                  <h3>Unexpected costs</h3>
+                  <p>Held accountable with no clear visibility.</p>
+                </div>
+              </div>
+              <div class="pain-card" data-step data-img="2">
+                <div class="ico">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="2" y="6" width="20" height="12" rx="2" />
+                    <path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10" />
+                  </svg>
+                </div>
+                <div class="card-text">
+                  <h3>Static toolkits</h3>
+                  <p>
+                    Hand-written queries, scheduled exports, scripts that don't
+                    think.
+                  </p>
+                </div>
+              </div>
+              <div class="pain-card" data-step data-img="5">
+                <div class="ico">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 12a9 9 0 1 1-3-6.7L21 8" />
+                    <polyline points="21 3 21 8 16 8" />
+                  </svg>
+                </div>
+                <div class="card-text">
+                  <h3>Endless catch-up</h3>
+                  <p>Always under pressure, always behind at scale.</p>
+                </div>
+              </div>
+              <div class="punchline-stack">
+                <div class="punchline tier2" data-step data-img="7">
+                  Leadership questions spendings.
+                </div>
+                <div class="punchline tier3" data-step data-img="8">
+                  Plans to cut aggressively or simply picks an alternative
+                  offer.
+                </div>
+              </div>
+            </div>
+            <div class="s2-right">
+              <img
+                class="s2-storyimg"
+                src=""
+                alt="Illustration of the current FinOps pain"
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 3: What it is ========== -->
+      <section class="slide s3 s3-centered">
+        <div class="content">
+          <h2 class="section-title anim d1">
+            Solution. Azure FinOps <em>Agent</em>.
+          </h2>
+          <p class="section-lead anim d2">
+            Every spend question becomes an agentic operation.
+          </p>
+          <div class="s3-grid">
+            <div class="pain-card anim d3" data-step>
+              <div class="ico">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+              </div>
+              <div class="card-text">
+                <h3>Built for everyone &mdash; CFO to engineer.</h3>
+                <p>
+                  Plain&#8209;language questions about waste and spend
+                  translated into dozens of live Azure API calls.<br />
+                  Not a chatbot summarising PDFs or stale data.
+                </p>
+              </div>
+            </div>
+            <div class="pain-card anim d4" data-step>
+              <div class="ico">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+              </div>
+              <div class="card-text">
+                <h3>One&#8209;click CFO readout.</h3>
+                <p>
+                  Fresh numbers and forecast &mdash; ready to present in
+                  seconds.
+                </p>
+              </div>
+            </div>
+            <div class="pain-card anim d5" data-step>
+              <div class="ico">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="3" />
+                  <path
+                    d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"
+                  />
+                </svg>
+              </div>
+              <div class="card-text">
+                <h3>Agentic remediation.</h3>
+                <p>
+                  An agent that takes action. Applies tags, sets budgets &amp;
+                  alerts. Crawl &rarr; Walk &rarr; Run.
+                </p>
+              </div>
+            </div>
+            <div class="pain-card anim d6" data-step>
+              <div class="ico">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <div class="card-text">
+                <h3>Trust &amp; open source.</h3>
+                <p>
+                  Open source and free. Runs in the customer&rsquo;s tenant,
+                  with fully transparent tool calls &mdash; and
+                  <strong>never deletes</strong>, enforced in code.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 4: Demo placeholder ========== -->
+      <section
+        class="slide s-video"
+        style="background: #000; padding: 0; margin: 0; overflow: hidden"
+      >
+        <div class="content" style="text-align: center">
+          <h2 class="section-title anim d1" style="color: #fff">Demo video</h2>
+          <p class="section-lead anim d2" style="color: rgba(255, 255, 255, 0.75)">
+            Demo recordings are intentionally not tracked in the sample repository.
+            Add a local <code>video1.mp4</code> file in this folder when presenting
+            the deck locally.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========== ARCHIVED (kept hidden for future use) ========== -->
+      <section class="slide-archived s3half-archived" style="display: none">
+        <div class="content" style="text-align: center">
+          <h2 class="section-title anim d1" style="color: #fff">
+            Bigger than <em>FinOps</em>.
+          </h2>
+          <p
+            class="section-lead anim d2"
+            style="color: rgba(255, 255, 255, 0.75)"
+          >
+            A common enterprise pattern we see across industries:
+          </p>
+          <div
+            style="
+              margin-top: 3rem;
+              display: flex;
+              flex-direction: column;
+              gap: 1.8rem;
+              align-items: center;
+            "
+          >
+            <div
+              data-step
+              style="font-size: 2.2em; font-weight: 800; line-height: 1.2"
+            >
+              One provider trusted for
+              <span style="color: #50e3c2">identity</span>.
+              <div
+                style="
+                  font-size: 0.42em;
+                  font-weight: 600;
+                  opacity: 0.7;
+                  margin-top: 0.4rem;
+                  font-style: italic;
+                "
+              >
+                The enterprise control plane.
+              </div>
+            </div>
+            <div
+              data-step
+              style="font-size: 2.2em; font-weight: 800; line-height: 1.2"
+            >
+              Another provider trusted for
+              <span style="color: #ff9966">workloads</span>.
+              <div
+                style="
+                  font-size: 0.42em;
+                  font-weight: 600;
+                  opacity: 0.7;
+                  margin-top: 0.4rem;
+                  font-style: italic;
+                "
+              >
+                Often a historical choice, driven by early pricing.
+              </div>
+            </div>
+            <div
+              data-step
+              style="
+                font-size: 2.2em;
+                font-weight: 800;
+                line-height: 1.2;
+                max-width: 1100px;
+              "
+            >
+              A trusted FinOps agent
+              <span style="color: #50e3c2">flips the script.</span>
+              <div
+                style="
+                  font-size: 0.42em;
+                  font-weight: 600;
+                  opacity: 0.85;
+                  margin-top: 0.4rem;
+                "
+              >
+                Identity → Governance → Workloads. The trusted provider becomes
+                the operational control layer.
+              </div>
+            </div>
+            <div
+              data-step
+              style="
+                font-size: 1.1em;
+                font-weight: 700;
+                opacity: 0.95;
+                margin-top: 1.6rem;
+                max-width: 1100px;
+                line-height: 1.4;
+              "
+            >
+              The same pattern repeats across regions and industries.
+              <div
+                style="
+                  font-size: 0.85em;
+                  font-weight: 500;
+                  opacity: 0.7;
+                  margin-top: 0.3rem;
+                  font-style: italic;
+                "
+              >
+                The FinOps Agent is the start.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 4: Architecture (HIDDEN — kept for future use; restore by changing class back to "slide s4") ========== -->
+      <section class="slide-archived s4" style="display: none">
+        <div class="content">
+          <div class="s4-header">
+            <h2 class="section-title anim d1">How it <em>works</em>.</h2>
+          </div>
+          <div class="arch-wrap anim d3">
+            <svg
+              class="arch-svg"
+              viewBox="0 0 1600 1000"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- ====== Inline Azure icon symbols (official Microsoft Azure SVGs) ====== -->
+              <defs>
+                <symbol id="ic-users" viewBox="0 0 18 18">
+                  <linearGradient
+                    id="ic-users-g1"
+                    x1="9"
+                    y1="6.88"
+                    x2="9"
+                    y2="20.45"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0.22" stop-color="#32d4f5" />
+                    <stop offset="1" stop-color="#198ab3" />
+                  </linearGradient>
+                  <linearGradient
+                    id="ic-users-g2"
+                    x1="8.61"
+                    y1="-0.4"
+                    x2="9.6"
+                    y2="11.92"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0.22" stop-color="#32d4f5" />
+                    <stop offset="1" stop-color="#198ab3" />
+                  </linearGradient>
+                  <path
+                    d="M15.72,18a1.45,1.45,0,0,0,1.45-1.45.47.47,0,0,0,0-.17C16.59,11.81,14,8.09,9,8.09S1.34,11.24.83,16.39A1.46,1.46,0,0,0,2.14,18H15.72Z"
+                    fill="url(#ic-users-g1)"
+                  />
+                  <path
+                    d="M9,9.17a4.59,4.59,0,0,1-2.48-.73L9,14.86l2.44-6.38A4.53,4.53,0,0,1,9,9.17Z"
+                    fill="#fff"
+                    opacity="0.8"
+                  />
+                  <circle
+                    cx="9.01"
+                    cy="4.58"
+                    r="4.58"
+                    fill="url(#ic-users-g2)"
+                  />
+                </symbol>
+
+                <symbol id="ic-container-apps" viewBox="0 0 18 18">
+                  <defs>
+                    <linearGradient
+                      id="ic-cae-g1"
+                      x1="11.729"
+                      y1="4.88"
+                      x2="11.729"
+                      y2="13.099"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.001" stop-color="#773adc" />
+                      <stop offset="0.528" stop-color="#6635bb" />
+                      <stop offset="1" stop-color="#552f99" />
+                    </linearGradient>
+                    <linearGradient
+                      id="ic-cae-g2"
+                      x1="6.35"
+                      y1="13.914"
+                      x2="6.35"
+                      y2="4.198"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.001" stop-color="#773adc" />
+                      <stop offset="0.307" stop-color="#793ddd" />
+                      <stop offset="0.532" stop-color="#8046e1" />
+                      <stop offset="0.731" stop-color="#8c56e7" />
+                      <stop offset="0.915" stop-color="#9c6def" />
+                      <stop offset="1" stop-color="#a67af4" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M8.617,8.644H.639V1.784A1.16,1.16,0,0,1,1.788.624H8.617ZM1.63,7.653h6V1.594H1.788a.158.158,0,0,0-.158.158h0Z"
+                    fill="#949494"
+                  />
+                  <path
+                    d="M17.5,8.644H9.523V.624h6.828A1.16,1.16,0,0,1,17.5,1.784Zm-6.987-.991h6V1.784a.157.157,0,0,0-.123-.187.2.2,0,0,0-.035,0H10.513Z"
+                    fill="#949494"
+                  />
+                  <path
+                    d="M8.617,17.485H1.788A1.149,1.149,0,0,1,.639,16.347V9.476H8.617ZM1.63,10.467v5.88a.158.158,0,0,0,.158.158H7.626V10.467Z"
+                    fill="#949494"
+                  />
+                  <path
+                    d="M16.351,17.485H9.523V9.476H17.5v6.871A1.149,1.149,0,0,1,16.351,17.485Zm-5.838-.991h5.838a.157.157,0,0,0,.158-.158V10.467h-6Z"
+                    fill="#949494"
+                  />
+                  <path
+                    d="M14.6,6.294a.294.294,0,0,0-.2-.278L9.044,4.205A.128.128,0,0,0,9,4.2H9a.132.132,0,0,0-.133.133v9.445A.133.133,0,0,0,9,13.911H9a.138.138,0,0,0,.049-.01l5.365-2.145a.292.292,0,0,0,.184-.272Z"
+                    fill="url(#ic-cae-g1)"
+                  />
+                  <path
+                    d="M8.966,4.2l-5.293.966a.161.161,0,0,0-.13.158V12.63a.16.16,0,0,0,.126.157L8.962,13.91a.161.161,0,0,0,.191-.121.22.22,0,0,0,0-.036V4.358A.16.16,0,0,0,9,4.2.163.163,0,0,0,8.966,4.2Z"
+                    fill="url(#ic-cae-g2)"
+                  />
+                  <path
+                    d="M6.52,5.656v6.8l1.842.3V5.335Zm-2.262.367v5.955l1.6.326V5.754Z"
+                    fill="#b796f9"
+                    opacity="0.5"
+                  />
+                </symbol>
+
+                <symbol id="ic-app-service" viewBox="0 0 18 18">
+                  <radialGradient
+                    id="ic-app-g1"
+                    cx="13428.81"
+                    cy="3518.86"
+                    r="56.67"
+                    gradientTransform="translate(-2005.33 -518.83) scale(0.15)"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0.18" stop-color="#5ea0ef" />
+                    <stop offset="1" stop-color="#0078d4" />
+                  </radialGradient>
+                  <linearGradient
+                    id="ic-app-g2"
+                    x1="4.4"
+                    y1="11.48"
+                    x2="4.37"
+                    y2="7.53"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#ccc" />
+                    <stop offset="1" stop-color="#fcfcfc" />
+                  </linearGradient>
+                  <linearGradient
+                    id="ic-app-g3"
+                    x1="10.13"
+                    y1="15.45"
+                    x2="10.13"
+                    y2="11.9"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#ccc" />
+                    <stop offset="1" stop-color="#fcfcfc" />
+                  </linearGradient>
+                  <linearGradient
+                    id="ic-app-g4"
+                    x1="14.18"
+                    y1="11.15"
+                    x2="14.18"
+                    y2="7.38"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#ccc" />
+                    <stop offset="1" stop-color="#fcfcfc" />
+                  </linearGradient>
+                  <path
+                    d="M14.21,15.72A8.5,8.5,0,0,1,3.79,2.28l.09-.06a8.5,8.5,0,0,1,10.33,13.5"
+                    fill="url(#ic-app-g1)"
+                  />
+                  <path
+                    d="M6.69,7.23A13,13,0,0,1,15.6,3.65a8.47,8.47,0,0,0-1.49-1.44,14.34,14.34,0,0,0-4.69,1.1A12.54,12.54,0,0,0,5.34,6.13,2.76,2.76,0,0,1,6.69,7.23Z"
+                    fill="#fff"
+                    opacity="0.6"
+                  />
+                  <path
+                    d="M2.48,10.65a17.86,17.86,0,0,0-.83,2.62,7.82,7.82,0,0,0,.62.92c.18.23.35.44.55.65A17.94,17.94,0,0,1,3.9,11.37,2.76,2.76,0,0,1,2.48,10.65Z"
+                    fill="#fff"
+                    opacity="0.6"
+                  />
+                  <path
+                    d="M3.46,6.11a12,12,0,0,1-.69-2.94,8.15,8.15,0,0,0-1.1,1.45A12.69,12.69,0,0,0,2.24,7,2.69,2.69,0,0,1,3.46,6.11Z"
+                    fill="#f2f2f2"
+                    opacity="0.55"
+                  />
+                  <circle cx="4.38" cy="8.68" r="2.73" fill="url(#ic-app-g2)" />
+                  <path
+                    d="M8.36,13.67A1.77,1.77,0,0,1,8.9,12.4a11.88,11.88,0,0,1-2.53-1.86,2.74,2.74,0,0,1-1.49.83,13.1,13.1,0,0,0,1.45,1.28A12.12,12.12,0,0,0,8.38,13.9,1.79,1.79,0,0,1,8.36,13.67Z"
+                    fill="#f2f2f2"
+                    opacity="0.55"
+                  />
+                  <path
+                    d="M14.66,13.88a12,12,0,0,1-2.76-.32.41.41,0,0,1,0,.11,1.75,1.75,0,0,1-.51,1.24,13.69,13.69,0,0,0,3.42.24A8.21,8.21,0,0,0,16,13.81,11.5,11.5,0,0,1,14.66,13.88Z"
+                    fill="#f2f2f2"
+                    opacity="0.55"
+                  />
+                  <circle
+                    cx="10.13"
+                    cy="13.67"
+                    r="1.78"
+                    fill="url(#ic-app-g3)"
+                  />
+                  <path
+                    d="M12.32,8.93a1.83,1.83,0,0,1,.61-1A25.5,25.5,0,0,1,8.47,3.79a16.91,16.91,0,0,1-2-2.92,7.64,7.64,0,0,0-1.09.42A18.14,18.14,0,0,0,7.53,4.47,26.44,26.44,0,0,0,12.32,8.93Z"
+                    fill="#f2f2f2"
+                    opacity="0.7"
+                  />
+                  <circle
+                    cx="14.18"
+                    cy="9.27"
+                    r="1.89"
+                    fill="url(#ic-app-g4)"
+                  />
+                </symbol>
+
+                <symbol id="ic-azure-openai" viewBox="0 0 18 18">
+                  <radialGradient
+                    id="ic-aoai-g"
+                    cx="-67.981"
+                    cy="793.199"
+                    r=".45"
+                    gradientTransform="translate(-17939.03 20368.029) rotate(45) scale(25.091 -34.149)"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#83b9f9" />
+                    <stop offset="1" stop-color="#0078d4" />
+                  </radialGradient>
+                  <path
+                    d="m0,2.7v12.6c0,1.491,1.209,2.7,2.7,2.7h12.6c1.491,0,2.7-1.209,2.7-2.7V2.7c0-1.491-1.209-2.7-2.7-2.7H2.7C1.209,0,0,1.209,0,2.7ZM10.8,0v3.6c0,3.976,3.224,7.2,7.2,7.2h-3.6c-3.976,0-7.199,3.222-7.2,7.198v-3.598c0-3.976-3.224-7.2-7.2-7.2h3.6c3.976,0,7.2-3.224,7.2-7.2Z"
+                    fill="url(#ic-aoai-g)"
+                  />
+                </symbol>
+
+                <symbol id="ic-cost-mgmt" viewBox="0 0 18 18">
+                  <linearGradient
+                    id="ic-cost-g1"
+                    x1="9"
+                    y1="1.48"
+                    x2="9"
+                    y2="17.07"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#76bc2d" />
+                    <stop offset="0.32" stop-color="#73b82c" />
+                    <stop offset="0.65" stop-color="#6cab29" />
+                    <stop offset="0.99" stop-color="#5e9724" />
+                    <stop offset="1" stop-color="#5e9624" />
+                  </linearGradient>
+                  <path
+                    d="M12.35,1.48H5.65a2,2,0,0,0-1.73,1L.58,8.28a2,2,0,0,0,0,2l3.34,5.79a2,2,0,0,0,1.73,1h6.7a2,2,0,0,0,1.73-1l3.34-5.79a2,2,0,0,0,0-2l-3.34-5.8A2,2,0,0,0,12.35,1.48Z"
+                    fill="url(#ic-cost-g1)"
+                  />
+                  <path
+                    d="M9.07,4.81A.82.82,0,0,1,8.25,4,.82.82,0,0,1,9.89,4,.82.82,0,0,1,9.07,4.81Zm-.82,9.75a.82.82,0,1,0,1.64,0,.82.82,0,0,0-1.64,0Zm.84-2.7A1.5,1.5,0,0,1,7.58,11l-1.45.28A2.68,2.68,0,0,0,9,13c1.69,0,2.91-.89,2.91-2.13a2.07,2.07,0,0,0-1.12-2A13,13,0,0,0,9,8.33c-.67-.16-1.1-.53-1.1-1A1,1,0,0,1,9,6.46a1.4,1.4,0,0,1,1.29.69l1.25-.4A2.56,2.56,0,0,0,9,5.45c-1.18,0-2.55.52-2.55,2,0,1.81,1.11,2.17,2.69,2.48.37.07,1.23.32,1.23,1C10.33,11.31,10,11.86,9.09,11.86Z"
+                    fill="#fff"
+                    opacity="0.9"
+                  />
+                </symbol>
+
+                <symbol id="ic-resource-graph" viewBox="0 0 18 18">
+                  <linearGradient
+                    id="ic-rg-g1"
+                    x1="2.63"
+                    y1="5.99"
+                    x2="2.63"
+                    y2="1.75"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#773adc" />
+                    <stop offset="1" stop-color="#b77af4" />
+                  </linearGradient>
+                  <linearGradient
+                    id="ic-rg-g2"
+                    x1="14.76"
+                    y1="6.31"
+                    x2="14.76"
+                    y2="0.85"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#773adc" />
+                    <stop offset="1" stop-color="#b77af4" />
+                  </linearGradient>
+                  <linearGradient
+                    id="ic-rg-g3"
+                    x1="11.92"
+                    y1="17.27"
+                    x2="11.92"
+                    y2="7.71"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#773adc" />
+                    <stop offset="1" stop-color="#b77af4" />
+                  </linearGradient>
+                  <path
+                    d="M11.56,14.24,1.79,4.35A.77.77,0,0,1,2.34,3H14.76V4.58H4.19l8.47,8.58Z"
+                    fill="#b796f9"
+                  />
+                  <ellipse
+                    cx="2.63"
+                    cy="3.87"
+                    rx="2.13"
+                    ry="2.12"
+                    fill="url(#ic-rg-g1)"
+                  />
+                  <ellipse
+                    cx="14.76"
+                    cy="3.58"
+                    rx="2.74"
+                    ry="2.73"
+                    fill="url(#ic-rg-g2)"
+                  />
+                  <ellipse
+                    cx="11.92"
+                    cy="13.69"
+                    rx="3.47"
+                    ry="3.46"
+                    fill="url(#ic-rg-g3)"
+                  />
+                </symbol>
+
+                <symbol id="ic-entra" viewBox="0 0 18 18">
+                  <linearGradient
+                    id="ic-entra-g1"
+                    x1="10.901"
+                    y1="4.385"
+                    x2="10.901"
+                    y2="18.783"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset=".085" stop-color="#ef7100" />
+                    <stop offset=".999" stop-color="#f78d1e" />
+                  </linearGradient>
+                  <linearGradient
+                    id="ic-entra-g2"
+                    x1="-79.452"
+                    y1="778.657"
+                    x2="-79.452"
+                    y2="786.378"
+                    gradientTransform="translate(94 795.516) scale(1 -1)"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#0078d4" />
+                    <stop offset=".06" stop-color="#0a7cd7" />
+                    <stop offset=".34" stop-color="#2e8ce1" />
+                    <stop offset=".59" stop-color="#4897e9" />
+                    <stop offset=".82" stop-color="#589eed" />
+                    <stop offset="1" stop-color="#5ea0ef" />
+                  </linearGradient>
+                  <polygon
+                    points="4.636 9.985 4.688 10.017 9 12.713 9.001 12.713 9.001 12.713 9.001 5.062 9 5.061 4.636 9.985"
+                    fill="#ffb34d"
+                    opacity=".9"
+                  />
+                  <path
+                    d="m10.146,1.294c-.299-.338-.722-.507-1.145-.507h0c-.424-.001-.847.168-1.147.506h-.001L.353,9.753c-.579.654-.428,1.642.323,2.111,0,0,2.776,1.735,3.126,1.954.388.242,1.033.511,1.715.511.621,0,1.198-.18,1.676-.487,0,0,0,0,.002,0l1.805-1.128-4.364-2.728,4.365-4.924.109-.123c.55-.627,1.377-1.026,2.302-1.026.472,0,.916.107,1.313.291l-2.579-2.909Z"
+                    fill="#faa21d"
+                  />
+                  <polygon
+                    points="13.365 9.985 13.365 9.985 13.365 9.985 9.001 5.062 9.001 12.712 13.365 9.985"
+                    fill="#f78d1e"
+                  />
+                  <path
+                    d="m17.647,9.753l-4.921-5.551c-.397-.185-.842-.291-1.313-.291-.925,0-1.752.399-2.302,1.026l-.109.123,4.364,4.924-4.266,2.666-.099.062v.003s-.001-.002-.001-.002l-1.805,1.128s-.002,0-.002,0c-.478.307-1.055.487-1.676.487-.682,0-1.327-.269-1.715-.511l4.374,2.734c.25.156.538.234.824.234h0s.001,0,.001,0c.287,0,.573-.078.823-.234l1.73-1.081h0s5.77-3.607,5.77-3.607h0c.751-.468.902-1.456.323-2.11Z"
+                    fill="url(#ic-entra-g1)"
+                  />
+                  <path
+                    d="m18,12.721c0,2.265-2.739,4.088-3.338,4.46-.068.044-.156.044-.224,0-.599-.367-3.338-2.19-3.338-4.46v-2.725c0-.119.093-.215.21-.218,2.134-.055,1.642-.991,3.241-.991s1.106.937,3.241.991c.117.003.21.1.21.218v2.725Z"
+                    fill="#0078d4"
+                  />
+                  <path
+                    d="m17.717,12.741c0,2.081-2.515,3.751-3.065,4.088-.063.039-.142.039-.205,0-.551-.337-3.065-2.007-3.065-4.088v-2.478c-.019-.111.054-.216.163-.235.011-.002.021-.003.032-.003,1.959-.035,1.511-.887,2.973-.887s1.014.852,2.973.887c.107.003.192.09.195.198v2.517Z"
+                    fill="url(#ic-entra-g2)"
+                  />
+                </symbol>
+
+                <symbol id="ic-log-analytics" viewBox="0 0 18 18">
+                  <linearGradient
+                    id="ic-la-g1"
+                    x1="5.23"
+                    y1="17.45"
+                    x2="5.23"
+                    y2="8.09"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#1988d9" />
+                    <stop offset="0.9" stop-color="#54aef0" />
+                  </linearGradient>
+                  <linearGradient
+                    id="ic-la-g2"
+                    x1="11.5"
+                    y1="12.45"
+                    x2="11.5"
+                    y2="0.55"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#198ab3" />
+                    <stop offset="0.44" stop-color="#27b2d7" />
+                    <stop offset="0.79" stop-color="#2fcbed" />
+                    <stop offset="1" stop-color="#32d4f5" />
+                  </linearGradient>
+                  <path
+                    d="M5.59,13.13H9.91v4.32H5.59ZM1.15,17.45H4.87V13.13H.55v3.72A.6.6,0,0,0,1.15,17.45Zm-.6-5H4.87V8.09H.55Z"
+                    fill="url(#ic-la-g1)"
+                  />
+                  <path
+                    d="M11.5.55a5.89,5.89,0,0,1,5.95,6,5.89,5.89,0,0,1-5.95,5.95H5.55V6.5A5.89,5.89,0,0,1,11.5.55Z"
+                    fill-rule="evenodd"
+                    fill="url(#ic-la-g2)"
+                  />
+                  <rect
+                    x="7.59"
+                    y="5.65"
+                    width="1.36"
+                    height="4.08"
+                    fill="#fff"
+                  />
+                  <rect
+                    x="10.31"
+                    y="7.01"
+                    width="1.36"
+                    height="2.72"
+                    fill="#fff"
+                  />
+                  <rect
+                    x="13.03"
+                    y="4.29"
+                    width="1.36"
+                    height="5.44"
+                    fill="#fff"
+                  />
+                </symbol>
+
+                <symbol id="ic-app-insights" viewBox="0 0 18 18">
+                  <radialGradient
+                    id="ic-ai-g1"
+                    cx="9"
+                    cy="7.35"
+                    r="6.42"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#b77af4" />
+                    <stop offset="0.21" stop-color="#b378f2" />
+                    <stop offset="0.43" stop-color="#a672ed" />
+                    <stop offset="0.65" stop-color="#9267e4" />
+                    <stop offset="0.88" stop-color="#7559d8" />
+                    <stop offset="1" stop-color="#624fd0" />
+                  </radialGradient>
+                  <path
+                    d="M10.23,17.39l.81-.87V14.2H7v2.32l.81.87A.32.32,0,0,0,8,17.5h2A.32.32,0,0,0,10.23,17.39Z"
+                    fill="#cecece"
+                  />
+                  <path
+                    d="M9,.5A5.89,5.89,0,0,0,3.09,7.07c.27,2.47,2.62,3.62,3.29,6.75a.49.49,0,0,0,.47.38h4.3a.49.49,0,0,0,.47-.38c.67-3.13,3-4.28,3.29-6.75A5.89,5.89,0,0,0,9,.5Z"
+                    fill="url(#ic-ai-g1)"
+                  />
+                  <path
+                    d="M11.46,3.79a1.4,1.4,0,0,0-1.35,1.44V6H8V5.23A1.41,1.41,0,0,0,6.59,3.79,1.4,1.4,0,0,0,5.24,5.23,1.41,1.41,0,0,0,6.59,6.68h.64v6a.36.36,0,0,0,.72,0v-6h2.16v6a.36.36,0,1,0,.72,0v-6h.63a1.4,1.4,0,0,0,1.35-1.45A1.4,1.4,0,0,0,11.46,3.79ZM7.23,6H6.55a.74.74,0,0,1-.68-.77.74.74,0,0,1,.68-.77.74.74,0,0,1,.68.77Zm4.28,0h-.68V5.19a.68.68,0,1,1,1.35,0A.73.73,0,0,1,11.51,6Z"
+                    fill="#fff"
+                  />
+                </symbol>
+
+                <symbol id="ic-storage" viewBox="0 0 18 18">
+                  <linearGradient
+                    id="ic-storage-g1"
+                    x1="9"
+                    y1="15.83"
+                    x2="9"
+                    y2="5.79"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#b3b3b3" />
+                    <stop offset="0.26" stop-color="#c1c1c1" />
+                    <stop offset="1" stop-color="#e6e6e6" />
+                  </linearGradient>
+                  <path
+                    d="M.5,5.79h17a0,0,0,0,1,0,0v9.48a.57.57,0,0,1-.57.57H1.07a.57.57,0,0,1-.57-.57V5.79A0,0,0,0,1,.5,5.79Z"
+                    fill="url(#ic-storage-g1)"
+                  />
+                  <path
+                    d="M1.07,2.17H16.93a.57.57,0,0,1,.57.57V5.79a0,0,0,0,1,0,0H.5a0,0,0,0,1,0,0V2.73A.57.57,0,0,1,1.07,2.17Z"
+                    fill="#37c2b1"
+                  />
+                  <path
+                    d="M2.81,6.89H15.18a.27.27,0,0,1,.26.27v1.4a.27.27,0,0,1-.26.27H2.81a.27.27,0,0,1-.26-.27V7.16A.27.27,0,0,1,2.81,6.89Z"
+                    fill="#fff"
+                  />
+                  <path
+                    d="M2.82,9.68H15.19a.27.27,0,0,1,.26.27v1.41a.27.27,0,0,1-.26.27H2.82a.27.27,0,0,1-.26-.27V10A.27.27,0,0,1,2.82,9.68Z"
+                    fill="#37c2b1"
+                  />
+                  <path
+                    d="M2.82,12.5H15.19a.27.27,0,0,1,.26.27v1.41a.27.27,0,0,1-.26.27H2.82a.27.27,0,0,1-.26-.27V12.77A.27.27,0,0,1,2.82,12.5Z"
+                    fill="#258277"
+                  />
+                </symbol>
+
+                <symbol id="ic-foundry" viewBox="0 0 18 18">
+                  <linearGradient
+                    id="ic-foundry-g1"
+                    x1="-603.563"
+                    y1="-218.378"
+                    x2="-606.6"
+                    y2="-206.22"
+                    gradientTransform="translate(617.126 -205.758) scale(1 -1)"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#712575" />
+                    <stop offset=".4" stop-color="#f131a5" />
+                    <stop offset="1" stop-color="#712575" />
+                  </linearGradient>
+                  <linearGradient
+                    id="ic-foundry-g2"
+                    x1="-602.412"
+                    y1="-206.025"
+                    x2="-602.412"
+                    y2="-223.175"
+                    gradientTransform="translate(617.126 -205.758) scale(1 -1)"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#da7ed0" />
+                    <stop offset=".54" stop-color="#2e72e8" />
+                    <stop offset="1" stop-color="#1171ed" />
+                  </linearGradient>
+                  <linearGradient
+                    id="ic-foundry-g3"
+                    x1="-603.438"
+                    y1="-206.414"
+                    x2="-614.807"
+                    y2="-224.644"
+                    gradientTransform="translate(617.126 -205.758) scale(1 -1)"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#da7ed0" />
+                    <stop offset=".54" stop-color="#1a71eb" />
+                    <stop offset="1" stop-color="#1171ed" />
+                  </linearGradient>
+                  <path
+                    d="m12.061.012c.534,0,1.008.401,1.178.984s1.166,4.19,1.166,4.19v7.166h-3.607l.073-12.352h1.19v.012Z"
+                    fill="url(#ic-foundry-g1)"
+                    fill-rule="evenodd"
+                  />
+                  <path
+                    d="m17.356,5.611c0-.255-.206-.449-.449-.449h-2.126c-1.494,0-2.709,1.215-2.709,2.709v4.494h2.575c1.494,0,2.709-1.215,2.709-2.709v-4.045Z"
+                    fill="url(#ic-foundry-g2)"
+                  />
+                  <path
+                    d="m12.061.012c-.413,0-.741.328-.741.741l-.073,13.64c0,1.992-1.615,3.607-3.607,3.607H1.093c-.316,0-.522-.304-.425-.595L5.915,2.429C6.425.984,7.785.012,9.316.012h2.757-.012Z"
+                    fill="url(#ic-foundry-g3)"
+                    fill-rule="evenodd"
+                  />
+                </symbol>
+
+                <symbol id="ic-subscription" viewBox="0 0 18 18">
+                  <radialGradient
+                    id="ic-sub-g1"
+                    cx="-36.63"
+                    cy="17.12"
+                    r="11.18"
+                    gradientTransform="translate(41.88 -7.4) scale(0.94 0.94)"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0.27" stop-color="#ffd70f" />
+                    <stop offset="0.49" stop-color="#ffcb12" />
+                    <stop offset="0.88" stop-color="#feac19" />
+                    <stop offset="1" stop-color="#fea11b" />
+                  </radialGradient>
+                  <path
+                    d="M13.56,7.19a2.07,2.07,0,0,0,0-2.93h0L10,.69a2.06,2.06,0,0,0-2.92,0h0L3.52,4.26a2.09,2.09,0,0,0,0,2.93l3,3a.61.61,0,0,1,.17.41v5.52a.7.7,0,0,0,.2.5l1.35,1.35a.45.45,0,0,0,.66,0l1.31-1.31h0l.77-.77a.26.26,0,0,0,0-.38l-.55-.56a.29.29,0,0,1,0-.42l.55-.56a.26.26,0,0,0,0-.38L10.4,13a.28.28,0,0,1,0-.41L11,12a.26.26,0,0,0,0-.38l-.77-.78v-.28Zm-5-5.64A1.18,1.18,0,1,1,7.37,2.73,1.17,1.17,0,0,1,8.54,1.55Z"
+                    fill="url(#ic-sub-g1)"
+                  />
+                  <path
+                    d="M7.62,16.21h0A.25.25,0,0,0,8,16V11.55a.27.27,0,0,0-.11-.22h0a.25.25,0,0,0-.39.22V16A.27.27,0,0,0,7.62,16.21Z"
+                    fill="#ff9300"
+                    opacity="0.75"
+                  />
+                  <rect
+                    x="5.69"
+                    y="5.45"
+                    width="5.86"
+                    height="0.69"
+                    rx="0.32"
+                    fill="#ff9300"
+                    opacity="0.75"
+                  />
+                  <rect
+                    x="5.69"
+                    y="6.57"
+                    width="5.86"
+                    height="0.69"
+                    rx="0.32"
+                    fill="#ff9300"
+                    opacity="0.75"
+                  />
+                </symbol>
+
+                <symbol id="ic-marketplace" viewBox="0 0 18 18">
+                  <linearGradient
+                    id="ic-mkt-g1"
+                    x1="7.63"
+                    y1="15.34"
+                    x2="7.63"
+                    y2="5.84"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0" stop-color="#ccc" />
+                    <stop offset="0.15" stop-color="#dadada" />
+                    <stop offset="0.44" stop-color="#eee" />
+                    <stop offset="0.72" stop-color="#fbfbfb" />
+                    <stop offset="1" stop-color="#fff" />
+                  </linearGradient>
+                  <path d="M15,4.77h-1v12.8l1-1.93Z" fill="#50e6ff" />
+                  <path d="M15,15.63h0l-1,1.93,1-.8,1.23-.95Z" fill="#9cebff" />
+                  <path
+                    d="M8.39,2.86A1.57,1.57,0,0,1,10,1.35a1.57,1.57,0,0,1,1.63,1.51V4.77h.78V2.86A2.35,2.35,0,0,0,10,.57a2.35,2.35,0,0,0-2.4,2.29V4.77h.78Z"
+                    fill="#a3a3a3"
+                  />
+                  <path
+                    d="M6,2.86A1.57,1.57,0,0,1,7.62,1.35,1.58,1.58,0,0,1,9.25,2.86V4.77H10V2.86A2.36,2.36,0,0,0,7.62.57a2.35,2.35,0,0,0-2.4,2.29V4.77H6Z"
+                    fill="#767676"
+                  />
+                  <polygon
+                    points="13.92 4.77 13.92 17.57 1.45 16.58 1.83 4.77 13.92 4.77"
+                    fill="#32bedd"
+                  />
+                  <polygon
+                    points="14.95 4.77 14.95 15.64 16.18 15.82 15.81 4.77 14.95 4.77"
+                    fill="#32bedd"
+                  />
+                  <path
+                    d="M12.19,12.31a2.3,2.3,0,0,0-1.79-2.18A2.84,2.84,0,0,0,7.74,7.38,2.47,2.47,0,0,0,5.2,9a2.3,2.3,0,0,0-2.13,2.31A2.74,2.74,0,0,0,5.63,14h.22l4.16.28h.11A2,2,0,0,0,12.19,12.31Z"
+                    fill="url(#ic-mkt-g1)"
+                  />
+                </symbol>
+              </defs>
+
+              <!-- ====== Region containers ====== -->
+              <rect
+                class="region-box"
+                x="80"
+                y="430"
+                width="1240"
+                height="540"
+                rx="14"
+              />
+
+              <!-- ====== Connections ====== -->
+              <path class="conn c1" d="M 800,140 L 800,180" />
+              <path class="conn c2" d="M 800,370 L 800,460" />
+              <!-- Trunk fans into 4 columns (centered on each column) -->
+              <path class="conn c3" d="M 800,460 L 250,480" />
+              <path class="conn c3" d="M 800,460 L 550,480" />
+              <path class="conn c3" d="M 800,460 L 850,480" />
+              <path class="conn c3" d="M 800,460 L 1150,480" />
+              <!-- Sub → chip (clean verticals) -->
+              <path class="conn c4" d="M 250,620 L 250,790" opacity="0.5" />
+              <path class="conn c4" d="M 550,620 L 550,790" opacity="0.5" />
+              <path class="conn c4" d="M 850,620 L 850,790" opacity="0.5" />
+              <!-- Agent → Retail Prices -->
+              <path
+                class="conn c10"
+                d="M 800,370 C 1300,370 1450,500 1450,560"
+              />
+
+              <!-- ====== Nodes ====== -->
+              <!-- FinOps Team (centered text) -->
+              <g>
+                <rect
+                  class="node-box"
+                  x="500"
+                  y="20"
+                  width="600"
+                  height="120"
+                  rx="12"
+                />
+                <use href="#ic-users" x="555" y="40" width="46" height="46" />
+                <use href="#ic-users" x="610" y="40" width="46" height="46" />
+                <use href="#ic-users" x="665" y="40" width="46" height="46" />
+                <use href="#ic-users" x="720" y="40" width="46" height="46" />
+                <text
+                  class="node-title"
+                  x="900"
+                  y="60"
+                  text-anchor="middle"
+                  style="font-size: 28px"
+                >
+                  FinOps Team
+                </text>
+                <text
+                  class="node-sub"
+                  x="900"
+                  y="92"
+                  text-anchor="middle"
+                  style="font-size: 15px; opacity: 0.75"
+                >
+                  Cost owner · Cloud admin · CFO
+                </text>
+              </g>
+
+              <!-- THE AGENT badge -->
+              <g>
+                <rect
+                  x="690"
+                  y="180"
+                  width="220"
+                  height="40"
+                  rx="20"
+                  fill="var(--azure-blue)"
+                />
+                <text
+                  x="800"
+                  y="208"
+                  text-anchor="middle"
+                  style="
+                    font-family: &quot;Segoe UI&quot;, sans-serif;
+                    font-size: 20px;
+                    font-weight: 800;
+                    fill: white;
+                    letter-spacing: 0.18em;
+                  "
+                >
+                  THE AGENT
+                </text>
+              </g>
+
+              <!-- App: Vue + .NET + Foundry -->
+              <g>
+                <rect
+                  class="node-box primary"
+                  x="380"
+                  y="230"
+                  width="840"
+                  height="140"
+                  rx="12"
+                />
+                <use
+                  href="#ic-app-service"
+                  x="430"
+                  y="270"
+                  width="68"
+                  height="68"
+                />
+                <use
+                  href="#ic-foundry"
+                  x="1102"
+                  y="270"
+                  width="68"
+                  height="68"
+                />
+                <text
+                  class="node-title"
+                  x="800"
+                  y="285"
+                  text-anchor="middle"
+                  style="font-size: 28px"
+                >
+                  Vue + .NET + Microsoft Foundry
+                </text>
+                <text
+                  class="node-sub"
+                  x="800"
+                  y="320"
+                  text-anchor="middle"
+                  style="font-size: 15px"
+                >
+                  Pro Code · Microsoft Agent Framework · Entra ID
+                </text>
+                <text
+                  class="node-sub"
+                  x="800"
+                  y="345"
+                  text-anchor="middle"
+                  style="font-size: 13px; opacity: 0.65"
+                >
+                  Container Apps or App Service
+                </text>
+              </g>
+
+              <!-- Subscription label inside tenant -->
+              <text
+                x="110"
+                y="465"
+                style="
+                  font-family: &quot;Segoe UI&quot;, sans-serif;
+                  font-size: 13px;
+                  font-weight: 800;
+                  fill: var(--azure-blue);
+                  letter-spacing: 0.16em;
+                  text-transform: uppercase;
+                "
+              >
+                Across every subscription
+              </text>
+
+              <!-- Sub tiles row (centers: 250, 550, 850, 1150) -->
+              <g>
+                <rect
+                  class="node-box"
+                  x="130"
+                  y="480"
+                  width="240"
+                  height="140"
+                  rx="12"
+                />
+                <use
+                  href="#ic-subscription"
+                  x="230"
+                  y="500"
+                  width="40"
+                  height="40"
+                />
+                <text
+                  class="node-title"
+                  x="250"
+                  y="585"
+                  text-anchor="middle"
+                  style="font-size: 18px"
+                >
+                  Production EU
+                </text>
+              </g>
+              <g>
+                <rect
+                  class="node-box"
+                  x="430"
+                  y="480"
+                  width="240"
+                  height="140"
+                  rx="12"
+                />
+                <use
+                  href="#ic-subscription"
+                  x="530"
+                  y="500"
+                  width="40"
+                  height="40"
+                />
+                <text
+                  class="node-title"
+                  x="550"
+                  y="585"
+                  text-anchor="middle"
+                  style="font-size: 18px"
+                >
+                  Production US
+                </text>
+              </g>
+              <g>
+                <rect
+                  class="node-box"
+                  x="730"
+                  y="480"
+                  width="240"
+                  height="140"
+                  rx="12"
+                />
+                <use
+                  href="#ic-subscription"
+                  x="830"
+                  y="500"
+                  width="40"
+                  height="40"
+                />
+                <text
+                  class="node-title"
+                  x="850"
+                  y="585"
+                  text-anchor="middle"
+                  style="font-size: 18px"
+                >
+                  Data &amp; Analytics
+                </text>
+              </g>
+              <g>
+                <rect
+                  class="node-box"
+                  x="1030"
+                  y="480"
+                  width="240"
+                  height="140"
+                  rx="12"
+                />
+                <use
+                  href="#ic-subscription"
+                  x="1130"
+                  y="500"
+                  width="40"
+                  height="40"
+                />
+                <text
+                  class="node-title"
+                  x="1150"
+                  y="585"
+                  text-anchor="middle"
+                  style="font-size: 18px"
+                >
+                  Non-prod
+                </text>
+              </g>
+
+              <!-- Data plane label -->
+              <text
+                x="110"
+                y="775"
+                style="
+                  font-family: &quot;Segoe UI&quot;, sans-serif;
+                  font-size: 13px;
+                  font-weight: 800;
+                  fill: var(--azure-blue);
+                  letter-spacing: 0.16em;
+                  text-transform: uppercase;
+                "
+              >
+                Read &amp; write across every Azure data plane
+              </text>
+
+              <!-- Data chips row (same x as sub tiles, centers: 250, 550, 850, 1150) -->
+              <g>
+                <rect
+                  class="node-box"
+                  x="130"
+                  y="790"
+                  width="240"
+                  height="160"
+                  rx="12"
+                />
+                <use
+                  href="#ic-cost-mgmt"
+                  x="215"
+                  y="810"
+                  width="70"
+                  height="70"
+                />
+                <text
+                  class="node-title"
+                  x="250"
+                  y="915"
+                  text-anchor="middle"
+                  style="font-size: 19px"
+                >
+                  Cost Management
+                </text>
+              </g>
+              <g>
+                <rect
+                  class="node-box"
+                  x="430"
+                  y="790"
+                  width="240"
+                  height="160"
+                  rx="12"
+                />
+                <use
+                  href="#ic-resource-graph"
+                  x="515"
+                  y="810"
+                  width="70"
+                  height="70"
+                />
+                <text
+                  class="node-title"
+                  x="550"
+                  y="915"
+                  text-anchor="middle"
+                  style="font-size: 19px"
+                >
+                  Resource Graph
+                </text>
+              </g>
+              <g>
+                <rect
+                  class="node-box"
+                  x="730"
+                  y="790"
+                  width="240"
+                  height="160"
+                  rx="12"
+                />
+                <use
+                  href="#ic-log-analytics"
+                  x="815"
+                  y="810"
+                  width="70"
+                  height="70"
+                />
+                <text
+                  class="node-title"
+                  x="850"
+                  y="915"
+                  text-anchor="middle"
+                  style="font-size: 19px"
+                >
+                  Azure Monitor
+                </text>
+              </g>
+              <g>
+                <rect
+                  class="node-box"
+                  x="1030"
+                  y="790"
+                  width="240"
+                  height="160"
+                  rx="12"
+                />
+                <use href="#ic-entra" x="1115" y="810" width="70" height="70" />
+                <text
+                  class="node-title"
+                  x="1150"
+                  y="915"
+                  text-anchor="middle"
+                  style="font-size: 19px"
+                >
+                  M365 Graph
+                </text>
+              </g>
+
+              <!-- Outside-tenant: Retail Prices -->
+              <g>
+                <rect
+                  class="node-box"
+                  x="1370"
+                  y="540"
+                  width="200"
+                  height="200"
+                  rx="12"
+                  opacity="0.92"
+                />
+                <use
+                  href="#ic-marketplace"
+                  x="1430"
+                  y="565"
+                  width="80"
+                  height="80"
+                />
+                <text
+                  class="node-title"
+                  x="1470"
+                  y="675"
+                  text-anchor="middle"
+                  style="font-size: 18px"
+                >
+                  Retail Prices
+                </text>
+                <text
+                  class="node-sub"
+                  x="1470"
+                  y="700"
+                  text-anchor="middle"
+                  style="font-size: 12px; opacity: 0.6"
+                >
+                  Public · no auth
+                </text>
+              </g>
+
+              <!-- ====== Animated flow particles ====== -->
+              <circle
+                class="flow-particle fp1"
+                r="4"
+                style="offset-path: path(&quot;M 800,140 L 800,180&quot;)"
+              />
+              <circle
+                class="flow-particle fp2"
+                r="4"
+                style="offset-path: path(&quot;M 800,370 L 800,460&quot;)"
+              />
+              <circle
+                class="flow-particle fp3"
+                r="4"
+                style="offset-path: path(&quot;M 800,460 L 250,480&quot;)"
+              />
+              <circle
+                class="flow-particle fp4"
+                r="4"
+                style="offset-path: path(&quot;M 800,460 L 550,480&quot;)"
+              />
+              <circle
+                class="flow-particle fp5"
+                r="4"
+                style="offset-path: path(&quot;M 800,460 L 850,480&quot;)"
+              />
+              <circle
+                class="flow-particle fp6"
+                r="4"
+                style="
+                  offset-path: path(&quot;M 800,460 L 1150,480&quot;);
+                  fill: #b77af4;
+                "
+              />
+              <circle
+                class="flow-particle fp3"
+                r="4"
+                style="
+                  offset-path: path(
+                    &quot;M 800,370 C 1300,370 1450,500 1450,560&quot;
+                  );
+                  fill: #50e6ff;
+                "
+              />
+            </svg>
+          </div>
+          <div class="legend-row anim d4" style="display: none">
+            <div class="item">
+              <span class="ico"></span> Customer-deployed component
+            </div>
+            <div class="item">
+              <span class="ico flow"></span> Live API call (delegated token)
+            </div>
+            <div class="item">All telemetry to your Application Insights</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 5: FinOps Maturity (HIDDEN) ========== -->
+      <section class="slide-archived s5" style="display: none">
+        <div class="content">
+          <h2 class="section-title anim d1">Start where <em>you are</em>.</h2>
+          <p class="section-lead anim d2">
+            Aligned to the FinOps Foundation Crawl · Walk · Run framework.
+          </p>
+          <div class="maturity">
+            <div class="stage anim d3">
+              <span class="badge">Crawl</span>
+              <h3>See it.</h3>
+              <p class="desc">Visibility &amp; baseline</p>
+              <ul>
+                <li>Cost trends &amp; tagging audit</li>
+                <li>Orphaned resources</li>
+                <li>Budgets &amp; Advisor</li>
+              </ul>
+            </div>
+            <div class="stage anim d4">
+              <span class="badge">Walk</span>
+              <h3>Fix it.</h3>
+              <p class="desc">Optimization &amp; governance</p>
+              <ul>
+                <li>Reservations &amp; savings plans</li>
+                <li>Right-sizing &amp; AHUB</li>
+                <li>Storage tiers, dev/test</li>
+              </ul>
+            </div>
+            <div class="stage anim d5">
+              <span class="badge">Run</span>
+              <h3>Own it.</h3>
+              <p class="desc">Scale &amp; accountability</p>
+              <ul>
+                <li>Chargeback &amp; unit economics</li>
+                <li>Anomaly detection</li>
+                <li>Exec reports, AI/GPU, carbon</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 5a: Demo video placeholder (HIDDEN) ========== -->
+      <section class="slide-archived s5a" style="display: none">
+        <div class="content">
+          <h2 class="section-title anim d1">See it <em>live</em>.</h2>
+          <p class="section-lead anim d2">
+            Score → Auto-fix → Re-score on real Azure data — under 3 minutes.
+          </p>
+          <div
+            class="video-frame anim d3"
+            style="
+              position: relative;
+              width: 100%;
+              max-width: 1400px;
+              margin: 1.5rem auto 0;
+              padding-top: 56.25%;
+              border-radius: 16px;
+              overflow: hidden;
+              background: #0a1733;
+              box-shadow: 0 20px 60px rgba(10, 23, 51, 0.25);
+              border: 1px solid var(--line);
+            "
+          >
+            <!-- Replace src with your demo video URL (YouTube embed or MP4) -->
+            <div
+              style="
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: rgba(255, 255, 255, 0.55);
+                font-size: 1.2rem;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                text-align: center;
+                padding: 2rem;
+                line-height: 1.5;
+              "
+            >
+              ▶ Demo video goes here<br />
+              <span style="font-size: 0.85rem; font-weight: 400; opacity: 0.7"
+                >Replace this div with an &lt;iframe&gt; or &lt;video&gt;
+                element</span
+              >
+            </div>
+            <!--
+              <iframe
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID?rel=0&modestbranding=1&playsinline=1&controls=1"
+                title="Azure FinOps Agent · live demo"
+                loading="lazy"
+                allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                allowfullscreen
+                style="position:absolute;inset:0;width:100%;height:100%;border:0"
+              ></iframe>
+            -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 5b: Proof (HIDDEN) ========== -->
+      <section class="slide-archived s5b" style="display: none">
+        <div class="content">
+          <h2 class="section-title anim d1">
+            Tagging score: <em>0 → 5</em>. In minutes.
+          </h2>
+          <p class="section-lead anim d2">
+            What used to take days of queries, naming standards, and Slack
+            threads, now done in one chat.
+          </p>
+          <div class="proof-wrap anim d3">
+            <div class="video-frame">
+              <iframe
+                src="https://www.youtube.com/embed/0BbM3TNFp_U?rel=0&modestbranding=1&playsinline=1&controls=1&color=white&iv_load_policy=3&fs=1&enablejsapi=1"
+                title="Azure FinOps Agent · tagging maturity demo"
+                loading="lazy"
+                allow="
+                  accelerometer;
+                  autoplay;
+                  clipboard-write;
+                  encrypted-media;
+                  gyroscope;
+                  picture-in-picture;
+                  fullscreen;
+                "
+                allowfullscreen
+                referrerpolicy="strict-origin-when-cross-origin"
+              ></iframe>
+            </div>
+            <div class="proof-meta">
+              <div class="proof-stat">
+                <span class="proof-num">~3 min</span>
+                <span class="proof-label">to tag the entire estate</span>
+              </div>
+              <div class="proof-stat">
+                <span class="proof-num">0 → 5</span>
+                <span class="proof-label">tagging maturity score</span>
+              </div>
+              <div class="proof-stat">
+                <span class="proof-num">1</span>
+                <span class="proof-label">conversation, no scripts</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 6: Security ========== -->
+      <section class="slide s6">
+        <div class="content" style="text-align: center">
+          <h2 class="section-title anim d1">Trust by <em>design</em>.</h2>
+          <p class="section-lead anim d2">
+            Read &amp; write on your behalf. <strong>Never delete.</strong>
+          </p>
+          <div
+            class="sec-panel no anim d3"
+            style="
+              max-width: 900px;
+              margin: 2.5rem auto 0;
+              text-align: left;
+              padding: 3rem 3rem;
+            "
+          >
+            <ul>
+              <li>
+                <span class="mark">✗</span
+                ><span>Delete any Azure resource. Ever.</span>
+              </li>
+              <li>
+                <span class="mark">✗</span
+                ><span>Move your data outside your tenant</span>
+              </li>
+              <li>
+                <span class="mark">✗</span
+                ><span>Lock you in — no license, no hidden code</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 6b: Why this wins ========== -->
+      <section class="slide s6b">
+        <div class="content">
+          <h2 class="section-title anim d1">Why this <em>wins</em>.</h2>
+          <p class="section-lead anim d2">Scored on the official rubric.</p>
+          <div class="s6b-grid">
+            <div class="s6b-card" data-step>
+              <div class="crit">Problem &amp; Value</div>
+              <h3>Opener for renewals &amp; AI Transformation</h3>
+              <p>
+                The reference customers point to when starting their AI
+                Transformation conversation.
+              </p>
+            </div>
+            <div class="s6b-card" data-step>
+              <div class="crit">Impact &amp; Outcomes</div>
+              <h3>
+                VBD Ready. Recover waste. Predictability. Sustainable business.
+              </h3>
+              <p>
+                Millions surfaced in minutes — before the CFO asks the hard
+                questions.
+              </p>
+            </div>
+            <div class="s6b-card" data-step>
+              <div class="crit">Innovation &amp; Creativity</div>
+              <h3>First agentic FinOps on Azure</h3>
+              <p>
+                Reasoning + orchestration across Cost, ARM, Graph, Log
+                Analytics.
+              </p>
+            </div>
+            <div class="s6b-card" data-step>
+              <div class="crit">User Experience</div>
+              <h3>Built on years of CSA FinOps know-how</h3>
+              <p>
+                Crawl-Walk-Run prompt templates, live charts, and exec decks.
+                Drag, drop, done.
+              </p>
+            </div>
+            <div class="s6b-card" data-step>
+              <div class="crit">Feasibility &amp; Scalability</div>
+              <h3>Free, open source, every industry</h3>
+              <p>
+                Customer's tenant, customer's tokens. Works for any of 120+ EMEA
+                markets.
+              </p>
+            </div>
+            <div class="s6b-card" data-step>
+              <div class="crit">Responsible &amp; Trusted AI</div>
+              <h3>Built by Microsoft. Open by design.</h3>
+              <p>
+                MIT license. Every prompt &amp; tool call visible. Never deletes
+                — enforced in code.
+              </p>
+            </div>
+            <div class="s6b-card" data-step>
+              <div class="crit">Clarity &amp; Proof</div>
+              <h3>Working code. Named pilots.</h3>
+              <p>
+                +200 commits. Live at azure-finops-agent.com. Two enterprise
+                pilots in flight.
+              </p>
+            </div>
+          </div>
+          <div class="s6b-punch" data-step>
+            Bring it to your next renewal conversation — today.
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Slide 7: Get started ========== -->
+      <section class="slide s7">
+        <div class="content">
+          <div class="pre anim d1">- Open Source · MIT -</div>
+          <h2 class="anim d2">
+            Your tenant.<br />Your data.<br />Your control.
+          </h2>
+          <p class="anim d3">
+            Customer-deployable. Microsoft Customer Success accelerator.
+          </p>
+          <div class="steps">
+            <div class="step anim d4">
+              <div class="num">01</div>
+              <h4>Clone</h4>
+              <p>From GitHub.</p>
+            </div>
+            <div class="step anim d5">
+              <div class="num">02</div>
+              <h4>Connect</h4>
+              <p>One Entra ID app.</p>
+            </div>
+            <div class="step anim d6">
+              <div class="num">03</div>
+              <h4>Agentic FinOps</h4>
+              <p>App Service or Container Apps.</p>
+            </div>
+          </div>
+          <div class="cta-row anim d7">
+            <a
+              class="cta"
+              href="https://github.com/Azure-Samples/azure-finops-agent"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.01-.02-1.99-3.2.69-3.87-1.54-3.87-1.54-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.97 10.97 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.13 0 1.54-.01 2.78-.01 3.16 0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"
+                />
+              </svg>
+              View on GitHub
+            </a>
+            <a class="cta secondary" href="/">Try the live demo →</a>
+          </div>
+          <a
+            class="pitch-banner anim d7"
+            href="/slides"
+            aria-label="Share or present this deck"
+          >
+            <span class="pitch-eyebrow">For devs &amp; FinOps architects</span>
+            <span class="pitch-title">Pitch this in your next review.</span>
+            <span class="pitch-link">azure-finops-agent.com/slides ↗</span>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- Persistent corner links -->
+    <div class="corner-links" aria-label="External links">
+      <a
+        class="corner-link"
+        href="https://github.com/Azure-Samples/azure-finops-agent"
+        target="_blank"
+        rel="noopener"
+        aria-label="View source on GitHub"
+        title="View on GitHub"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.01-.02-1.99-3.2.69-3.87-1.54-3.87-1.54-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.97 10.97 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.13 0 1.54-.01 2.78-.01 3.16 0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"
+          />
+        </svg>
+        <span>GitHub</span>
+      </a>
+      <a
+        class="corner-link"
+        href="/"
+        aria-label="Open the live demo"
+        title="Try the live demo"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="2.5" fill="currentColor" />
+          <circle cx="12" cy="12" r="6.5" />
+        </svg>
+        <span>Live demo</span>
+      </a>
+    </div>
+
+    <button class="nav-arrow left" id="zoneLeft" aria-label="Previous slide">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+    </button>
+    <button class="nav-arrow right" id="zoneRight" aria-label="Next slide">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
+    </button>
+    <button
+      class="fs-toggle"
+      id="fsToggle"
+      aria-label="Toggle fullscreen"
+      title="Fullscreen (↑) / Exit (↓)"
+    >
+      <svg
+        class="fs-enter"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" />
+      </svg>
+      <svg
+        class="fs-exit"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6" />
+      </svg>
+    </button>
+
+    <div class="dots" id="dots"></div>
+    <div class="counter" id="counter">01 / 08</div>
+    <div class="hint" id="hint">
+      <kbd>←</kbd> <kbd>→</kbd> navigate &middot; <kbd>↑</kbd> fullscreen
+      &middot; <kbd>↓</kbd> exit
+    </div>
+
+    <script>
+      const slides = document.querySelectorAll(".slide");
+      const total = slides.length;
+      let current = 0;
+      const counter = document.getElementById("counter");
+      const progressBar = document.getElementById("progressBar");
+      const dotsWrap = document.getElementById("dots");
+      const hint = document.getElementById("hint");
+
+      for (let i = 0; i < total; i++) {
+        const b = document.createElement("button");
+        b.className = "dot-nav" + (i === 0 ? " active" : "");
+        b.setAttribute("aria-label", "Go to slide " + (i + 1));
+        b.addEventListener("click", (e) => {
+          e.stopPropagation();
+          goTo(i);
+        });
+        dotsWrap.appendChild(b);
+      }
+      const dotEls = dotsWrap.querySelectorAll(".dot-nav");
+      const pad = (n) => String(n).padStart(2, "0");
+
+      // Demo video: when it ends, auto-advance to next slide
+      (function () {
+        const v = document.getElementById("demoVideo");
+        if (!v) return;
+        v.addEventListener("ended", () => {
+          if (current < total - 1) {
+            current++;
+            update();
+          }
+        });
+      })();
+
+      function update() {
+        slides.forEach((s, i) => {
+          s.classList.remove("active", "prev");
+          if (i === current) s.classList.add("active");
+          else if (i < current) s.classList.add("prev");
+          // Reset step reveals when leaving a slide
+          if (i !== current) {
+            s.querySelectorAll("[data-step]").forEach((el) =>
+              el.classList.remove("revealed"),
+            );
+            // Reset story image so re-entering the slide starts fresh
+            const storyImg = s.querySelector(".s2-storyimg, .s3-storyimg");
+            if (storyImg) {
+              storyImg.classList.remove("is-visible", "swap");
+              storyImg.removeAttribute("src");
+            }
+          }
+        });
+        dotEls.forEach((d, i) => d.classList.toggle("active", i === current));
+        counter.textContent = pad(current + 1) + " / " + pad(total);
+        progressBar.style.width = ((current + 1) / total) * 100 + "%";
+        // Update URL hash for deep linking
+        history.replaceState(null, "", "#" + (current + 1));
+        // Demo video: autoplay on enter, reset+pause on leave
+        const demoVideo = document.getElementById("demoVideo");
+        if (demoVideo) {
+          const onVideoSlide =
+            slides[current] && slides[current].classList.contains("s-video");
+          if (onVideoSlide) {
+            try {
+              demoVideo.currentTime = 0;
+            } catch (_) {}
+            demoVideo.play().catch(() => {});
+          } else {
+            demoVideo.pause();
+            try {
+              demoVideo.currentTime = 0;
+            } catch (_) {}
+          }
+        }
+      }
+      // Reveal the next pending step inside the active slide; returns true if one was revealed.
+      function revealNextStep() {
+        const active = slides[current];
+        if (!active) return false;
+        const pending = active.querySelector("[data-step]:not(.revealed)");
+        if (pending) {
+          pending.classList.add("revealed");
+          // If this step also drives a story image swap, crossfade the slide's image.
+          const imgIdx = pending.getAttribute("data-img");
+          if (imgIdx) {
+            const storyImg = active.querySelector(".s2-storyimg, .s3-storyimg");
+            if (storyImg) {
+              const newSrc = `sam-finops-images/${imgIdx}.png`;
+              if (!storyImg.src || storyImg.classList.contains("is-visible")) {
+                storyImg.classList.add("swap");
+                setTimeout(() => {
+                  storyImg.src = newSrc;
+                  storyImg.classList.remove("swap");
+                  storyImg.classList.add("is-visible");
+                }, 220);
+              } else {
+                storyImg.src = newSrc;
+                requestAnimationFrame(() =>
+                  storyImg.classList.add("is-visible"),
+                );
+              }
+            }
+          }
+          return true;
+        }
+        return false;
+      }
+      const next = () => {
+        // Video slide: seek +20s instead of advancing; only advance past end
+        const activeSlide = slides[current];
+        if (activeSlide && activeSlide.classList.contains("s-video")) {
+          const v = document.getElementById("demoVideo");
+          if (
+            v &&
+            !v.ended &&
+            (v.duration ? v.currentTime < v.duration - 0.5 : true)
+          ) {
+            v.currentTime = Math.min(
+              (v.duration || v.currentTime + 20) - 0.01,
+              v.currentTime + 20,
+            );
+            if (v.paused) v.play().catch(() => {});
+            fadeHint();
+            return;
+          }
+        }
+        if (revealNextStep()) {
+          fadeHint();
+          return;
+        }
+        if (current < total - 1) {
+          current++;
+          update();
+          fadeHint();
+        }
+      };
+      // Hide the last revealed step inside the active slide; returns true if one was hidden.
+      function unrevealLastStep() {
+        const active = slides[current];
+        if (!active) return false;
+        const revealed = active.querySelectorAll("[data-step].revealed");
+        if (revealed.length === 0) return false;
+        const last = revealed[revealed.length - 1];
+        last.classList.remove("revealed");
+        // If this step drove a story image swap, revert to the previous step's image (or hide).
+        const imgIdx = last.getAttribute("data-img");
+        if (imgIdx) {
+          const storyImg = active.querySelector(".s2-storyimg, .s3-storyimg");
+          if (storyImg) {
+            const remaining = active.querySelectorAll(
+              "[data-step].revealed[data-img]",
+            );
+            if (remaining.length === 0) {
+              storyImg.classList.remove("is-visible");
+              storyImg.classList.add("swap");
+              setTimeout(() => storyImg.removeAttribute("src"), 220);
+            } else {
+              const prevIdx =
+                remaining[remaining.length - 1].getAttribute("data-img");
+              storyImg.classList.add("swap");
+              setTimeout(() => {
+                storyImg.src = `sam-finops-images/${prevIdx}.png`;
+                storyImg.classList.remove("swap");
+                storyImg.classList.add("is-visible");
+              }, 220);
+            }
+          }
+        }
+        return true;
+      }
+      const prev = () => {
+        // Video slide: seek -20s instead of going back; only go back if at start
+        const activeSlide = slides[current];
+        if (activeSlide && activeSlide.classList.contains("s-video")) {
+          const v = document.getElementById("demoVideo");
+          if (v && v.currentTime > 0.5) {
+            v.currentTime = Math.max(0, v.currentTime - 20);
+            if (v.paused) v.play().catch(() => {});
+            fadeHint();
+            return;
+          }
+        }
+        if (unrevealLastStep()) {
+          fadeHint();
+          return;
+        }
+        if (current > 0) {
+          current--;
+          update();
+          fadeHint();
+        }
+      };
+      const goTo = (i) => {
+        if (i >= 0 && i < total) {
+          current = i;
+          update();
+          fadeHint();
+        }
+      };
+
+      let hintFaded = false;
+      function fadeHint() {
+        if (hintFaded) return;
+        hintFaded = true;
+        hint.classList.add("fade");
+      }
+
+      document.getElementById("zoneLeft").addEventListener("click", prev);
+      document.getElementById("zoneRight").addEventListener("click", next);
+
+      // Fullscreen handling - try multiple element targets and vendor prefixes
+      const fsBtn = document.getElementById("fsToggle");
+      function fsElement() {
+        return (
+          document.fullscreenElement ||
+          document.webkitFullscreenElement ||
+          document.mozFullScreenElement ||
+          document.msFullscreenElement ||
+          null
+        );
+      }
+      function enterFullscreen() {
+        if (fsElement()) return;
+        const el = document.documentElement;
+        const req =
+          el.requestFullscreen ||
+          el.webkitRequestFullscreen ||
+          el.mozRequestFullScreen ||
+          el.msRequestFullscreen;
+        if (!req) {
+          console.warn("Fullscreen API not supported by this browser.");
+          return;
+        }
+        try {
+          const p = req.call(el);
+          if (p && typeof p.then === "function") {
+            p.catch((err) => console.warn("Fullscreen request rejected:", err));
+          }
+        } catch (err) {
+          console.warn("Fullscreen request threw:", err);
+        }
+      }
+      function exitFullscreen() {
+        if (!fsElement()) return;
+        const ex =
+          document.exitFullscreen ||
+          document.webkitExitFullscreen ||
+          document.mozCancelFullScreen ||
+          document.msExitFullscreen;
+        if (ex) ex.call(document);
+      }
+      function toggleFullscreen() {
+        fsElement() ? exitFullscreen() : enterFullscreen();
+      }
+      fsBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        toggleFullscreen();
+      });
+      [
+        "fullscreenchange",
+        "webkitfullscreenchange",
+        "mozfullscreenchange",
+        "MSFullscreenChange",
+      ].forEach((evt) =>
+        document.addEventListener(evt, () => {
+          document.body.classList.toggle("is-fullscreen", !!fsElement());
+        }),
+      );
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+          e.preventDefault();
+          next();
+        } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+          e.preventDefault();
+          prev();
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          enterFullscreen();
+        } else if (e.key === "ArrowDown" || e.key === "Escape") {
+          // Escape is handled natively by the browser, but normalize ArrowDown
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            exitFullscreen();
+          }
+        } else if (e.key === "Home") goTo(0);
+        else if (e.key === "End") goTo(total - 1);
+      });
+
+      let touchStartX = 0;
+      document.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.touches[0].clientX;
+        },
+        { passive: true },
+      );
+      document.addEventListener("touchend", (e) => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 50) (dx < 0 ? next : prev)();
+      });
+
+      // Honor #N hash on load
+      const hash = parseInt(location.hash.slice(1), 10);
+      if (!isNaN(hash) && hash >= 1 && hash <= total) current = hash - 1;
+      update();
+      setTimeout(fadeHint, 6000);
+    </script>
+  </body>
+</html>

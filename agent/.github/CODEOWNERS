@@ -1,0 +1,11 @@
+# Default owners — review required for any change
+*       @alfarahn
+
+# Infrastructure / deployment
+.github/workflows/    @alfarahn
+src/Dashboard/Dockerfile      @alfarahn
+src/Dashboard/otel-collector-config.yaml  @alfarahn
+
+# Authentication & security-sensitive code
+src/Dashboard/Auth/   @alfarahn
+src/Dashboard/Infrastructure/HttpHelper.cs  @alfarahn

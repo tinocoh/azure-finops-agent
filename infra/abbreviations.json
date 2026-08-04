@@ -1,0 +1,17 @@
+{
+  "appManagedEnvironments": "cae-",
+  "appContainerApps": "ca-",
+  "cognitiveServicesAccounts": "cog-",
+  "containerRegistryRegistries": "cr",
+  "insightsComponents": "appi-",
+  "keyVaultVaults": "kv-",
+  "managedIdentityUserAssignedIdentities": "id-",
+  "networkPrivateEndpoints": "pep-",
+  "networkVirtualNetworks": "vnet-",
+  "networkVirtualNetworksSubnets": "snet-",
+  "operationalInsightsWorkspaces": "log-",
+  "resourcesResourceGroups": "rg-",
+  "storageStorageAccounts": "st",
+  "webServerFarms": "plan-",
+  "webSites": "app-"
+}

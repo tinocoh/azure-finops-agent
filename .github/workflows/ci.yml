@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cost-mcp:
+    name: cost-mcp (Node)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cost-mcp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: cost-mcp/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint
+      - run: npm test
+
+  webui:
+    name: agent web UI
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agent/src/Dashboard/webui
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install
+      - run: npm run build
+
+  agent:
+    name: agent (.NET)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore
+        run: dotnet restore agent/azure-finops-agent.sln
+      - name: Build
+        run: dotnet build agent/azure-finops-agent.sln -c Release --no-restore
+      - name: Test
+        run: dotnet test agent/azure-finops-agent.sln -c Release --no-build
+
+  analyzer:
+    name: analyzer (Python)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: finopsazure-analyzer/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Import check
+        run: python -c "import app"
+
+  infra:
+    name: infra (Bicep)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Bicep
+        run: |
+          az bicep install
+          az bicep build --file infra/main.bicep --stdout > /dev/null

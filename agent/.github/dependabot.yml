@@ -1,0 +1,39 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: /src/Dashboard
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: [dependencies, dotnet]
+    groups:
+      otel:
+        patterns: ["OpenTelemetry*", "Azure.Monitor.OpenTelemetry*"]
+      azure:
+        patterns: ["Azure.*"]
+
+  - package-ecosystem: npm
+    directory: /src/Dashboard/frontend
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: [dependencies, javascript]
+    groups:
+      vue:
+        patterns: ["vue*", "@vitejs/*", "vite"]
+      echarts:
+        patterns: ["echarts*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels: [dependencies, ci]
+
+  - package-ecosystem: docker
+    directory: /src/Dashboard
+    schedule:
+      interval: weekly
+    labels: [dependencies, docker]

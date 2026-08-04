@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0",
+  "billingPeriod": "2026-04",
+  "currency": "USD",
+  "totals": {
+    "actualCost": 184532.41,
+    "amortizedCost": 168220.07,
+    "forecastNextMonth": 191005.1
+  },
+  "byService": [
+    {
+      "serviceName": "Virtual Machines",
+      "cost": 68924.95
+    },
+    {
+      "serviceName": "Storage",
+      "cost": 36005.98
+    },
+    {
+      "serviceName": "Azure SQL",
+      "cost": 22436.24
+    },
+    {
+      "serviceName": "Azure Kubernetes Service",
+      "cost": 17554.92
+    },
+    {
+      "serviceName": "App Service",
+      "cost": 13801.39
+    },
+    {
+      "serviceName": "Cosmos DB",
+      "cost": 8977.94
+    },
+    {
+      "serviceName": "Bandwidth",
+      "cost": 8106.77
+    },
+    {
+      "serviceName": "Log Analytics",
+      "cost": 6873.06
+    },
+    {
+      "serviceName": "Azure Monitor",
+      "cost": 3773.67
+    },
+    {
+      "serviceName": "Cognitive Services",
+      "cost": 3985.52
+    },
+    {
+      "serviceName": "Container Registry",
+      "cost": 1922.47
+    },
+    {
+      "serviceName": "Key Vault",
+      "cost": 1822.09
+    }
+  ],
+  "bySubscription": [
+    {
+      "subscriptionId": "11111111-1111-1111-1111-111111111111",
+      "name": "prod-platform",
+      "cost": 63987.69
+    },
+    {
+      "subscriptionId": "22222222-2222-2222-2222-222222222222",
+      "name": "prod-data",
+      "cost": 60003.11
+    },
+    {
+      "subscriptionId": "33333333-3333-3333-3333-333333333333",
+      "name": "dev-sandbox",
+      "cost": 46484.2
+    },
+    {
+      "subscriptionId": "44444444-4444-4444-4444-444444444444",
+      "name": "shared-services",
+      "cost": 58336.78
+    }
+  ],
+  "anomalies": [
+    {
+      "date": "2026-05-03",
+      "service": "Cognitive Services",
+      "delta": 247.87
+    },
+    {
+      "date": "2026-05-02",
+      "service": "Virtual Machines",
+      "delta": 971.46
+    },
+    {
+      "date": "2026-05-01",
+      "service": "Container Registry",
+      "delta": 1450.09
+    },
+    {
+      "date": "2026-04-30",
+      "service": "Cosmos DB",
+      "delta": 105.18
+    },
+    {
+      "date": "2026-04-29",
+      "service": "Azure Kubernetes Service",
+      "delta": 659.28
+    },
+    {
+      "date": "2026-04-28",
+      "service": "Cosmos DB",
+      "delta": 952.8
+    },
+    {
+      "date": "2026-04-27",
+      "service": "Azure Monitor",
+      "delta": 235.98
+    },
+    {
+      "date": "2026-04-26",
+      "service": "Virtual Machines",
+      "delta": 1126.84
+    },
+    {
+      "date": "2026-04-25",
+      "service": "Cognitive Services",
+      "delta": 500.33
+    },
+    {
+      "date": "2026-04-24",
+      "service": "Azure Kubernetes Service",
+      "delta": 694.57
+    },
+    {
+      "date": "2026-04-23",
+      "service": "Storage",
+      "delta": 441.12
+    }
+  ],
+  "tagBreakdown": {
+    "cost-center": {
+      "eng": 78230.1,
+      "data": 41200.55,
+      "platform": 32008.4,
+      "ml": 15920.2,
+      "untagged": 17173.16
+    },
+    "environment": {
+      "prod": 142010.2,
+      "dev": 21005.05,
+      "test": 8312.16,
+      "untagged": 13205.0
+    }
+  }
+}

@@ -1,0 +1,73 @@
+name: Bug report
+description: Report something that is not working as documented
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please do not include secrets,
+        tenant identifiers, subscription IDs, or customer names in this report.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part of the sample is affected?
+      options:
+        - agent (.NET API and Vue SPA)
+        - cost-mcp (MCP server)
+        - finopsazure-analyzer (FastAPI and React)
+        - infra (Bicep / azd)
+        - documentation
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run `azd up`
+        2. Open the agent URL
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Paste any error output. It is rendered as code, no backticks needed.
+      render: shell
+
+  - type: input
+    id: azd-version
+    attributes:
+      label: azd version
+      description: Output of `azd version`
+      placeholder: "1.14.0"
+
+  - type: input
+    id: environment
+    attributes:
+      label: Operating system and runtime versions
+      placeholder: "Windows 11, .NET 10.0.100, Node 22.11.0, Python 3.12.7"
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and this is not a duplicate
+          required: true
+        - label: This report contains no secrets or customer data
+          required: true

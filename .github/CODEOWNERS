@@ -1,0 +1,12 @@
+# Default reviewers for the Azure-Samples publication-ready template.
+* @Azure-Samples/azure-finops-agent-maintainers
+
+# Application components
+/agent/ @Azure-Samples/azure-finops-agent-maintainers
+/cost-mcp/ @Azure-Samples/azure-finops-agent-maintainers
+/finopsazure-analyzer/ @Azure-Samples/azure-finops-agent-maintainers
+
+# Infrastructure, CI, and documentation
+/infra/ @Azure-Samples/azure-finops-agent-maintainers
+/.github/ @Azure-Samples/azure-finops-agent-maintainers
+/docs/ @Azure-Samples/azure-finops-agent-maintainers

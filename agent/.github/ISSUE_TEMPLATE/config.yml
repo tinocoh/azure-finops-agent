@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discussions
+    url: https://github.com/Azure-Samples/azure-finops-agent/discussions
+    about: Ask questions, share ideas, or talk about FinOps patterns.
+  - name: Security issues
+    url: https://github.com/Azure-Samples/azure-finops-agent/security/policy
+    about: Please report security issues via the responsible-disclosure flow, not as public issues.

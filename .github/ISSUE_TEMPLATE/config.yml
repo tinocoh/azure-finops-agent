@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://aka.ms/security.md/msrc/create-report
+    about: Please report security vulnerabilities to MSRC, never through a public issue.
+  - name: Azure Developer CLI documentation
+    url: https://learn.microsoft.com/azure/developer/azure-developer-cli/
+    about: Questions about azd itself, including azd up and azd down.
+  - name: Azure support
+    url: https://azure.microsoft.com/support/plans/
+    about: Production support for the underlying Azure services.

@@ -1,0 +1,23 @@
+UsageDate,SubscriptionName,ResourceGroup,ResourceName,ServiceName,Sku,Region,PowerState,DaysIdle,Quantity,UnitPrice,MonthlyCost,Currency,Owner,Tags
+2026-04-30,pharma-research-prod,rg-discovery-gpu,gpu-protein-fold-01,Virtual Machines,Standard_ND96asr_v4,northeurope,running,18,720,32.77,23594.40,USD,researcher.a@pharmaresearch.com,project=alphafold;environment=prod
+2026-04-30,pharma-research-prod,rg-discovery-gpu,gpu-protein-fold-02,Virtual Machines,Standard_ND96asr_v4,northeurope,running,21,720,32.77,23594.40,USD,researcher.a@pharmaresearch.com,project=alphafold;environment=prod
+2026-04-30,pharma-research-prod,rg-discovery-gpu,gpu-protein-fold-03,Virtual Machines,Standard_ND96asr_v4,northeurope,running,15,720,32.77,23594.40,USD,researcher.a@pharmaresearch.com,project=alphafold;environment=prod
+2026-04-30,pharma-research-prod,rg-discovery-gpu,gpu-protein-fold-04,Virtual Machines,Standard_ND96asr_v4,northeurope,running,28,720,32.77,23594.40,USD,researcher.a@pharmaresearch.com,project=alphafold;environment=prod
+2026-04-30,pharma-research-prod,rg-clinical-trials-storage,trial-data-archive-2019,Storage,Premium_LRS_P80,northeurope,-,2147,1024,0.20,16384.00,USD,researcher.b@pharmaresearch.com,project=clinical-trials;environment=archive
+2026-04-30,pharma-research-prod,rg-clinical-trials-storage,trial-data-archive-2020,Storage,Premium_LRS_P80,northeurope,-,1782,1024,0.20,16384.00,USD,researcher.b@pharmaresearch.com,project=clinical-trials;environment=archive
+2026-04-30,pharma-research-prod,rg-clinical-trials-storage,trial-data-archive-2021,Storage,Premium_LRS_P80,northeurope,-,1417,1024,0.20,16384.00,USD,researcher.b@pharmaresearch.com,project=clinical-trials;environment=archive
+2026-04-30,pharma-research-prod,rg-clinical-trials-storage,trial-data-archive-2022,Storage,Premium_LRS_P80,northeurope,-,1052,1024,0.20,16384.00,USD,researcher.b@pharmaresearch.com,project=clinical-trials;environment=archive
+2026-04-30,pharma-research-prod,rg-clinical-trials-storage,genomics-raw-2023,Storage,Premium_LRS_P80,northeurope,-,687,2048,0.20,32768.00,USD,researcher.b@pharmaresearch.com,project=genomics;environment=archive
+2026-04-30,pharma-research-prod,rg-discovery-gpu,gpu-molecular-sim-01,Virtual Machines,Standard_NC24ads_A100_v4,northeurope,running,9,720,5.96,4291.20,USD,researcher.c@pharmaresearch.com,project=molecular-dynamics;environment=prod
+2026-04-30,pharma-research-prod,rg-discovery-gpu,gpu-molecular-sim-02,Virtual Machines,Standard_NC24ads_A100_v4,northeurope,running,12,720,5.96,4291.20,USD,researcher.c@pharmaresearch.com,project=molecular-dynamics;environment=prod
+2026-04-30,pharma-research-prod,rg-discovery-gpu,gpu-molecular-sim-03,Virtual Machines,Standard_NC24ads_A100_v4,northeurope,running,7,720,5.96,4291.20,USD,researcher.c@pharmaresearch.com,project=molecular-dynamics;environment=prod
+2026-04-30,pharma-research-prod,rg-bioinformatics-platform,aks-research-platform,Azure Kubernetes Service,Standard_D16s_v5,northeurope,running,0,720,0.96,691.20,USD,platform-team@pharmaresearch.com,project=bioinformatics;environment=prod
+2026-04-30,pharma-research-prod,rg-bioinformatics-platform,sql-trial-metadata,Azure SQL,GP_Gen5_8,northeurope,-,0,720,1.42,1022.40,USD,platform-team@pharmaresearch.com,project=bioinformatics;environment=prod
+2026-04-30,pharma-research-prod,rg-bioinformatics-platform,storage-pipeline-cool,Storage,Standard_GZRS_Cool,northeurope,-,0,5120,0.018,92.16,USD,platform-team@pharmaresearch.com,project=bioinformatics;environment=prod
+2026-04-30,pharma-research-prod,rg-discovery-gpu,disk-gpu-fold-01-os,Storage,Premium_LRS_P30,northeurope,-,0,1024,0.135,138.24,USD,researcher.a@pharmaresearch.com,project=alphafold;environment=prod
+2026-04-30,pharma-research-prod,rg-discovery-gpu,disk-gpu-fold-02-os,Storage,Premium_LRS_P30,northeurope,-,0,1024,0.135,138.24,USD,researcher.a@pharmaresearch.com,project=alphafold;environment=prod
+2026-04-30,pharma-research-prod,rg-discovery-gpu,disk-orphaned-old-train,Storage,Premium_LRS_P40,northeurope,-,156,2048,0.27,553.00,USD,,
+2026-04-30,pharma-research-prod,rg-discovery-gpu,disk-orphaned-snapshot-q1,Storage,Premium_LRS_P40,northeurope,-,89,2048,0.27,553.00,USD,,
+2026-04-30,pharma-research-prod,rg-clinical-trials-storage,disk-orphaned-trial-2018,Storage,Premium_LRS_P30,northeurope,-,412,1024,0.135,138.24,USD,,
+2026-04-30,pharma-research-prod,rg-bioinformatics-platform,monitor-research-workspace,Log Analytics,PerGB,northeurope,-,0,180,2.30,414.00,USD,platform-team@pharmaresearch.com,project=bioinformatics;environment=prod
+2026-04-30,pharma-research-prod,rg-bioinformatics-platform,keyvault-research,Key Vault,Standard,northeurope,-,0,1,0.03,0.90,USD,platform-team@pharmaresearch.com,project=bioinformatics;environment=prod

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cloud in Motion — A Visual Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%; width: 100%; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #05060d; color: #fff;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 4vh 5vw;
+    opacity: 0; visibility: hidden;
+    transform: translateX(60px) scale(0.98);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                visibility 0s linear 0.7s;
+  }
+  .slide.active {
+    opacity: 1; visibility: visible;
+    transform: translateX(0) scale(1);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                visibility 0s linear 0s;
+  }
+  .slide.prev { transform: translateX(-60px) scale(0.98); }
+
+  .slide .anim { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+  .slide.active .anim { opacity: 1; transform: translateY(0); }
+  .slide.active .anim.d1 { transition-delay: 0.10s; }
+  .slide.active .anim.d2 { transition-delay: 0.25s; }
+  .slide.active .anim.d3 { transition-delay: 0.40s; }
+  .slide.active .anim.d4 { transition-delay: 0.55s; }
+  .slide.active .anim.d5 { transition-delay: 0.70s; }
+  .slide.active .anim.d6 { transition-delay: 0.85s; }
+
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 700; letter-spacing: -0.02em; line-height: 1.05;
+    margin-bottom: 0.5rem;
+  }
+  h2.section-title em { font-style: italic; color: #c9b8ff; }
+  .section-lead { color: rgba(255,255,255,0.6); font-size: 1.05rem; margin-bottom: 2rem; max-width: 700px; }
+
+  /* ========== Slide 1: Hero ========== */
+  .s1 {
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(120, 80, 255, 0.4), transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(0, 200, 255, 0.35), transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(255, 80, 180, 0.25), transparent 60%),
+      #05060d;
+  }
+  .s1::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  }
+  .s1 .content { text-align: center; max-width: 1100px; position: relative; }
+  .s1 .eyebrow {
+    display: inline-block; font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.4em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    padding: 0.55rem 1.4rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.03);
+    margin-bottom: 2rem;
+  }
+  .s1 h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 7.5rem);
+    font-weight: 900; line-height: 0.95; letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #fff 0%, #c9b8ff 50%, #80d4ff 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+  }
+  .s1 .sub {
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+    color: rgba(255,255,255,0.65);
+    max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.6;
+  }
+  .s1 .meta { display: flex; gap: 2.5rem; justify-content: center; font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; }
+  .s1 .meta span { position: relative; }
+  .s1 .meta span:not(:last-child)::after { content: ''; position: absolute; right: -1.25rem; top: 50%; width: 4px; height: 4px; background: rgba(255,255,255,0.3); border-radius: 50%; transform: translateY(-50%); }
+
+  .orb { position: absolute; border-radius: 50%; filter: blur(60px); animation: float 8s ease-in-out infinite; }
+  .orb-1 { width: 300px; height: 300px; background: rgba(120, 80, 255, 0.4); top: 10%; left: 5%; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(0, 200, 255, 0.3); bottom: 5%; right: 8%; animation-delay: -3s; }
+  @keyframes float { 0%,100% { transform: translate(0,0); } 50% { transform: translate(30px,-40px); } }
+
+  /* ========== Slide 2: Bar chart ========== */
+  .s2 { background: linear-gradient(135deg, #05060d 0%, #0d1729 100%); }
+  .s2 .content { max-width: 1300px; width: 100%; }
+  .s2 .chart-wrap { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: stretch; }
+  .bar-chart-area { position: relative; height: 46vh; min-height: 320px; padding: 2rem 0 2.5rem 3rem; }
+  .y-axis {
+    position: absolute; left: 0; top: 2rem; bottom: 2.5rem; width: 2.5rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+  }
+  .y-axis span { text-align: right; padding-right: 8px; line-height: 1; }
+  .grid-lines {
+    position: absolute; left: 3rem; right: 0; top: 2rem; bottom: 2.5rem;
+    display: flex; flex-direction: column; justify-content: space-between; pointer-events: none;
+  }
+  .grid-lines span { height: 1px; background: rgba(255,255,255,0.05); display: block; }
+  .grid-lines span:first-child { background: rgba(255,255,255,0.08); }
+  .grid-lines span:last-child  { background: rgba(255,255,255,0.15); }
+  .bar-chart {
+    position: relative; z-index: 2;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    height: 100%; gap: 1.25rem;
+  }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; position: relative; }
+  .bar {
+    width: 100%; max-width: 64px;
+    background: linear-gradient(180deg, #80d4ff 0%, #5a8fff 50%, #7c4dff 100%);
+    border-radius: 6px 6px 0 0; height: 0;
+    transition: height 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 0 30px rgba(122, 143, 255, 0.35);
+    position: relative;
+  }
+  .bar::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.25), transparent 30%); border-radius: inherit; }
+  .bar-value {
+    position: absolute; top: -1.7rem; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 0.85rem;
+    color: #fff; opacity: 0; transition: opacity 0.4s ease 1.2s; white-space: nowrap;
+  }
+  .bar-label {
+    position: absolute; bottom: -1.8rem; left: 50%; transform: translateX(-50%);
+    font-size: 0.75rem; color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em; font-family: 'JetBrains Mono', monospace;
+  }
+  .slide.active .bar-value { opacity: 1; }
+  .slide.active .b1 { height: 42%; transition-delay: 0.4s; }
+  .slide.active .b2 { height: 58%; transition-delay: 0.5s; }
+  .slide.active .b3 { height: 71%; transition-delay: 0.6s; }
+  .slide.active .b4 { height: 85%; transition-delay: 0.7s; }
+  .slide.active .b5 { height: 78%; transition-delay: 0.8s; }
+  .slide.active .b6 { height: 96%; transition-delay: 0.9s; }
+  .slide.active .b7 { height: 88%; transition-delay: 1.0s; }
+  .slide.active .b8 { height: 100%; transition-delay: 1.1s; }
+  .s2 .legend { display: flex; flex-direction: column; justify-content: center; padding: 2rem 0; }
+  .s2 .legend h3 { font-size: 1rem; margin-bottom: 1rem; color: rgba(255,255,255,0.85); }
+  .s2 .legend .item { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0; font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+  .s2 .legend .swatch { width: 14px; height: 14px; border-radius: 4px; background: linear-gradient(180deg, #80d4ff, #7c4dff); flex-shrink: 0; }
+  .s2 .insight { margin-top: 1.25rem; padding: 1rem 1.25rem; background: rgba(124, 77, 255, 0.1); border-left: 3px solid #c9b8ff; border-radius: 0 8px 8px 0; font-size: 0.85rem; line-height: 1.5; color: rgba(255,255,255,0.8); }
+
+  /* ========== Slide 3: Donut (rebuilt with SVG arc paths) ========== */
+  .s3 { background: linear-gradient(135deg, #0a0518 0%, #1a0a3a 100%); }
+  .s3 .content { max-width: 1300px; width: 100%; }
+  .s3 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .donut-wrap {
+    position: relative; display: flex; justify-content: center; align-items: center;
+    aspect-ratio: 1; max-width: 420px; margin: 0 auto; width: 100%;
+  }
+  .donut { width: 100%; height: 100%; display: block; overflow: visible; }
+  .donut .track { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 22; }
+  .donut .seg {
+    fill: none; stroke-width: 22; stroke-linecap: butt;
+    stroke-dasharray: var(--len);
+    stroke-dashoffset: var(--len);
+    transition: stroke-dashoffset 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+  .seg-1 { --len: 262; stroke: #7c4dff; color: #7c4dff; }
+  .seg-2 { --len: 136; stroke: #00b4ff; color: #00b4ff; }
+  .seg-3 { --len: 76;  stroke: #ff5e9c; color: #ff5e9c; }
+  .seg-4 { --len: 31;  stroke: #ffb84d; color: #ffb84d; }
+  .slide.active .seg { stroke-dashoffset: 0; }
+  .slide.active .seg-1 { transition-delay: 0.30s; }
+  .slide.active .seg-2 { transition-delay: 0.50s; }
+  .slide.active .seg-3 { transition-delay: 0.70s; }
+  .slide.active .seg-4 { transition-delay: 0.90s; }
+
+  .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
+  .donut-center .big {
+    font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 3.6vw, 3.2rem); font-weight: 700;
+    background: linear-gradient(135deg, #fff, #c9b8ff);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .donut-center .small { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 0.5rem; }
+
+  .donut-legend { display: flex; flex-direction: column; gap: 1rem; }
+  .donut-legend .row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.9rem 1.1rem; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .donut-legend .row:hover { transform: translateX(6px); background: rgba(255,255,255,0.06); }
+  .donut-legend .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 10px currentColor; }
+  .donut-legend .label-text { flex: 1; min-width: 0; }
+  .donut-legend .label-text .name { font-weight: 600; font-size: 0.95rem; }
+  .donut-legend .label-text .desc { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .donut-legend .pct { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 1.05rem; }
+
+  /* ========== Slide 4: Line chart ========== */
+  .s4 { background: linear-gradient(135deg, #001a1a 0%, #050d1a 100%); }
+  .s4 .content { max-width: 1300px; width: 100%; }
+  .line-wrap { position: relative; width: 100%; aspect-ratio: 1000 / 380; max-height: 50vh; }
+  .line-chart { width: 100%; height: 100%; display: block; overflow: visible; }
+  .line-chart .axis { stroke: rgba(255,255,255,0.15); stroke-width: 1; }
+  .line-chart .grid-line { stroke: rgba(255,255,255,0.05); stroke-width: 1; stroke-dasharray: 4 4; }
+  .line-chart .axis-label { fill: rgba(255,255,255,0.45); font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+  .line-chart .area { fill: url(#areaGrad); opacity: 0; transition: opacity 0.8s ease 1.5s; }
+  .slide.active .line-chart .area { opacity: 1; }
+  .line-chart .line {
+    fill: none; stroke: url(#lineGrad); stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 1500; stroke-dashoffset: 1500;
+    transition: stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+    filter: drop-shadow(0 0 8px rgba(0, 220, 255, 0.6));
+  }
+  .slide.active .line-chart .line { stroke-dashoffset: 0; }
+  .line-chart .dot {
+    fill: #fff; stroke: #00dcff; stroke-width: 3;
+    opacity: 0; transform: scale(0); transform-origin: center; transform-box: fill-box;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .slide.active .line-chart .dot { opacity: 1; transform: scale(1); transition-delay: 1.7s; }
+  .line-chart .point-label {
+    fill: rgba(255,255,255,0.85); font-size: 12px; font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0; transition: opacity 0.4s ease 2s;
+  }
+  .slide.active .line-chart .point-label { opacity: 1; }
+  .s4 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.5rem; }
+  .s4 .stat-card { padding: 1rem 1.25rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
+  .s4 .stat-card .lbl { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem; }
+  .s4 .stat-card .val { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 1.4rem; color: #00dcff; }
+  .s4 .stat-card .delta { font-size: 0.75rem; color: #80ffaa; margin-left: 0.4rem; }
+
+  /* ========== Slide 5: Azure architecture ========== */
+  .s5 { background: linear-gradient(135deg, #001428 0%, #002a52 60%, #001428 100%); }
+  .s5 .content { max-width: 1500px; width: 100%; }
+  .s5 .arch-wrap {
+    position: relative; width: 100%; aspect-ratio: 1400 / 600; max-height: 58vh;
+    background: rgba(0, 30, 60, 0.3);
+    border: 1px solid rgba(80, 160, 255, 0.15);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+  }
+  .arch-svg { width: 100%; height: 100%; display: block; }
+
+  .node-group { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+  .slide.active .node-group { opacity: 1; transform: translateY(0); }
+  .slide.active .ng-1 { transition-delay: 0.30s; }
+  .slide.active .ng-2 { transition-delay: 0.50s; }
+  .slide.active .ng-3 { transition-delay: 0.70s; }
+  .slide.active .ng-4 { transition-delay: 0.90s; }
+  .slide.active .ng-5 { transition-delay: 1.10s; }
+  .slide.active .ng-6 { transition-delay: 1.30s; }
+  .slide.active .ng-7 { transition-delay: 1.50s; }
+  .slide.active .ng-8 { transition-delay: 1.70s; }
+
+  .node-box { fill: rgba(0, 60, 120, 0.6); stroke: rgba(120, 200, 255, 0.4); stroke-width: 1.5; }
+  .node-box.primary { fill: rgba(20, 100, 200, 0.5); stroke: rgba(120, 200, 255, 0.7); }
+  .node-icon-bg { fill: rgba(0, 120, 215, 0.95); }
+  .node-title   { fill: #fff; font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif; }
+  .node-sub     { fill: rgba(255,255,255,0.55); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
+  .node-title-c { fill: #fff; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; text-anchor: middle; }
+
+  .conn {
+    fill: none; stroke: rgba(120, 200, 255, 0.4); stroke-width: 1.5;
+    stroke-dasharray: 800; stroke-dashoffset: 800;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .slide.active .conn { stroke-dashoffset: 0; }
+  .slide.active .conn.c1 { transition-delay: 1.0s; }
+  .slide.active .conn.c2 { transition-delay: 1.2s; }
+  .slide.active .conn.c3 { transition-delay: 1.4s; }
+  .slide.active .conn.c4 { transition-delay: 1.6s; }
+  .slide.active .conn.c5 { transition-delay: 1.7s; }
+  .slide.active .conn.c6 { transition-delay: 1.8s; }
+  .slide.active .conn.c7 { transition-delay: 1.9s; }
+  .slide.active .conn.c8 { transition-delay: 2.0s; }
+
+  .flow-particle { fill: #00dcff; filter: drop-shadow(0 0 6px #00dcff); opacity: 0; }
+  .slide.active .flow-particle { opacity: 1; animation: flowAnim 3s linear infinite; }
+  .slide.active .fp1 { animation-delay: 2.4s; }
+  .slide.active .fp2 { animation-delay: 2.6s; }
+  .slide.active .fp3 { animation-delay: 2.8s; }
+  .slide.active .fp4 { animation-delay: 3.0s; }
+  .slide.active .fp5 { animation-delay: 3.2s; }
+  @keyframes flowAnim {
+    0%   { offset-distance: 0%;   opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { offset-distance: 100%; opacity: 0; }
+  }
+
+  .region-label { fill: rgba(120, 200, 255, 0.7); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600; font-family: 'Inter', sans-serif; }
+  .region-box   { fill: none; stroke: rgba(120, 200, 255, 0.18); stroke-width: 1; stroke-dasharray: 5 4; }
+
+  .s5 .legend-row { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center; font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+  .s5 .legend-row .item { display: flex; align-items: center; gap: 0.5rem; }
+  .s5 .legend-row .ico { width: 12px; height: 12px; border-radius: 3px; background: #0078d7; }
+  .s5 .legend-row .ico.flow { width: 18px; height: 2px; background: linear-gradient(90deg, transparent, #00dcff, transparent); border-radius: 0; }
+
+  /* ========== Slide 6: Closing ========== */
+  .s6 { background: radial-gradient(ellipse at 50% 50%, rgba(120, 80, 255, 0.4), transparent 70%), linear-gradient(135deg, #05060d 0%, #1a0033 100%); }
+  .s6 .content { text-align: center; max-width: 900px; }
+  .s6 .pre { font-size: 0.8rem; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(201, 184, 255, 0.8); margin-bottom: 2rem; }
+  .s6 h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 900;
+    line-height: 1; letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #fff 0%, #c9b8ff 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 2rem;
+  }
+  .s6 p { font-size: 1.15rem; color: rgba(255,255,255,0.7); margin-bottom: 2.5rem; line-height: 1.6; }
+  .s6 .cta { display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2.25rem; background: #fff; color: #0a0a0f; border-radius: 999px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; border: none; }
+  .s6 .cta:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -10px rgba(201, 184, 255, 0.4); }
+  .s6 .cta::after { content: '↻'; transition: transform 0.6s ease; font-size: 1.1em; }
+  .s6 .cta:hover::after { transform: rotate(180deg); }
+
+  /* ========== Chrome ========== */
+  .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.05); z-index: 100; }
+  .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #c9b8ff, #ff9ec7, #80d4ff); transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+  .dots { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 100; }
+  .dot-nav { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0; }
+  .dot-nav.active { background: #fff; width: 28px; border-radius: 4px; }
+  .dot-nav:hover { background: rgba(255,255,255,0.5); }
+  .counter { position: fixed; bottom: 1.5rem; right: 1.5rem; font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.5); z-index: 100; font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono', monospace; }
+  .hint { position: fixed; bottom: 1.5rem; left: 1.5rem; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); z-index: 100; transition: opacity 0.5s ease; }
+  .hint.fade { opacity: 0; }
+  .hint kbd { display: inline-block; padding: 2px 6px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; font-family: inherit; font-size: 0.65rem; margin: 0 2px; }
+  .click-zone { position: fixed; top: 0; bottom: 0; width: 22%; z-index: 50; cursor: pointer; }
+  .click-zone.left { left: 0; }
+  .click-zone.right { right: 0; }
+  .click-zone::after {
+    content: ''; position: absolute; top: 50%;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    transform: translateY(-50%) scale(0.8); opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    backdrop-filter: blur(10px); background-repeat: no-repeat; background-position: center; background-size: 16px;
+  }
+  .click-zone.left::after  { left: 1.25rem;  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z'/></svg>"); }
+  .click-zone.right::after { right: 1.25rem; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/></svg>"); }
+  .click-zone:hover::after { opacity: 1; transform: translateY(-50%) scale(1); }
+
+  @media (max-width: 900px) {
+    .s2 .chart-wrap, .s3 .grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .s4 .stats { grid-template-columns: 1fr 1fr; }
+    .hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="deck" id="deck">
+
+  <!-- ========== Slide 1: Hero ========== -->
+  <section class="slide s1 active">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="content">
+      <div class="eyebrow anim d1">Cloud Architecture · Visual Report</div>
+      <h1 class="anim d2">Cloud<br/>in Motion</h1>
+      <p class="sub anim d3">Numbers that breathe, charts that draw themselves, and an architecture diagram alive with flowing data.</p>
+      <div class="meta anim d4">
+        <span>Six Slides</span>
+        <span>2026</span>
+        <span>← → to navigate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Slide 2: Bar chart ========== -->
+  <section class="slide s2">
+    <div class="content">
+      <h2 class="section-title anim d1">Quarterly <em>throughput</em>.</h2>
+      <p class="section-lead anim d2">Requests served per second across eight regions.</p>
+      <div class="chart-wrap">
+        <div class="bar-chart-area anim d3">
+          <div class="y-axis">
+            <span>100K</span><span>75K</span><span>50K</span><span>25K</span><span>0</span>
+          </div>
+          <div class="grid-lines">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="bar-chart">
+            <div class="bar-col"><div class="bar b1"><span class="bar-value">42K</span></div><span class="bar-label">JAN</span></div>
+            <div class="bar-col"><div class="bar b2"><span class="bar-value">58K</span></div><span class="bar-label">FEB</span></div>
+            <div class="bar-col"><div class="bar b3"><span class="bar-value">71K</span></div><span class="bar-label">MAR</span></div>
+            <div class="bar-col"><div class="bar b4"><span class="bar-value">85K</span></div><span class="bar-label">APR</span></div>
+            <div class="bar-col"><div class="bar b5"><span class="bar-value">78K</span></div><span class="bar-label">MAY</span></div>
+            <div class="bar-col"><div class="bar b6"><span class="bar-value">96K</span></div><span class="bar-label">JUN</span></div>
+            <div class="bar-col"><div class="bar b7"><span class="bar-value">88K</span></div><span class="bar-label">JUL</span></div>
+            <div class="bar-col"><div class="bar b8"><span class="bar-value">100K</span></div><span class="bar-label">AUG</span></div>
+          </div>
+        </div>
+        <div class="legend anim d4">
+          <h3>What you're seeing</h3>
+          <div class="item"><span class="swatch"></span> Requests / second (peak)</div>
+          <div class="item">Across 8 Azure regions</div>
+          <div class="item">Bars animate on entry</div>
+          <div class="insight">Throughput grew <strong style="color:#fff">2.4×</strong> over eight months — driven by autoscale rules tightening at 60% CPU.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    Donut math (Slide 3):
+      cx=100, cy=100, r=80, circumference C ≈ 502.65
+      Segments: 52% / 27% / 15% / 6%   →   lengths 261.4 / 135.7 / 75.4 / 30.2
+
+      Each segment is an SVG arc starting where the previous ended.
+      Coordinate fn: x = 100 + 80·sin(angle),  y = 100 − 80·cos(angle)
+        where 'angle' is degrees clockwise from 12 o'clock.
+
+      Cumulative angles: 0° → 187.2° → 284.4° → 338.4° → 360°
+      Endpoints (rounded):
+        0°    → (100, 20)
+        187.2 → (89.98, 179.37)
+        284.4 → (22.55, 80.13)
+        338.4 → (70.55, 25.62)
+        360   → (100, 20)
+  -->
+  <!-- ========== Slide 3: Donut ========== -->
+  <section class="slide s3">
+    <div class="content">
+      <h2 class="section-title anim d1">Where the <em>spend</em> goes.</h2>
+      <p class="section-lead anim d2">Monthly cloud cost distribution.</p>
+      <div class="grid">
+        <div class="donut-wrap anim d3">
+          <svg class="donut" viewBox="0 0 200 200">
+            <circle class="track" cx="100" cy="100" r="80"/>
+            <path class="seg seg-1" d="M 100,20 A 80,80 0 1 1 89.98,179.37"/>
+            <path class="seg seg-2" d="M 89.98,179.37 A 80,80 0 0 1 22.55,80.13"/>
+            <path class="seg seg-3" d="M 22.55,80.13 A 80,80 0 0 1 70.55,25.62"/>
+            <path class="seg seg-4" d="M 70.55,25.62 A 80,80 0 0 1 100,20"/>
+          </svg>
+          <div class="donut-center">
+            <div class="big">$184K</div>
+            <div class="small">Monthly Spend</div>
+          </div>
+        </div>
+        <div class="donut-legend">
+          <div class="row anim d3"><span class="dot" style="background:#7c4dff;color:#7c4dff"></span><div class="label-text"><div class="name">Compute</div><div class="desc">App Service · AKS · Functions</div></div><span class="pct" style="color:#c9b8ff">52%</span></div>
+          <div class="row anim d4"><span class="dot" style="background:#00b4ff;color:#00b4ff"></span><div class="label-text"><div class="name">Data &amp; Storage</div><div class="desc">SQL · Cosmos · Blob</div></div><span class="pct" style="color:#80d4ff">27%</span></div>
+          <div class="row anim d5"><span class="dot" style="background:#ff5e9c;color:#ff5e9c"></span><div class="label-text"><div class="name">Networking</div><div class="desc">Front Door · ExpressRoute</div></div><span class="pct" style="color:#ff9ec7">15%</span></div>
+          <div class="row anim d6"><span class="dot" style="background:#ffb84d;color:#ffb84d"></span><div class="label-text"><div class="name">Observability</div><div class="desc">Monitor · Log Analytics</div></div><span class="pct" style="color:#ffd699">6%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    Line chart math (Slide 4):
+      Plot area: x ∈ [60, 960], y ∈ [40, 340]   (300 pixels for 0–400 ms)
+      Conversion: y = 40 + (400 − value) × 0.75
+
+      Data (12 months, declining from 388 → 110 ms):
+        JAN 388  → y= 49      JUL 175  → y= 209
+        FEB 340  → y= 85      AUG 155  → y= 224
+        MAR 310  → y=108      SEP 140  → y= 235
+        APR 280  → y=130      OCT 130  → y= 243
+        MAY 240  → y=160      NOV 120  → y= 250
+        JUN 200  → y=190      DEC 110  → y= 258
+  -->
+  <!-- ========== Slide 4: Line chart ========== -->
+  <section class="slide s4">
+    <div class="content">
+      <h2 class="section-title anim d1">Latency, <em>tamed</em>.</h2>
+      <p class="section-lead anim d2">P95 response time across the last twelve months — milliseconds, lower is better.</p>
+      <div class="line-wrap anim d3">
+        <svg class="line-chart" viewBox="0 0 1000 380">
+          <defs>
+            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#7c4dff"/>
+              <stop offset="50%"  stop-color="#00dcff"/>
+              <stop offset="100%" stop-color="#80ffaa"/>
+            </linearGradient>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#00dcff" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#00dcff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Grid lines: y at 40 (400 ms), 115 (300), 190 (200), 265 (100), 340 (0) -->
+          <line class="grid-line" x1="60" y1="40"  x2="960" y2="40"/>
+          <line class="grid-line" x1="60" y1="115" x2="960" y2="115"/>
+          <line class="grid-line" x1="60" y1="190" x2="960" y2="190"/>
+          <line class="grid-line" x1="60" y1="265" x2="960" y2="265"/>
+
+          <text class="axis-label" x="50" y="44"  text-anchor="end">400</text>
+          <text class="axis-label" x="50" y="119" text-anchor="end">300</text>
+          <text class="axis-label" x="50" y="194" text-anchor="end">200</text>
+          <text class="axis-label" x="50" y="269" text-anchor="end">100</text>
+          <text class="axis-label" x="50" y="344" text-anchor="end">0</text>
+
+          <line class="axis" x1="60" y1="40"  x2="60"  y2="340"/>
+          <line class="axis" x1="60" y1="340" x2="960" y2="340"/>
+
+          <!-- Area under curve -->
+          <path class="area" d="M 80,49 L 158,85 L 236,108 L 314,130 L 392,160 L 470,190 L 548,209 L 626,224 L 704,235 L 782,243 L 860,250 L 940,258 L 940,340 L 80,340 Z"/>
+
+          <!-- Line -->
+          <path class="line" d="M 80,49 L 158,85 L 236,108 L 314,130 L 392,160 L 470,190 L 548,209 L 626,224 L 704,235 L 782,243 L 860,250 L 940,258"/>
+
+          <!-- Dots -->
+          <circle class="dot" cx="80"  cy="49"  r="5"/>
+          <circle class="dot" cx="158" cy="85"  r="5"/>
+          <circle class="dot" cx="236" cy="108" r="5"/>
+          <circle class="dot" cx="314" cy="130" r="5"/>
+          <circle class="dot" cx="392" cy="160" r="5"/>
+          <circle class="dot" cx="470" cy="190" r="5"/>
+          <circle class="dot" cx="548" cy="209" r="5"/>
+          <circle class="dot" cx="626" cy="224" r="5"/>
+          <circle class="dot" cx="704" cy="235" r="5"/>
+          <circle class="dot" cx="782" cy="243" r="5"/>
+          <circle class="dot" cx="860" cy="250" r="5"/>
+          <circle class="dot" cx="940" cy="258" r="5"/>
+
+          <!-- Endpoint labels -->
+          <text class="point-label" x="80"  y="38"  text-anchor="middle">388</text>
+          <text class="point-label" x="940" y="248" text-anchor="middle">110</text>
+
+          <!-- X labels -->
+          <text class="axis-label" x="80"  y="362" text-anchor="middle">JAN</text>
+          <text class="axis-label" x="236" y="362" text-anchor="middle">MAR</text>
+          <text class="axis-label" x="392" y="362" text-anchor="middle">MAY</text>
+          <text class="axis-label" x="548" y="362" text-anchor="middle">JUL</text>
+          <text class="axis-label" x="704" y="362" text-anchor="middle">SEP</text>
+          <text class="axis-label" x="860" y="362" text-anchor="middle">NOV</text>
+        </svg>
+      </div>
+      <div class="stats">
+        <div class="stat-card anim d4"><div class="lbl">Starting P95</div><div class="val">388 ms</div></div>
+        <div class="stat-card anim d5"><div class="lbl">Current P95</div><div class="val">110 ms <span class="delta">↓ 72%</span></div></div>
+        <div class="stat-card anim d6"><div class="lbl">SLA Target</div><div class="val">&lt; 150 ms <span class="delta">✓ met</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    Azure topology (Slide 5) — viewBox 1400 × 600.
+    Region columns and the nodes inside them:
+      Users      | x  40–240   | User       (70,270)  140×80
+      Edge       | x 280–560   | Front Door (340,270) 160×80
+      App Tier   | x 600–880   | App Service(660,170), AKS (660,370)  both 160×80
+      Data Tier  | x 920–1200  | SQL (980,170), Storage (980,290), Cosmos (980,410)  all 160×80
+      Platform   | x 1240–1360 | Key Vault (1260,180), Insights (1260,275), Entra (1260,370)  all 80×70
+
+    Connection endpoints all sit on actual node edges (verified):
+      c1: (210,310) → (340,310)            User → Front Door
+      c2: (500,310) curve   → (660,210)    Front Door → App Service
+      c3: (500,310) curve   → (660,410)    Front Door → AKS
+      c4: (820,210) → (980,210)            App Service → SQL
+      c5: (820,410) → (980,410)            AKS → Cosmos
+      c6: (820,210) curve   → (980,330)    App Service → Storage
+      c7: (820,410) curve   → (980,330)    AKS → Storage
+      c8: (1140,310) → (1260,310)          Data Tier hub → App Insights (Identity bus)
+  -->
+  <!-- ========== Slide 5: Azure architecture ========== -->
+  <section class="slide s5">
+    <div class="content">
+      <h2 class="section-title anim d1">A reference <em>Azure topology</em>.</h2>
+      <p class="section-lead anim d2">Traffic flows from edge → app tier → data, observed end-to-end.</p>
+      <div class="arch-wrap anim d3">
+        <svg class="arch-svg" viewBox="0 0 1400 600" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="azureBlue" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#50a0ff"/>
+              <stop offset="100%" stop-color="#0078d7"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Region containers (relabeled to match what's inside) -->
+          <rect class="region-box" x="40"   y="80"  width="200" height="460" rx="12"/>
+          <text class="region-label" x="60"   y="105">Users</text>
+
+          <rect class="region-box" x="280"  y="80"  width="280" height="460" rx="12"/>
+          <text class="region-label" x="300"  y="105">Edge · Global</text>
+
+          <rect class="region-box" x="600"  y="80"  width="280" height="460" rx="12"/>
+          <text class="region-label" x="620"  y="105">App Tier · West EU</text>
+
+          <rect class="region-box" x="920"  y="80"  width="280" height="460" rx="12"/>
+          <text class="region-label" x="940"  y="105">Data Tier</text>
+
+          <rect class="region-box" x="1240" y="80"  width="120" height="460" rx="12"/>
+          <text class="region-label" x="1255" y="105">Platform</text>
+
+          <!-- Connections (drawn first so node icons sit on top) -->
+          <path class="conn c1" d="M 210,310 L 340,310"/>
+          <path class="conn c2" d="M 500,310 C 580,310 580,210 660,210"/>
+          <path class="conn c3" d="M 500,310 C 580,310 580,410 660,410"/>
+          <path class="conn c4" d="M 820,210 L 980,210"/>
+          <path class="conn c5" d="M 820,410 L 980,410"/>
+          <path class="conn c6" d="M 820,210 C 900,210 900,330 980,330"/>
+          <path class="conn c7" d="M 820,410 C 900,410 900,330 980,330"/>
+          <path class="conn c8" d="M 1140,310 L 1260,310"/>
+
+          <!-- ===== Users ===== -->
+          <g class="node-group ng-1">
+            <rect class="node-box" x="70" y="270" width="140" height="80" rx="10"/>
+            <circle cx="105" cy="310" r="20" fill="url(#azureBlue)"/>
+            <circle cx="105" cy="304" r="6" fill="#fff"/>
+            <path d="M 92,322 Q 105,312 118,322 L 118,325 Q 105,316 92,325 Z" fill="#fff"/>
+            <text class="node-title" x="138" y="306">Users</text>
+            <text class="node-sub"   x="138" y="324">Global</text>
+          </g>
+
+          <!-- ===== Front Door ===== -->
+          <g class="node-group ng-2">
+            <rect class="node-box primary" x="340" y="270" width="160" height="80" rx="10"/>
+            <rect class="node-icon-bg" x="354" y="290" width="40" height="40" rx="6"/>
+            <circle cx="374" cy="310" r="13" fill="none" stroke="#fff" stroke-width="2"/>
+            <ellipse cx="374" cy="310" rx="6" ry="13" fill="none" stroke="#fff" stroke-width="1.5"/>
+            <line x1="361" y1="310" x2="387" y2="310" stroke="#fff" stroke-width="1.5"/>
+            <text class="node-title" x="408" y="306">Front Door</text>
+            <text class="node-sub"   x="408" y="324">CDN · WAF</text>
+          </g>
+
+          <!-- ===== App Service ===== -->
+          <g class="node-group ng-3">
+            <rect class="node-box primary" x="660" y="170" width="160" height="80" rx="10"/>
+            <rect class="node-icon-bg" x="674" y="190" width="40" height="40" rx="6"/>
+            <rect x="680" y="196" width="28" height="22" rx="2" fill="#fff"/>
+            <rect x="680" y="196" width="28" height="6"  rx="2" fill="#0078d7"/>
+            <circle cx="683" cy="199" r="1" fill="#fff"/>
+            <circle cx="686" cy="199" r="1" fill="#fff"/>
+            <text class="node-title" x="728" y="206">App Service</text>
+            <text class="node-sub"   x="728" y="224">Web · API</text>
+          </g>
+
+          <!-- ===== AKS ===== -->
+          <g class="node-group ng-4">
+            <rect class="node-box primary" x="660" y="370" width="160" height="80" rx="10"/>
+            <rect class="node-icon-bg" x="674" y="390" width="40" height="40" rx="6"/>
+            <polygon points="694,394 706,400 706,412 694,418 682,412 682,400" fill="none" stroke="#fff" stroke-width="2"/>
+            <polygon points="694,400 700,403 700,409 694,412 688,409 688,403" fill="#fff"/>
+            <text class="node-title" x="728" y="406">AKS</text>
+            <text class="node-sub"   x="728" y="424">Microservices</text>
+          </g>
+
+          <!-- ===== Azure SQL ===== -->
+          <g class="node-group ng-5">
+            <rect class="node-box" x="980" y="170" width="160" height="80" rx="10"/>
+            <rect class="node-icon-bg" x="994" y="190" width="40" height="40" rx="6"/>
+            <ellipse cx="1014" cy="196" rx="14" ry="3.5" fill="#fff"/>
+            <path d="M 1000,196 L 1000,216 Q 1014,222 1028,216 L 1028,196" fill="#fff" opacity="0.9"/>
+            <ellipse cx="1014" cy="206" rx="14" ry="2.5" fill="none" stroke="#0078d7" stroke-width="0.8"/>
+            <text class="node-title" x="1048" y="206">Azure SQL</text>
+            <text class="node-sub"   x="1048" y="224">Hyperscale</text>
+          </g>
+
+          <!-- ===== Storage ===== -->
+          <g class="node-group ng-6">
+            <rect class="node-box" x="980" y="290" width="160" height="80" rx="10"/>
+            <rect class="node-icon-bg" x="994" y="310" width="40" height="40" rx="6"/>
+            <rect x="1000" y="316" width="28" height="6" rx="1" fill="#fff"/>
+            <rect x="1000" y="324" width="28" height="6" rx="1" fill="#fff"/>
+            <rect x="1000" y="332" width="28" height="6" rx="1" fill="#fff"/>
+            <circle cx="1024" cy="319" r="1.2" fill="#0078d7"/>
+            <circle cx="1024" cy="327" r="1.2" fill="#0078d7"/>
+            <circle cx="1024" cy="335" r="1.2" fill="#0078d7"/>
+            <text class="node-title" x="1048" y="326">Storage</text>
+            <text class="node-sub"   x="1048" y="344">Blob · Queue</text>
+          </g>
+
+          <!-- ===== Cosmos ===== -->
+          <g class="node-group ng-7">
+            <rect class="node-box" x="980" y="410" width="160" height="80" rx="10"/>
+            <rect class="node-icon-bg" x="994" y="430" width="40" height="40" rx="6"/>
+            <circle cx="1014" cy="450" r="3.5" fill="#fff"/>
+            <ellipse cx="1014" cy="450" rx="13" ry="5" fill="none" stroke="#fff" stroke-width="1.5"/>
+            <ellipse cx="1014" cy="450" rx="13" ry="5" fill="none" stroke="#fff" stroke-width="1.5" transform="rotate(60 1014 450)"/>
+            <ellipse cx="1014" cy="450" rx="13" ry="5" fill="none" stroke="#fff" stroke-width="1.5" transform="rotate(-60 1014 450)"/>
+            <text class="node-title" x="1048" y="446">Cosmos DB</text>
+            <text class="node-sub"   x="1048" y="464">Multi-region</text>
+          </g>
+
+          <!-- ===== Key Vault ===== -->
+          <g class="node-group ng-8">
+            <rect class="node-box" x="1260" y="180" width="80" height="70" rx="10"/>
+            <rect class="node-icon-bg" x="1280" y="195" width="40" height="40" rx="6"/>
+            <rect x="1290" y="212" width="20" height="14" rx="2" fill="#fff"/>
+            <path d="M 1293,212 L 1293,206 Q 1293,202 1300,202 Q 1307,202 1307,206 L 1307,212" fill="none" stroke="#fff" stroke-width="2"/>
+            <text class="node-title-c" x="1300" y="245">Key Vault</text>
+          </g>
+
+          <!-- ===== App Insights ===== -->
+          <g class="node-group ng-8">
+            <rect class="node-box" x="1260" y="275" width="80" height="70" rx="10"/>
+            <rect class="node-icon-bg" x="1280" y="290" width="40" height="40" rx="6"/>
+            <rect x="1286" y="318" width="4" height="8"  fill="#fff"/>
+            <rect x="1292" y="312" width="4" height="14" fill="#fff"/>
+            <rect x="1298" y="306" width="4" height="20" fill="#fff"/>
+            <rect x="1304" y="314" width="4" height="12" fill="#fff"/>
+            <text class="node-title-c" x="1300" y="340">Insights</text>
+          </g>
+
+          <!-- ===== Entra ID ===== -->
+          <g class="node-group ng-8">
+            <rect class="node-box" x="1260" y="370" width="80" height="70" rx="10"/>
+            <rect class="node-icon-bg" x="1280" y="385" width="40" height="40" rx="6"/>
+            <path d="M 1300,390 L 1311,395 L 1311,406 Q 1311,413 1300,418 Q 1289,413 1289,406 L 1289,395 Z" fill="#fff"/>
+            <path d="M 1295,404 L 1299,408 L 1305,400" fill="none" stroke="#0078d7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <text class="node-title-c" x="1300" y="435">Entra ID</text>
+          </g>
+
+          <!-- Animated flow particles (offset-path identical to connection 'd') -->
+          <circle class="flow-particle fp1" cx="0" cy="0" r="3" style="offset-path: path('M 210,310 L 340,310');"/>
+          <circle class="flow-particle fp2" cx="0" cy="0" r="3" style="offset-path: path('M 500,310 C 580,310 580,210 660,210');"/>
+          <circle class="flow-particle fp3" cx="0" cy="0" r="3" style="offset-path: path('M 500,310 C 580,310 580,410 660,410');"/>
+          <circle class="flow-particle fp4" cx="0" cy="0" r="3" style="offset-path: path('M 820,210 L 980,210');"/>
+          <circle class="flow-particle fp5" cx="0" cy="0" r="3" style="offset-path: path('M 820,410 L 980,410');"/>
+        </svg>
+      </div>
+      <div class="legend-row anim d4">
+        <div class="item"><span class="ico"></span> Azure Service</div>
+        <div class="item"><span class="ico flow"></span> Data flow</div>
+        <div class="item">Animated particles trace live request paths</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Slide 6: Closing ========== -->
+  <section class="slide s6">
+    <div class="content">
+      <div class="pre anim d1">— End of Deck —</div>
+      <h2 class="anim d2">Pixels with<br/>a pulse.</h2>
+      <p class="anim d3">Every chart drew itself, every node arrived in turn, every line of data is still moving. Replace the words — keep the rhythm.</p>
+      <button class="cta anim d4" id="restartBtn">Watch Again</button>
+    </div>
+  </section>
+
+</div>
+
+<div class="click-zone left"  id="zoneLeft"  aria-label="Previous slide"></div>
+<div class="click-zone right" id="zoneRight" aria-label="Next slide"></div>
+
+<div class="dots" id="dots"></div>
+<div class="counter" id="counter">01 / 06</div>
+<div class="hint" id="hint">Click <kbd>◀</kbd> <kbd>▶</kbd> sides &middot; or <kbd>←</kbd> <kbd>→</kbd> arrows</div>
+
+<script>
+  const slides   = document.querySelectorAll('.slide');
+  const total    = slides.length;
+  let   current  = 0;
+  const counter  = document.getElementById('counter');
+  const progressBar = document.getElementById('progressBar');
+  const dotsWrap = document.getElementById('dots');
+  const hint     = document.getElementById('hint');
+
+  for (let i = 0; i < total; i++) {
+    const b = document.createElement('button');
+    b.className = 'dot-nav' + (i === 0 ? ' active' : '');
+    b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    b.addEventListener('click', e => { e.stopPropagation(); goTo(i); });
+    dotsWrap.appendChild(b);
+  }
+  const dotEls = dotsWrap.querySelectorAll('.dot-nav');
+  const pad = n => String(n).padStart(2, '0');
+
+  function update() {
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'prev');
+      if (i === current) s.classList.add('active');
+      else if (i < current) s.classList.add('prev');
+    });
+    dotEls.forEach((d, i) => d.classList.toggle('active', i === current));
+    counter.textContent = pad(current + 1) + ' / ' + pad(total);
+    progressBar.style.width = ((current + 1) / total * 100) + '%';
+  }
+  const next = () => { if (current < total - 1) { current++; update(); fadeHint(); } };
+  const prev = () => { if (current > 0)         { current--; update(); fadeHint(); } };
+  const goTo = i  => { if (i >= 0 && i < total) { current = i;  update(); fadeHint(); } };
+
+  let hintFaded = false;
+  function fadeHint() { if (hintFaded) return; hintFaded = true; hint.classList.add('fade'); }
+
+  document.getElementById('zoneLeft').addEventListener('click', prev);
+  document.getElementById('zoneRight').addEventListener('click', next);
+  document.getElementById('restartBtn').addEventListener('click', e => { e.stopPropagation(); goTo(0); });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') goTo(0);
+    else if (e.key === 'End')  goTo(total - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) (dx < 0 ? next : prev)();
+  });
+
+  update();
+  setTimeout(fadeHint, 6000);
+</script>
+
+</body>
+</html>

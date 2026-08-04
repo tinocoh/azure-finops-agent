@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    image: finopsazure-backend:local
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    environment:
+      APP_ENV: ${APP_ENV:-local}
+      DATABASE_URL: ${DATABASE_URL:-sqlite:///./data/finopsazure.db}
+      FINOPS_CONFIG_ENCRYPTION_KEY: ${FINOPS_CONFIG_ENCRYPTION_KEY}
+      AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT:-}
+      AZURE_OPENAI_DEPLOYMENT: ${AZURE_OPENAI_DEPLOYMENT:-}
+      AZURE_OPENAI_API_VERSION: ${AZURE_OPENAI_API_VERSION:-2024-10-21}
+      AZURE_OPENAI_API_KEY: ${AZURE_OPENAI_API_KEY:-}
+      KEY_VAULT_URI: ${KEY_VAULT_URI:-}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
+    volumes:
+      - backend-data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ""
+    image: finopsazure-frontend:local
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    environment:
+      # nginx proxies /api/ to this target inside the compose network.
+      BACKEND_URL: http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend-data:

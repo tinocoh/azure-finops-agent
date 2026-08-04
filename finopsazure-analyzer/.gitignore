@@ -1,0 +1,17 @@
+# Local env (never commit)
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+backend/data/
+.pytest_cache/
+
+# Node / Vite
+node_modules/
+frontend/dist/
+
+# Bicep build output
+infra/*.json
+!infra/main.parameters.json

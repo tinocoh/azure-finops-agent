@@ -1,0 +1,64 @@
+# Azure Developer CLI
+.azure/
+
+# Node
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+cost-mcp/test-results/
+
+# .NET
+bin/
+obj/
+*.user
+*.pfx
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Secrets and local configuration
+.env
+.env.local
+.env.*.local
+appsettings.Development.json
+appsettings.Local.json
+
+# Azure Storage emulator (Azurite) state
+__azurite_db_*.json
+__blobstorage__/
+__queuestorage__/
+azurite-debug.log
+
+# Generated demo data and large local media
+agent/demo-data/azure-cost-90days.csv
+agent/src/Dashboard/frontend/public/video.mp4
+agent/src/Dashboard/frontend/public/video1.mp4
+
+# Bicep compilation output (source of truth is the .bicep files).
+# Scoped so the azd contract files under infra/ stay tracked.
+infra/main.json
+infra/resources.json
+infra/main.test.json
+
+# Test and coverage output
+coverage/
+TestResults/
+*.trx
+reports/
+
+# SPA build output served from wwwroot at runtime; built via webui
+agent/src/Dashboard/wwwroot/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vs/
+.idea/
+*.swp

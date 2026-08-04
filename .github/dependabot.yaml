@@ -1,0 +1,66 @@
+version: 2
+updates:
+  # GitHub Actions used by every workflow in the repository
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # Cost intelligence MCP server
+  - package-ecosystem: "npm"
+    directory: "/cost-mcp"
+    schedule:
+      interval: "weekly"
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
+
+  # Agent single page application
+  - package-ecosystem: "npm"
+    directory: "/agent/src/Dashboard/webui"
+    schedule:
+      interval: "weekly"
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
+
+  # Agent API
+  - package-ecosystem: "nuget"
+    directory: "/agent"
+    schedule:
+      interval: "weekly"
+    groups:
+      azure-sdk:
+        patterns:
+          - "Azure.*"
+          - "Microsoft.Identity.*"
+
+  # Analyzer backend
+  - package-ecosystem: "pip"
+    directory: "/finopsazure-analyzer/backend"
+    schedule:
+      interval: "weekly"
+    groups:
+      telemetry:
+        patterns:
+          - "opentelemetry-*"
+          - "azure-monitor-opentelemetry*"
+
+  # Analyzer frontend
+  - package-ecosystem: "npm"
+    directory: "/finopsazure-analyzer/frontend"
+    schedule:
+      interval: "weekly"
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
+
+  # Container base images
+  - package-ecosystem: "docker"
+    directory: "/finopsazure-analyzer/backend"
+    schedule:
+      interval: "weekly"

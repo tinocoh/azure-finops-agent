@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: azure-finops-agent
+metadata:
+  template: azure-finops-agent@0.1.0
+
+requiredVersions:
+  azd: ">= 1.14.0"
+
+infra:
+  provider: bicep
+  path: infra
+  module: main
+
+services:
+  agent:
+    project: ./agent/src/Dashboard
+    language: dotnet
+    host: appservice
+    hooks:
+      prepackage:
+        posix:
+          shell: sh
+          run: cd frontend && npm ci && npm run build
+          interactive: false
+          continueOnError: false
+        windows:
+          shell: pwsh
+          run: cd frontend; npm ci; npm run build
+          interactive: false
+          continueOnError: false
+
+pipeline:
+  variables:
+    - AZURE_ENV_NAME
+    - AZURE_LOCATION
+    - AZURE_RESOURCE_GROUP
+    - AZURE_OPENAI_LOCATION
+    - AZURE_OPENAI_DEPLOYMENT_NAME
+    - AZURE_OPENAI_MODEL_NAME
+    - AZURE_OPENAI_MODEL_VERSION
+    - ENABLE_PRIVATE_NETWORKING
+    - FINOPS_READONLY
