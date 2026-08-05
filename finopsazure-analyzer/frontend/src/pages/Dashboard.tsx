@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../router';
 import { api } from '../api';
 import StatCard from '../components/StatCard';
 import Loading from '../components/Loading';

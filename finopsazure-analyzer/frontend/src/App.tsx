@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from './router';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import AzureConfig from './pages/AzureConfig';

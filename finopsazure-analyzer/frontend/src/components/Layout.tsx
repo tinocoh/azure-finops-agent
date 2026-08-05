@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from '../router';
 
 const links = [
   { to: '/', label: 'Dashboard', end: true },

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from '../router';
 import { api } from '../api';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
