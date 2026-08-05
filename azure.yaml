@@ -14,6 +14,7 @@ infra:
 
 services:
   agent:
+    condition: ${DEPLOY_AGENT_SERVICE=true}
     project: ./agent/src/Dashboard
     language: dotnet
     host: appservice
@@ -40,4 +41,5 @@ pipeline:
     - AZURE_OPENAI_MODEL_NAME
     - AZURE_OPENAI_MODEL_VERSION
     - ENABLE_PRIVATE_NETWORKING
+    - DEPLOY_AGENT_SERVICE
     - FINOPS_READONLY

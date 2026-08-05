@@ -39,6 +39,9 @@ param appServicePlanSku string
 @description('Disable public network access and reach Azure OpenAI and Key Vault over private endpoints only.')
 param enablePrivateNetworking bool
 
+@description('Deploy the App Service that hosts the agent.')
+param deployAgentService bool
+
 @description('Run the agent in read-only mode.')
 param finopsReadOnly bool
 
@@ -236,7 +239,7 @@ module keyVaultPrivateEndpoint 'modules/private-endpoint.bicep' = if (enablePriv
 // App Service hosting the agent. The azd-service-name tag maps this site to
 // the "agent" service declared in azure.yaml.
 // ---------------------------------------------------------------------------
-resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = if (deployAgentService) {
   name: '${abbrs.webServerFarms}${resourceToken}'
   location: location
   tags: tags
@@ -249,7 +252,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
   }
 }
 
-resource agentSite 'Microsoft.Web/sites@2024-04-01' = {
+resource agentSite 'Microsoft.Web/sites@2024-04-01' = if (deployAgentService) {
   name: siteName
   location: location
   tags: union(tags, {
@@ -329,28 +332,28 @@ resource agentSite 'Microsoft.Web/sites@2024-04-01' = {
 // Role assignments. The site's managed identity gets exactly the read access
 // it needs; the deploying user gets the same OpenAI access for local runs.
 // ---------------------------------------------------------------------------
-module agentOpenAiRole 'core/security/role.bicep' = {
+module agentOpenAiRole 'core/security/role.bicep' = if (deployAgentService) {
   name: 'agent-openai-role'
   params: {
-    principalId: agentSite.identity.principalId
+    principalId: agentSite!.identity.principalId
     principalType: 'ServicePrincipal'
     roleDefinitionId: cognitiveServicesOpenAiUserRoleId
   }
 }
 
-module agentCognitiveServicesRole 'core/security/role.bicep' = {
+module agentCognitiveServicesRole 'core/security/role.bicep' = if (deployAgentService) {
   name: 'agent-cognitiveservices-role'
   params: {
-    principalId: agentSite.identity.principalId
+    principalId: agentSite!.identity.principalId
     principalType: 'ServicePrincipal'
     roleDefinitionId: cognitiveServicesUserRoleId
   }
 }
 
-module agentKeyVaultRole 'core/security/role.bicep' = {
+module agentKeyVaultRole 'core/security/role.bicep' = if (deployAgentService) {
   name: 'agent-keyvault-role'
   params: {
-    principalId: agentSite.identity.principalId
+    principalId: agentSite!.identity.principalId
     principalType: 'ServicePrincipal'
     roleDefinitionId: keyVaultSecretsUserRoleId
   }
@@ -369,6 +372,6 @@ output openAiEndpoint string = 'https://${openAiName}.openai.azure.com/'
 output openAiDeploymentName string = openAiDeployment.name
 output keyVaultName string = keyVault.name
 output applicationInsightsConnectionString string = applicationInsights.properties.ConnectionString
-output agentSiteName string = agentSite.name
-output agentSiteUri string = 'https://${agentSite.properties.defaultHostName}'
-output agentPrincipalId string = agentSite.identity.principalId
+output agentSiteName string = deployAgentService ? agentSite!.name : ''
+output agentSiteUri string = deployAgentService ? 'https://${agentSite!.properties.defaultHostName}' : ''
+output agentPrincipalId string = deployAgentService ? agentSite!.identity.principalId : ''

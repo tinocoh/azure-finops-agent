@@ -53,6 +53,9 @@ param appServicePlanSku string = 'P0v3'
 @description('Deploy the audit-safe posture: private endpoints only, public network access disabled on Azure OpenAI and Key Vault. Requires connectivity into the virtual network to reach the app.')
 param enablePrivateNetworking bool = false
 
+@description('Deploy the App Service that hosts the agent. Keep true for normal deployments; set false only for quota-limited infrastructure validation.')
+param deployAgentService bool = true
+
 @description('Run the agent in read-only mode. Keep true for audit-safe deployments.')
 param finopsReadOnly bool = true
 
@@ -86,6 +89,7 @@ module resources 'resources.bicep' = {
     openAiCapacity: openAiCapacity
     appServicePlanSku: appServicePlanSku
     enablePrivateNetworking: enablePrivateNetworking
+    deployAgentService: deployAgentService
     finopsReadOnly: finopsReadOnly
     microsoftClientId: microsoftClientId
   }

@@ -12,6 +12,7 @@ module main 'main.bicep' = {
     location: 'eastus2'
     principalId: '00000000-0000-0000-0000-000000000000'
     enablePrivateNetworking: true
+    deployAgentService: true
     finopsReadOnly: true
   }
 }

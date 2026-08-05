@@ -35,6 +35,9 @@
     "enablePrivateNetworking": {
       "value": "${ENABLE_PRIVATE_NETWORKING=false}"
     },
+    "deployAgentService": {
+      "value": "${DEPLOY_AGENT_SERVICE=true}"
+    },
     "finopsReadOnly": {
       "value": "${FINOPS_READONLY=true}"
     },

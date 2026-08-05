@@ -62,3 +62,12 @@ Keep the audit-safe default:
 ```bash
 azd env set FINOPS_READONLY true
 ```
+
+For quota-limited validation environments only, skip the App Service while still validating and
+provisioning the shared infrastructure:
+
+```bash
+azd env set DEPLOY_AGENT_SERVICE false
+```
+
+Leave `DEPLOY_AGENT_SERVICE=true` for normal Azure-Samples deployments.

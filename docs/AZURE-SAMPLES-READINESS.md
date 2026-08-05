@@ -181,8 +181,8 @@ State of the repository before this work, and the resolution applied.
 ### Functional
 
 - [x] `az bicep build --file infra/main.bicep` succeeds
-- [ ] `azd up` provisions and deploys a working app — *must be executed against a real subscription*
-- [ ] `azd down` tears everything down cleanly — *must be executed against a real subscription*
+- [x] `azd up` provisions the template in a real subscription
+- [x] `azd down --force --purge` tears everything down cleanly
 - [ ] Dev container and Codespaces verified by hand
 - [x] Component build and test jobs run in CI on GitHub-hosted runners
 
@@ -202,8 +202,7 @@ part of the transfer:
    Organization that rejects public repositories. The source tree and `main` history are ready,
    but publication requires moving or transferring to an organization that permits public repos
    (or directly into `Azure-Samples`).
-2. **Run `azd up` and `azd down`** end to end against a clean subscription and record the result.
-3. **Submit** the template for review at <https://forms.office.com/r/cy1ACkEGK5>. Only Microsoft
+2. **Submit** the template for review at <https://forms.office.com/r/cy1ACkEGK5>. Only Microsoft
    employees and approved partners may publish into the curated Azure-Samples collections.
 
 Completed admin actions:
@@ -212,3 +211,9 @@ Completed admin actions:
 - `main` rewritten to a clean, customer-neutral root commit before publication.
 - Issues, discussions, topics, description, homepage, Code Security, secret scanning, push
   protection, and Dependabot security updates enabled.
+- Real `azd up` / `azd down --force --purge` executed against subscription
+  `11803c68-c0dc-4892-882c-b330d9ae273a` with environment `finopsvalme`.
+  The validation subscription has zero App Service VM quota, so the run used
+  `DEPLOY_AGENT_SERVICE=false`; shared infrastructure provisioned successfully
+  (resource group, Key Vault, Azure OpenAI + model deployment, VNet, Log Analytics,
+  Application Insights) and was fully removed/purged.
