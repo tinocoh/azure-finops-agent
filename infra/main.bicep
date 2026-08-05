@@ -35,13 +35,13 @@ param principalId string = ''
 param openAiLocation string = ''
 
 @description('Name of the Azure OpenAI model deployment.')
-param openAiDeploymentName string = 'gpt-4o'
+param openAiDeploymentName string = 'gpt-4.1-mini'
 
 @description('Azure OpenAI model to deploy.')
-param openAiModelName string = 'gpt-4o'
+param openAiModelName string = 'gpt-4.1-mini'
 
 @description('Azure OpenAI model version to deploy.')
-param openAiModelVersion string = '2024-11-20'
+param openAiModelVersion string = '2025-04-14'
 
 @minValue(1)
 @description('Provisioned throughput for the Azure OpenAI deployment, in thousands of tokens per minute.')
