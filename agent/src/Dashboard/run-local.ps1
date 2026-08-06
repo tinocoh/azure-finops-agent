@@ -20,7 +20,7 @@
   Listen URL (default http://localhost:5180).
 
 .EXAMPLE
-  ./run-local.ps1 -SubscriptionId "11803c68-...."
+  ./run-local.ps1 -SubscriptionId "00000000-0000-0000-0000-000000000000"
   # then open http://localhost:5180 and select "Connect Azure"
 #>
 param(

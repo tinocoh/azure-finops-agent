@@ -36,7 +36,7 @@ For each row in the claims table, mark: **keep** / **bump-version** / **delete**
 
 ## Phase 3 — Mine 5 days of production telemetry
 
-Application Insights App ID: **`89a08d0e-fb6e-4273-8a94-470699c7cfb2`** (Azure CLI is already authenticated).
+Application Insights App ID: **`<APPLICATION_INSIGHTS_APP_ID>`** (Azure CLI is already authenticated).
 
 Run targeted KQL over the last 5 days to find what production has actually been getting wrong. At minimum:
 

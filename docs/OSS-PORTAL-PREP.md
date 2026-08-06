@@ -24,7 +24,7 @@ evidence that can be safely pasted into the portal.
 | Intended final repository name | `Azure-Samples/azure-finops-agent` |
 | Template name | `azure-finops-agent` |
 | Current visibility | Public |
-| Microsoft contact / sponsor | `htinoco@microsoft.com` |
+| Microsoft contact / sponsor | `<MICROSOFT_SPONSOR_ALIAS>@microsoft.com` |
 | GitHub account used for staging | `tinocoh` |
 | Reason for personal staging | Microsoft Enterprise Managed User restrictions prevent the Microsoft-managed GitHub organization from hosting public repositories. |
 
@@ -99,8 +99,8 @@ Support channels:
 
 ## Real azd validation evidence
 
-Validation was executed against Azure subscription `11803c68-c0dc-4892-882c-b330d9ae273a` using
-environment `finopsvalme`.
+Validation was executed against Azure subscription `<VALIDATION_SUBSCRIPTION_ID>` using
+environment `<azd-validation-environment>`.
 
 Because that validation subscription has zero App Service VM quota, the run used:
 
@@ -124,7 +124,7 @@ Cleanup was completed with:
 azd down --force --purge
 ```
 
-The validation resource group `rg-finopsvalme` no longer exists.
+The validation resource group `rg-<azd-validation-environment>` no longer exists.
 
 Normal users should leave `DEPLOY_AGENT_SERVICE=true` so the App Service agent is deployed.
 
@@ -177,7 +177,7 @@ Azure FinOps Agent
 
 ### Microsoft business owner
 
-`htinoco@microsoft.com`
+`<MICROSOFT_SPONSOR_ALIAS>@microsoft.com`
 
 ### License
 
@@ -223,7 +223,7 @@ to `Azure-Samples`.
 
 ## Pre-submission checklist for the owner
 
-- [ ] Sign in to <https://repos.opensource.microsoft.com/release> with `htinoco@microsoft.com`.
+- [ ] Sign in to <https://repos.opensource.microsoft.com/release> with `<MICROSOFT_SPONSOR_ALIAS>@microsoft.com`.
 - [ ] Choose **Get release pre-approval**.
 - [ ] Use this document as the submission packet.
 - [ ] Include the Azure-Samples tracking issue:

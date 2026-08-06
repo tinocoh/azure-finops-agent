@@ -18,7 +18,7 @@ sample.
 ## Real azd validation
 
 Real `azd up` / `azd down` validation was executed against Azure subscription
-`11803c68-c0dc-4892-882c-b330d9ae273a` with environment `finopsvalme`.
+`<VALIDATION_SUBSCRIPTION_ID>` with environment `<azd-validation-environment>`.
 
 The validation subscription has zero App Service VM quota, so the run used:
 
