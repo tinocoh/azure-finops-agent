@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "UI de chat (Fluent UI) para el FinOps AI Agent — preguntas en lenguaje natural sobre costos y operación de Azure.",
+  "description": "Chat UI (Fluent UI) for the FinOps AI Agent — natural-language questions about Azure costs and operations.",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

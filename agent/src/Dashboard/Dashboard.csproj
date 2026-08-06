@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <RootNamespace>AzureFinOps.Dashboard</RootNamespace>
     <UserSecretsId>1190b8a4-6595-436b-9479-b9951bd00f16</UserSecretsId>
+    <FrontendRoot>$(MSBuildProjectDirectory)\webui\</FrontendRoot>
+    <FrontendOutput>$(MSBuildProjectDirectory)\wwwroot\</FrontendOutput>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,5 +24,18 @@
   <ItemGroup>
     <EmbeddedResource Include="AI\Tools\Resources\*.py" />
   </ItemGroup>
+
+  <ItemGroup>
+    <DashboardFrontendSource Include="webui\index.html;webui\vite.config.ts;webui\tsconfig.json;webui\src\**\*;webui\public\**\*" />
+  </ItemGroup>
+
+  <Target Name="BuildDashboardFrontend"
+          BeforeTargets="Build;ComputeFilesToPublish"
+          Inputs="webui\package.json;webui\package-lock.json;@(DashboardFrontendSource)"
+          Outputs="$(FrontendOutput)index.html">
+    <Message Importance="high" Text="Building Dashboard frontend assets..." />
+    <Exec WorkingDirectory="$(FrontendRoot)" Command="npm ci --no-audit --no-fund" />
+    <Exec WorkingDirectory="$(FrontendRoot)" Command="npm run build" />
+  </Target>
 
 </Project>
