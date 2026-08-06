@@ -28,7 +28,7 @@ interface Msg {
 const SUGGESTIONS = [
   'How much did I spend on Azure this month by service?',
   'Chart this month\'s spend by service as a pie chart',
-  'Compara en barras el precio/hora de las VMs D2s_v5, D4s_v5 y D8s_v5 en East US',
+  'Compare the hourly price of D2s_v5, D4s_v5, and D8s_v5 VMs in East US as a bar chart',
   'Where can I save money? Give me optimization recommendations.',
 ];
 
