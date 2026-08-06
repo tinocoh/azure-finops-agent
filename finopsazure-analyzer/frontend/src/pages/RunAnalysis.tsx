@@ -26,7 +26,7 @@ export default function RunAnalysis() {
           setSelectedSubs(conns[0].subscriptionIds);
         }
       } catch (e: any) {
-        setError(e?.message || 'Error cargando conexiones');
+        setError(e?.message || 'Error loading connections');
       } finally {
         setLoading(false);
       }
@@ -57,7 +57,7 @@ export default function RunAnalysis() {
       });
       navigate(`/results/${result.id}`);
     } catch (e: any) {
-      setError(e?.response?.data?.detail || e?.message || 'Error ejecutando el análisis');
+      setError(e?.response?.data?.detail || e?.message || 'Error running analysis');
     } finally {
       setRunning(false);
     }
@@ -68,20 +68,20 @@ export default function RunAnalysis() {
   if (connections.length === 0) {
     return (
       <div>
-        <h2>Ejecutar análisis</h2>
-        <p className="muted">Primero registra una conexión en Configuración Azure.</p>
+        <h2>Run analysis</h2>
+        <p className="muted">Register a connection in Azure configuration first.</p>
       </div>
     );
   }
 
   return (
     <div>
-      <h2>Ejecutar análisis</h2>
+      <h2>Run analysis</h2>
       <ErrorMessage message={error} />
 
       <div className="card" style={{ maxWidth: 620 }}>
         <div className="field">
-          <label>Conexión</label>
+          <label>Connection</label>
           <select value={connectionId} onChange={(e) => onConnectionChange(e.target.value)}>
             {connections.map((c) => (
               <option key={c.id} value={c.id}>{c.connectionName}</option>
@@ -90,7 +90,7 @@ export default function RunAnalysis() {
         </div>
 
         <div className="field">
-          <label>Suscripciones a analizar</label>
+          <label>Subscriptions to analyze</label>
           {current?.subscriptionIds.map((s) => (
             <label key={s} className="row" style={{ fontSize: 13, marginBottom: 6 }}>
               <input type="checkbox" checked={selectedSubs.includes(s)} onChange={() => toggleSub(s)} style={{ width: 'auto' }} />
@@ -101,19 +101,19 @@ export default function RunAnalysis() {
 
         <div className="row">
           <div className="field" style={{ flex: 1 }}>
-            <label>Desde (opcional)</label>
+            <label>From (optional)</label>
             <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
           </div>
           <div className="field" style={{ flex: 1 }}>
-            <label>Hasta (opcional)</label>
+            <label>To (optional)</label>
             <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
           </div>
         </div>
 
         <button className="btn" onClick={run} disabled={running || selectedSubs.length === 0}>
-          {running ? 'Ejecutando análisis…' : 'Ejecutar análisis'}
+          {running ? 'Running analysis...' : 'Run analysis'}
         </button>
-        {running && <p className="muted" style={{ marginTop: 10 }}>Consultando Cost Management, Resource Graph y Advisor…</p>}
+        {running && <p className="muted" style={{ marginTop: 10 }}>Querying Cost Management, Resource Graph, and Advisor...</p>}
       </div>
     </div>
   );

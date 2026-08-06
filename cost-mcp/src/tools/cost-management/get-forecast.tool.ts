@@ -70,9 +70,9 @@ export async function getForecastHandler(
 
     const p = project(rows, now);
     const summary =
-      `Proyección de cierre de mes (lineal): ${money(p.projected)}  ` +
-      `(real al día ${money(p.actual)} · pronóstico restante ${money(p.remaining)} · ` +
-      `${p.daysElapsed}/${p.daysInMonth} días)`;
+      `Projected month-end spend (linear): ${money(p.projected)}  ` +
+      `(actual to date ${money(p.actual)} · remaining forecast ${money(p.remaining)} · ` +
+      `${p.daysElapsed}/${p.daysInMonth} days)`;
 
     if (groupBy === 'None') {
       if (params.response_format === 'json') {

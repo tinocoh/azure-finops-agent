@@ -40,7 +40,7 @@ export default function AzureConfig() {
     try {
       setConnections(await api.listConnections());
     } catch (e: any) {
-      setApiError(e?.message || 'Error cargando conexiones');
+      setApiError(e?.message || 'Error loading connections');
     } finally {
       setLoading(false);
     }
@@ -52,13 +52,13 @@ export default function AzureConfig() {
 
   const validate = (): boolean => {
     const errs: Record<string, string> = {};
-    if (!form.connectionName.trim()) errs.connectionName = 'Requerido';
-    if (!GUID_RE.test(form.tenantId)) errs.tenantId = 'Debe ser un GUID válido';
-    if (!GUID_RE.test(form.clientId)) errs.clientId = 'Debe ser un GUID válido';
+    if (!form.connectionName.trim()) errs.connectionName = 'Required';
+    if (!GUID_RE.test(form.tenantId)) errs.tenantId = 'Must be a valid GUID';
+    if (!GUID_RE.test(form.clientId)) errs.clientId = 'Must be a valid GUID';
     const subs = form.subscriptionIds.split(',').map((s) => s.trim()).filter(Boolean);
-    if (subs.length === 0) errs.subscriptionIds = 'Agrega al menos una suscripción';
-    else if (subs.some((s) => !GUID_RE.test(s))) errs.subscriptionIds = 'Todas deben ser GUIDs válidos';
-    if (!editingId && !form.clientSecret) errs.clientSecret = 'Requerido al crear';
+    if (subs.length === 0) errs.subscriptionIds = 'Add at least one subscription';
+    else if (subs.some((s) => !GUID_RE.test(s))) errs.subscriptionIds = 'All values must be valid GUIDs';
+    if (!editingId && !form.clientSecret) errs.clientSecret = 'Required when creating';
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -92,7 +92,7 @@ export default function AzureConfig() {
       setEditingId(null);
       await refresh();
     } catch (e: any) {
-      setApiError(e?.response?.data?.detail || e?.message || 'Error guardando la conexión');
+      setApiError(e?.response?.data?.detail || e?.message || 'Error saving connection');
     } finally {
       setSaving(false);
     }
@@ -111,36 +111,36 @@ export default function AzureConfig() {
   };
 
   const remove = async (id: string) => {
-    if (!confirm('¿Eliminar esta conexión?')) return;
+    if (!confirm('Delete this connection?')) return;
     await api.deleteConnection(id);
     await refresh();
   };
 
   const runValidation = async (id: string) => {
-    setValidation((v) => ({ ...v, [id]: { ...(v[id] as any), status: 'validando' } as any }));
+    setValidation((v) => ({ ...v, [id]: { ...(v[id] as any), status: 'validating' } as any }));
     try {
       const result = await api.validateConnection(id);
       setValidation((v) => ({ ...v, [id]: result }));
     } catch (e: any) {
-      setApiError(e?.response?.data?.detail || 'Error validando la conexión');
+      setApiError(e?.response?.data?.detail || 'Error validating connection');
     }
   };
 
   return (
     <div>
-      <h2>Configuración Azure</h2>
+      <h2>Azure configuration</h2>
       <p className="muted">
-        Registra un service principal de <strong>mínimos privilegios</strong> (Reader + Cost Management Reader).
-        El <code>clientSecret</code> se cifra en el backend y nunca se devuelve.
+        Register a least-privilege service principal (Reader + Cost Management Reader).
+        The <code>clientSecret</code> is encrypted in the backend and never returned.
       </p>
       <ErrorMessage message={apiError} />
 
       <div className="row" style={{ alignItems: 'flex-start', gap: 28 }}>
         <form onSubmit={submit} className="card" style={{ flex: '1 1 360px', maxWidth: 460 }}>
-          <h3>{editingId ? 'Editar conexión' : 'Nueva conexión'}</h3>
+          <h3>{editingId ? 'Edit connection' : 'New connection'}</h3>
 
           <div className="field">
-            <label>Nombre de la conexión *</label>
+            <label>Connection name *</label>
             <input value={form.connectionName} onChange={(e) => setForm({ ...form, connectionName: e.target.value })} />
             {errors.connectionName && <div className="error">{errors.connectionName}</div>}
           </div>
@@ -160,16 +160,16 @@ export default function AzureConfig() {
           </div>
 
           <SecureTextInput
-            label={editingId ? 'Client Secret (dejar vacío para no cambiar)' : 'Client Secret'}
+            label={editingId ? 'Client Secret (leave blank to keep unchanged)' : 'Client Secret'}
             value={form.clientSecret}
             onChange={(v) => setForm({ ...form, clientSecret: v })}
             error={errors.clientSecret}
             required={!editingId}
-            placeholder={editingId ? '•••••• (sin cambios)' : ''}
+            placeholder={editingId ? '•••••• (unchanged)' : ''}
           />
 
           <div className="field">
-            <label>Subscription IDs (separadas por coma) *</label>
+            <label>Subscription IDs (comma-separated) *</label>
             <textarea rows={3} value={form.subscriptionIds}
               onChange={(e) => setForm({ ...form, subscriptionIds: e.target.value })}
               placeholder="sub-guid-1, sub-guid-2" />
@@ -177,39 +177,39 @@ export default function AzureConfig() {
           </div>
 
           <div className="field">
-            <label>Moneda por defecto (opcional)</label>
+            <label>Default currency (optional)</label>
             <input value={form.defaultCurrency} onChange={(e) => setForm({ ...form, defaultCurrency: e.target.value })} placeholder="MXN" />
           </div>
 
           <div className="row">
-            <button type="submit" className="btn" disabled={saving}>{saving ? 'Guardando…' : 'Guardar'}</button>
+            <button type="submit" className="btn" disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
             {editingId && (
               <button type="button" className="btn secondary" onClick={() => { setEditingId(null); setForm(empty); setErrors({}); }}>
-                Cancelar
+                Cancel
               </button>
             )}
           </div>
         </form>
 
         <div style={{ flex: '2 1 480px' }}>
-          <h3>Conexiones</h3>
+          <h3>Connections</h3>
           {loading ? (
             <Loading />
           ) : connections.length === 0 ? (
-            <p className="muted">No hay conexiones registradas.</p>
+            <p className="muted">No registered connections.</p>
           ) : (
             connections.map((c) => (
               <div className="card section" key={c.id}>
                 <div className="row">
                   <strong>{c.connectionName}</strong>
-                  <span className={`badge ${c.enabled ? 'ok' : 'warn'}`}>{c.enabled ? 'activa' : 'deshabilitada'}</span>
+                  <span className={`badge ${c.enabled ? 'ok' : 'warn'}`}>{c.enabled ? 'active' : 'disabled'}</span>
                   <div className="spacer" />
-                  <button className="btn secondary" onClick={() => runValidation(c.id)}>Validar</button>
-                  <button className="btn secondary" onClick={() => edit(c)}>Editar</button>
-                  <button className="btn danger" onClick={() => remove(c.id)}>Eliminar</button>
+                  <button className="btn secondary" onClick={() => runValidation(c.id)}>Validate</button>
+                  <button className="btn secondary" onClick={() => edit(c)}>Edit</button>
+                  <button className="btn danger" onClick={() => remove(c.id)}>Delete</button>
                 </div>
                 <div className="muted" style={{ marginTop: 8, fontSize: 13 }}>
-                  Tenant: {c.tenantId} · Client: {c.clientId} · Secreto: {c.secretSet ? c.secretHint : 'no definido'}
+                  Tenant: {c.tenantId} · Client: {c.clientId} · Secret: {c.secretSet ? c.secretHint : 'not set'}
                 </div>
                 <div style={{ marginTop: 8 }}>
                   {c.subscriptionIds.map((s) => <span className="tag" key={s}>{s}</span>)}
@@ -228,15 +228,15 @@ function ValidationView({ result }: { result: ValidationResult }) {
   return (
     <div style={{ marginTop: 12 }}>
       <div>
-        Credenciales:{' '}
+        Credentials:{' '}
         <span className={`badge ${result.credentialsValid ? 'ok' : 'err'}`}>
-          {result.credentialsValid ? 'válidas' : result.status}
+          {result.credentialsValid ? 'valid' : result.status}
         </span>
         {result.message && <span className="muted"> — {result.message}</span>}
       </div>
       {result.subscriptions?.length > 0 && (
         <table style={{ marginTop: 8 }}>
-          <thead><tr><th>Suscripción</th><th>Estado</th><th>Detalle</th></tr></thead>
+          <thead><tr><th>Subscription</th><th>Status</th><th>Details</th></tr></thead>
           <tbody>
             {result.subscriptions.map((s) => (
               <tr key={s.subscriptionId}>

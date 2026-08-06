@@ -19,7 +19,7 @@ export default function Recommendations() {
       try {
         setData(await api.getRecommendations(runId));
       } catch (e: any) {
-        setError(e?.message || 'Error cargando recomendaciones');
+        setError(e?.message || 'Error loading recommendations');
       } finally {
         setLoading(false);
       }
@@ -44,7 +44,7 @@ export default function Recommendations() {
 
   return (
     <div>
-      <h2>Recomendaciones</h2>
+      <h2>Recommendations</h2>
       <div className="cards section">
         {Object.entries(agg.byCategory || {}).map(([cat, n]) => (
           <div className="card stat-card" key={cat}>
@@ -56,11 +56,11 @@ export default function Recommendations() {
 
       <div className="row" style={{ marginBottom: 12 }}>
         <select value={category} onChange={(e) => setCategory(e.target.value)} style={{ maxWidth: 220 }}>
-          <option value="">Todas las categorías</option>
+          <option value="">All categories</option>
           {categories.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
         <select value={impact} onChange={(e) => setImpact(e.target.value)} style={{ maxWidth: 180 }}>
-          <option value="">Todo impacto</option>
+          <option value="">All impacts</option>
           <option value="High">High</option>
           <option value="Medium">Medium</option>
           <option value="Low">Low</option>
@@ -68,11 +68,11 @@ export default function Recommendations() {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="muted">Sin recomendaciones (o Advisor sin permisos de lectura).</p>
+        <p className="muted">No recommendations (or Advisor has no read permissions).</p>
       ) : (
         <table>
           <thead>
-            <tr><th>Categoría</th><th>Impacto</th><th>Problema</th><th>Solución</th><th>Recurso</th><th>Quick win</th></tr>
+            <tr><th>Category</th><th>Impact</th><th>Problem</th><th>Solution</th><th>Resource</th><th>Quick win</th></tr>
           </thead>
           <tbody>
             {filtered.map((r, i) => (

@@ -5,10 +5,10 @@ import ErrorMessage from '../components/ErrorMessage';
 import type { ChatMessage, Connection } from '../types';
 
 const SUGGESTIONS = [
-  '¿Cuánto gasté este mes por servicio?',
-  '¿Qué recursos no tienen tags?',
-  '¿Dónde puedo ahorrar? Dame los quick wins.',
-  '¿Cuál es la variación de costo vs el mes anterior?',
+  'How much did I spend this month by service?',
+  'Which resources are missing tags?',
+  'Where can I save money? Give me the quick wins.',
+  'What is the cost variance compared to last month?',
 ];
 
 export default function Chat() {
@@ -28,7 +28,7 @@ export default function Chat() {
         setConnections(conns);
         if (conns.length > 0) setConnectionId(conns[0].id);
       } catch (e: any) {
-        setError(e?.message || 'Error cargando conexiones');
+        setError(e?.message || 'Error loading connections');
       } finally {
         setLoading(false);
       }
@@ -51,8 +51,8 @@ export default function Chat() {
       const res = await api.chat({ connectionId, message, history });
       setMessages((m) => [...m, { role: 'assistant', content: res.reply }]);
     } catch (e: any) {
-      setError(e?.response?.data?.detail || e?.message || 'Error consultando el chat');
-      setMessages((m) => [...m, { role: 'assistant', content: '⚠️ No pude responder. Revisa la conexión y los permisos.' }]);
+      setError(e?.response?.data?.detail || e?.message || 'Error querying chat');
+      setMessages((m) => [...m, { role: 'assistant', content: '⚠️ I could not respond. Check the connection and permissions.' }]);
     } finally {
       setSending(false);
     }
@@ -64,7 +64,7 @@ export default function Chat() {
     return (
       <div>
         <h2>Chat FinOps</h2>
-        <p className="muted">Primero registra una conexión en Configuración Azure.</p>
+        <p className="muted">Register a connection in Azure configuration first.</p>
       </div>
     );
   }
@@ -80,13 +80,13 @@ export default function Chat() {
           </select>
         </div>
       </div>
-      <p className="muted">Pregunta en lenguaje natural sobre costos, inventario y recomendaciones de la suscripción seleccionada.</p>
+      <p className="muted">Ask natural-language questions about costs, inventory, and recommendations for the selected subscription.</p>
       <ErrorMessage message={error} />
 
       <div className="card" style={{ minHeight: 360, maxHeight: 520, overflowY: 'auto', marginBottom: 14 }}>
         {messages.length === 0 ? (
           <div>
-            <p className="muted">Empieza con una pregunta:</p>
+            <p className="muted">Start with a question:</p>
             <div className="row">
               {SUGGESTIONS.map((s) => (
                 <button key={s} className="btn secondary" onClick={() => send(s)} style={{ marginBottom: 8 }}>{s}</button>
@@ -96,7 +96,7 @@ export default function Chat() {
         ) : (
           messages.map((m, i) => <ChatBubble key={i} msg={m} />)
         )}
-        {sending && <div className="muted" style={{ marginTop: 8 }}>Consultando datos de la suscripción…</div>}
+        {sending && <div className="muted" style={{ marginTop: 8 }}>Querying subscription data...</div>}
         <div ref={bottomRef} />
       </div>
 
@@ -107,11 +107,11 @@ export default function Chat() {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Escribe tu pregunta…"
+          placeholder="Type your question..."
           style={{ flex: 1 }}
           disabled={sending}
         />
-        <button type="submit" className="btn" disabled={sending || !input.trim()}>Enviar</button>
+        <button type="submit" className="btn" disabled={sending || !input.trim()}>Send</button>
       </form>
     </div>
   );

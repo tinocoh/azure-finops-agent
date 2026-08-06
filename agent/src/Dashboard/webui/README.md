@@ -1,32 +1,36 @@
-# webui — Chat UI (React + Fluent UI v9)
+# Azure FinOps Agent web UI
 
-Interfaz de chat amigable para que un líder de operaciones de Azure pregunte en lenguaje
-natural sobre **costos y operación** de Azure. Conversa con el backend .NET vía `/api/chat`
-(streaming SSE) y usa el sign-in OAuth (`Conectar Azure`).
+React + TypeScript + Fluent UI chat interface for the Azure FinOps Agent.
 
-## Stack (decisión V2.0)
-- **Vite + React + TypeScript + Fluent UI v9** — sistema de diseño de Microsoft (look Azure,
-  accesible, profesional).
-- Se sirve **mismo-origen** desde el backend: `vite build` emite a `../wwwroot`, que el
-  `Dashboard` sirve con `UseStaticFiles` + `MapFallbackToFile`. Así cookies + el CSRF/Origin
-  de `/api/chat` y el OAuth funcionan sin CORS.
+## Stack
 
-## Funcionalidad
-- Chat con burbujas usuario/asistente, streaming token-a-token, render Markdown (tablas de costo).
-- Indicador de actividad de herramienta ("Consultando Cost Management…").
-- Estado de conexión + botón **Conectar Azure** (OAuth delegado).
-- Prompts sugeridos y aviso de **modo solo-lectura**.
+- Vite
+- React
+- TypeScript
+- Fluent UI v9
 
-## Desarrollo
+The build output is written to `../wwwroot` so the .NET `Dashboard` application can serve the
+single-page app with `UseStaticFiles` and `MapFallbackToFile`.
+
+## Features
+
+- Azure connection status and sign-in entry point.
+- Streaming chat over `/api/chat`.
+- Tool-call progress indicators.
+- Markdown rendering for agent responses.
+- Chart rendering for JSON chart payloads.
+
+## Local development
+
 ```bash
-cd agent/src/Dashboard/webui
 npm install
-npm run build          # → ../wwwroot (servido por el backend en http://localhost:5180/)
-# o, con el backend corriendo en :5180:
-npm run dev            # Vite dev server con proxy /api y /auth al backend
+npm run dev
 ```
-El backend debe correr con `COST_MCP_PATH`, `AzureOpenAI__*`, `FINOPS_READONLY=true` y la
-config `Microsoft:*` (ver `docs/OAUTH-SETUP.md`). Validado e2e: la UI invoca el tool MCP de
-costos y renderiza el gasto real del tenant (ver `docs/E2E-RESULTS.md`).
 
-> `wwwroot/` (salida de build) está en `.gitignore`; se genera con `npm run build` o en CI (job **webui**).
+## Production build
+
+```bash
+npm run build
+```
+
+`wwwroot/` is generated output and is intentionally ignored by git.

@@ -26,21 +26,21 @@ interface Msg {
 }
 
 const SUGGESTIONS = [
-  '¿Cuánto gasté este mes en Azure por servicio?',
-  'Grafica mi gasto de este mes por servicio en una gráfica de pastel',
+  'How much did I spend on Azure this month by service?',
+  'Chart this month\'s spend by service as a pie chart',
   'Compara en barras el precio/hora de las VMs D2s_v5, D4s_v5 y D8s_v5 en East US',
-  '¿Dónde puedo ahorrar? Dame recomendaciones de optimización.',
+  'Where can I save money? Give me optimization recommendations.',
 ];
 
 const friendlyTool = (t: string): string => {
-  if (t.includes('query_costs')) return 'Consultando Cost Management…';
-  if (t.includes('search_prices') || t.includes('vm_prices') || t.includes('cheapest')) return 'Consultando precios de Azure…';
-  if (t.includes('forecast')) return 'Calculando pronóstico de costos…';
-  if (t.includes('budget')) return 'Revisando presupuestos…';
-  if (t.includes('reservation') || t.includes('estimate')) return 'Estimando ahorros…';
-  if (t.startsWith('azure-cost')) return 'Consultando motor FinOps…';
-  if (t === 'web_fetch') return 'Consultando información pública…';
-  return 'Procesando…';
+  if (t.includes('query_costs')) return 'Querying Cost Management...';
+  if (t.includes('search_prices') || t.includes('vm_prices') || t.includes('cheapest')) return 'Querying Azure prices...';
+  if (t.includes('forecast')) return 'Calculating cost forecast...';
+  if (t.includes('budget')) return 'Reviewing budgets...';
+  if (t.includes('reservation') || t.includes('estimate')) return 'Estimating savings...';
+  if (t.startsWith('azure-cost')) return 'Querying FinOps engine...';
+  if (t === 'web_fetch') return 'Fetching public information...';
+  return 'Processing...';
 };
 
 const useStyles = makeStyles({
@@ -181,17 +181,17 @@ export function App() {
             </Text>
             <br />
             <Text size={200} style={{ color: tokens.colorNeutralForeground3 }}>
-              Costos y operación de Azure en lenguaje natural
+              Azure costs and operations in natural language
             </Text>
           </div>
         </div>
         {connected ? (
           <Badge appearance="tint" color="success" size="large">
-            Conectado · {me?.email}
+            Connected · {me?.email}
           </Badge>
         ) : (
           <Button appearance="primary" onClick={() => (window.location.href = '/auth/microsoft')}>
-            Conectar Azure
+            Connect Azure
           </Button>
         )}
       </header>
@@ -200,11 +200,11 @@ export function App() {
         <div className={s.thread}>
           {messages.length === 0 ? (
             <div className={s.empty}>
-              <Title3>¿En qué te ayudo hoy?</Title3>
+              <Title3>How can I help today?</Title3>
               <br />
               <Text>
-                Pregunta sobre tu gasto, recursos, precios o dónde optimizar.
-                {!connected && ' Conecta Azure para consultar los datos de tu suscripción.'}
+                Ask about spend, resources, pricing, or where to optimize.
+                {!connected && ' Connect Azure to query your subscription data.'}
               </Text>
               <div className={s.suggestGrid}>
                 {SUGGESTIONS.map((q) => (
@@ -220,7 +220,7 @@ export function App() {
                 <Avatar
                   size={28}
                   color={m.role === 'user' ? 'brand' : 'colorful'}
-                  name={m.role === 'user' ? me?.name ?? 'Tú' : 'FinOps'}
+                  name={m.role === 'user' ? me?.name ?? 'You' : 'FinOps'}
                   icon={m.role === 'assistant' ? <Sparkle24Filled /> : undefined}
                 />
                 <div className={`${s.bubble} ${m.role === 'user' ? s.bubbleUser : s.bubbleAssistant}`}>
@@ -235,7 +235,7 @@ export function App() {
                   {m.content ? (
                     <Markdown remarkPlugins={[remarkGfm]}>{m.content}</Markdown>
                   ) : m.streaming && !m.tool && !m.chart ? (
-                    <Spinner size="tiny" label="Pensando…" labelPosition="after" />
+                    <Spinner size="tiny" label="Thinking..." labelPosition="after" />
                   ) : null}
                   {m.chart && <ChartView payload={m.chart} />}
                 </div>
@@ -252,7 +252,7 @@ export function App() {
               className={s.textarea}
               appearance="filled-lighter"
               resize="vertical"
-              placeholder="Escribe tu pregunta sobre Azure…  (Enter para enviar)"
+              placeholder="Type your Azure question... (Enter to send)"
               value={input}
               onChange={(_, d) => setInput(d.value)}
               onKeyDown={(e) => {
@@ -268,11 +268,11 @@ export function App() {
               disabled={busy || !input.trim()}
               onClick={() => send(input)}
             >
-              Enviar
+              Send
             </Button>
           </div>
           <Text className={s.hint} size={100} block>
-            Modo solo-lectura · El agente no modifica tu tenant.
+            Read-only mode · The agent does not modify your tenant.
           </Text>
         </div>
       </footer>

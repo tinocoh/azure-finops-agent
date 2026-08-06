@@ -3,8 +3,8 @@ import { NavLink } from '../router';
 
 const links = [
   { to: '/', label: 'Dashboard', end: true },
-  { to: '/config', label: 'Configuración Azure' },
-  { to: '/run', label: 'Ejecutar análisis' },
+  { to: '/config', label: 'Azure configuration' },
+  { to: '/run', label: 'Run analysis' },
   { to: '/chat', label: 'Chat FinOps' },
 ];
 
@@ -37,10 +37,10 @@ export default function Layout({ children }: { children: ReactNode }) {
         </nav>
         {user && (
           <div style={{ padding: '16px 20px', marginTop: 20, borderTop: '1px solid var(--border)', fontSize: 13 }}>
-            <div className="muted">Sesión</div>
+            <div className="muted">Session</div>
             <div style={{ margin: '4px 0 8px' }}>{user}</div>
             <a href="/.auth/logout" className="btn secondary" style={{ display: 'inline-block', textDecoration: 'none' }}>
-              Cerrar sesión
+              Sign out
             </a>
           </div>
         )}

@@ -23,7 +23,7 @@ export default function Dashboard() {
           setLastSummary(await api.getSummary(allRuns[0].id));
         }
       } catch (e: any) {
-        setError(e?.message || 'Error cargando el dashboard');
+        setError(e?.message || 'Error loading dashboard');
       } finally {
         setLoading(false);
       }
@@ -41,31 +41,31 @@ export default function Dashboard() {
       <ErrorMessage message={error} />
 
       <div className="cards section">
-        <StatCard label="Suscripciones configuradas" value={connections.reduce((n, c) => n + c.subscriptionIds.length, 0)} />
-        <StatCard label="Conexiones" value={connections.length} />
-        <StatCard label="Análisis ejecutados" value={runs.length} />
+        <StatCard label="Configured subscriptions" value={connections.reduce((n, c) => n + c.subscriptionIds.length, 0)} />
+        <StatCard label="Connections" value={connections.length} />
+        <StatCard label="Analysis runs" value={runs.length} />
         <StatCard
-          label="Costo actual estimado"
+          label="Estimated current cost"
           value={s?.currentMonthCost != null ? s.currentMonthCost.toLocaleString() : '—'}
-          delta={delta != null ? `${delta > 0 ? '+' : ''}${delta}% vs mes anterior` : undefined}
+          delta={delta != null ? `${delta > 0 ? '+' : ''}${delta}% vs previous month` : undefined}
           trend={delta == null ? 'flat' : delta > 0 ? 'up' : 'down'}
         />
-        <StatCard label="Recomendaciones" value={s?.recommendations ?? '—'} />
-        <StatCard label="Recursos sin tags" value={s?.resourcesWithoutTags ?? '—'} />
+        <StatCard label="Recommendations" value={s?.recommendations ?? '—'} />
+        <StatCard label="Untagged resources" value={s?.resourcesWithoutTags ?? '—'} />
       </div>
 
       <div className="section">
         <div className="row">
-          <h3>Últimos análisis</h3>
+          <h3>Recent analyses</h3>
           <div className="spacer" />
-          <Link to="/run" className="btn">Ejecutar análisis</Link>
+          <Link to="/run" className="btn">Run analysis</Link>
         </div>
         {runs.length === 0 ? (
-          <p className="muted">Aún no hay análisis. Configura una conexión y ejecuta el primero.</p>
+          <p className="muted">No analyses yet. Configure a connection and run the first one.</p>
         ) : (
           <table>
             <thead>
-              <tr><th>Fecha</th><th>Estado</th><th>Suscripciones</th><th></th></tr>
+              <tr><th>Date</th><th>Status</th><th>Subscriptions</th><th></th></tr>
             </thead>
             <tbody>
               {runs.slice(0, 8).map((r) => (
@@ -73,7 +73,7 @@ export default function Dashboard() {
                   <td>{new Date(r.createdAt).toLocaleString()}</td>
                   <td><StatusBadge status={r.status} /></td>
                   <td>{r.subscriptionIds.length}</td>
-                  <td><Link to={`/results/${r.id}`}>Ver resultados</Link></td>
+                  <td><Link to={`/results/${r.id}`}>View results</Link></td>
                 </tr>
               ))}
             </tbody>
@@ -83,7 +83,7 @@ export default function Dashboard() {
 
       {connections.length === 0 && (
         <div className="card">
-          <p>No hay conexiones. Empieza en <Link to="/config">Configuración Azure</Link>.</p>
+          <p>No connections. Start in <Link to="/config">Azure configuration</Link>.</p>
         </div>
       )}
     </div>

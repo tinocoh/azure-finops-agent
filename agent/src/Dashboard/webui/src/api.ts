@@ -44,16 +44,16 @@ export async function streamChat(prompt: string, h: ChatHandlers): Promise<void>
       body: JSON.stringify({ prompt }),
     });
   } catch {
-    h.onError('No se pudo conectar con el agente.');
+    h.onError('Could not connect to the agent.');
     return;
   }
 
   if (res.status === 401) {
-    h.onError('Necesitas iniciar sesión para usar el agente.');
+    h.onError('You need to sign in to use the agent.');
     return;
   }
   if (!res.ok || !res.body) {
-    h.onError(`El agente respondió con un error (HTTP ${res.status}).`);
+    h.onError(`The agent returned an error (HTTP ${res.status}).`);
     return;
   }
 

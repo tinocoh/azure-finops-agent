@@ -33,9 +33,9 @@ describe('getForecastHandler', () => {
     ]);
     const result = await getForecastHandler({}, config, now);
     // actual 200 over 2 of 28 days -> projected 2800, remaining 2600
-    expect(result).toContain('Proyección de cierre de mes');
+    expect(result).toContain('Projected month-end spend');
     expect(result).toContain('$2800.00');
-    expect(result).toContain('real al día $200.00');
+    expect(result).toContain('actual to date $200.00');
     expect(result).toContain('$2600.00');
     expect(result).toContain('2/28');
   });
