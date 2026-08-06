@@ -2,9 +2,9 @@
 
 ## 1. Purpose
 
-Before this change set, the Azure FinOps Agent had a **single live converregulated tenantion per browser session**. Closing the tab, redeploying the container, or being idle past the 30-minute SDK timeout meant the user lost their chat history and had to re-consent to Azure / Graph / Log Analytics on the next visit.
+Before this change set, the Azure FinOps Agent had a **single live conversation per browser session**. Closing the tab, redeploying the container, or being idle past the 30-minute SDK timeout meant the user lost their chat history and had to re-consent to Azure / Graph / Log Analytics on the next visit.
 
-The goal of this work is to give every user — anonymous or Entra-authenticated — **multiple long-lived converregulated tenantions** that survive container restarts, slot swaps, OAuth token expiry, and 24-hour absences, **without re-prompting for OAuth consent**. Entra users additionally get cross-device continuity (sign in on a new browser → see the same converregulated tenantions).
+The goal of this work is to give every user — anonymous or Entra-authenticated — **multiple long-lived Conversations** that survive container restarts, slot swaps, OAuth token expiry, and 24-hour absences, **without re-prompting for OAuth consent**. Entra users additionally get cross-device continuity (sign in on a new browser → see the same Conversations).
 
 ## 2. Architecture at a glance
 
@@ -16,7 +16,7 @@ Three independent persistence layers cooperate:
 | **Per-user workdir**            | SDK working directory used as the _ownership marker_                    | `$COPILOT_HOME/users/{oid}` (Entra) or `$COPILOT_HOME/anon/{userId}`                      | Same as session state               |
 | **`PersistentIdentity` record** | Encrypted `oid`, `tenantId`, derived `userId`, refresh token, GraphTier | `$COPILOT_HOME/users/{oid}/identity.json` (DataProtection-encrypted) + `finops_id` cookie | 30 days, sliding                    |
 
-The combination is what makes restart-survivable login possible: the cookie tells us _who_ the user is, the identity record gives us a fresh access token (via the persisted refresh token), and the SDK rehydrates the converregulated tenantion from disk on the next prompt.
+The combination is what makes restart-survivable login possible: the cookie tells us _who_ the user is, the identity record gives us a fresh access token (via the persisted refresh token), and the SDK rehydrates the conversation from disk on the next prompt.
 
 ## 3. Identity & user-id derivation
 
@@ -81,7 +81,7 @@ This is the _only_ place that touches the identity file on the read path; the re
 
 `Auth/MicrosoftAuthEndpoints.cs` was extended so each Entra callback does three things in addition to its existing token exchange:
 
-1. **Migrate the in-memory user**. After the `id_token` is validated, derive `newUserId = DeriveUserId(oid)` and copy `telemetry.UserTokens`, `telemetry.UserTools`, and `telemetry.CurrentSessionId` from the random anon id to the deterministic OID-derived id. This is a no-op on subsequent logins but seamlessly converts a fresh visitor's anon session into their Entra session without losing the converregulated tenantion they may have already started.
+1. **Migrate the in-memory user**. After the `id_token` is validated, derive `newUserId = DeriveUserId(oid)` and copy `telemetry.UserTokens`, `telemetry.UserTools`, and `telemetry.CurrentSessionId` from the random anon id to the deterministic OID-derived id. This is a no-op on subsequent logins but seamlessly converts a fresh visitor's anon session into their Entra session without losing the conversation they may have already started.
 2. **Persist the rotating refresh token + the current GraphTier**:
    ```csharp
    if (!string.IsNullOrEmpty(refreshToken))
@@ -98,11 +98,11 @@ This is the _only_ place that touches the identity file on the read path; the re
 
 ## 7. Multi-session SDK glue
 
-`AI/CopilotSessionFactory.cs` is where the per-user multi-converregulated tenantion behavior lives. Key invariants:
+`AI/CopilotSessionFactory.cs` is where the per-user multi-conversation behavior lives. Key invariants:
 
 ### 7.1 Workdir as ownership marker
 
-Every `CopilotSession` is created with `WorkingDirectory = $COPILOT_HOME/users/{oid}` (Entra) or `…/anon/{userId}`. The SDK persists `metadata.Context.Cwd` for each session, so listing the user's converregulated tenantions is just _list all sessions whose `Cwd` matches my workdir_. We never store our own session-id index — the SDK's filesystem layout is the index.
+Every `CopilotSession` is created with `WorkingDirectory = $COPILOT_HOME/users/{oid}` (Entra) or `…/anon/{userId}`. The SDK persists `metadata.Context.Cwd` for each session, so listing the user's Conversations is just _list all sessions whose `Cwd` matches my workdir_. We never store our own session-id index — the SDK's filesystem layout is the index.
 
 ### 7.2 Live-vs-disk distinction (`AiTelemetry.LiveSessions`)
 
@@ -130,13 +130,13 @@ On the first user/assistant exchange we ask the model for a 5-word title via a t
 
 | Method   | Path                            | Purpose                                                                                                                                                                                                                          |
 | -------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `GET`    | `/api/sessions`                 | List the caller's converregulated tenantions (filtered by `Cwd`). **Anon users get an empty list** — their `userId` is randomized per browser session, so they could never re-find old chats anyway; the sidebar is intentionally Entra-only. |
-| `POST`   | `/api/sessions/new`             | Force-create a new converregulated tenantion and make it current.                                                                                                                                                                             |
+| `GET`    | `/api/sessions`                 | List the caller's Conversations (filtered by `Cwd`). **Anon users get an empty list** — their `userId` is randomized per browser session, so they could never re-find old chats anyway; the sidebar is intentionally Entra-only. |
+| `POST`   | `/api/sessions/new`             | Force-create a new conversation and make it current.                                                                                                                                                                             |
 | `POST`   | `/api/sessions/{id}/select`     | Switch the user's "current" pointer (with IDOR check).                                                                                                                                                                           |
 | `GET`    | `/api/sessions/{id}/transcript` | Read-only history fetch via `LoadTranscriptAsync` — does **not** disturb `CurrentSessionId` or the live-session gauge.                                                                                                           |
 | `DELETE` | `/api/sessions/{id}`            | Tears down live wrapper, removes title, removes current-session pointer if it matches, then `_copilotClient.DeleteSessionAsync` which deletes the on-disk session-state directory.                                               |
 
-The chat SSE endpoint (`AI/ChatEndpoints.cs`) accepts an optional `sessionId` to resume a specific converregulated tenantion, threads it through the IDOR check, and sends a `session_id` SSE event so the frontend can sync `localStorage`.
+The chat SSE endpoint (`AI/ChatEndpoints.cs`) accepts an optional `sessionId` to resume a specific conversation, threads it through the IDOR check, and sends a `session_id` SSE event so the frontend can sync `localStorage`.
 
 ## 9. TTL janitor
 
@@ -144,19 +144,19 @@ The chat SSE endpoint (`AI/ChatEndpoints.cs`) accepts an optional `sessionId` to
 
 ## 10. Frontend (`ChatView.vue`)
 
-The Vue chat UI now has a vertical-split right sidebar: tool calls on top, Converregulated tenantions list on bottom. On load it `GET`s `/api/sessions`, renders titles with relative timestamps, highlights the active one, and supports click-to-switch and trash-to-delete (single-click delete that removes from disk via the chain above). Anon users simply don't get this panel because the API returns an empty list.
+The Vue chat UI now has a vertical-split right sidebar: tool calls on top, Conversations list on bottom. On load it `GET`s `/api/sessions`, renders titles with relative timestamps, highlights the active one, and supports click-to-switch and trash-to-delete (single-click delete that removes from disk via the chain above). Anon users simply don't get this panel because the API returns an empty list.
 
 ## 11. End-to-end flow after these changes
 
 1. **First visit, anon** — middleware finds no cookie, mints a random anon `userId`, the user chats; session state is written to `$COPILOT_HOME/anon/{userId}/`.
-2. **Click "Connect Azure"** — OAuth callback derives `userId` from `oid`, migrates in-memory state, writes `identity.json` + sets `finops_id` cookie. The converregulated tenantion already in flight keeps its sessionId; future sessions go under `…/users/{oid}/`.
+2. **Click "Connect Azure"** — OAuth callback derives `userId` from `oid`, migrates in-memory state, writes `identity.json` + sets `finops_id` cookie. The conversation already in flight keeps its sessionId; future sessions go under `…/users/{oid}/`.
 3. **Container restart / new browser on another device** — cookie arrives → hydration middleware decrypts it, loads `identity.json`, restores session blobs. Sidebar fetches `/api/sessions`, shows all the user's past chats. Picking one rehydrates via `ResumeSessionAsync` with a freshly minted bearer.
-4. **Token expiry mid-converregulated tenantion** — proactive recycle kicks in 10 min before expiry, swaps the live wrapper for one with a new bearer; user sees nothing.
+4. **Token expiry mid-conversation** — proactive recycle kicks in 10 min before expiry, swaps the live wrapper for one with a new bearer; user sees nothing.
 5. **30-day idle** — janitor sweeps the on-disk state away.
 
 ## 12. Why this design and not SQLite / Cosmos
 
 - **Zero new infrastructure.** App Service `/home` is already an Azure Files mount that survives restarts, scale-up, and slot swaps. No new dependency, no new RBAC, no new failure mode.
 - **No locking surprises.** SQLite over SMB is famously bad. Plain JSON files + per-OID `SemaphoreSlim` + atomic `File.Move` give us the same correctness without WAL pitfalls.
-- **The SDK already persists converregulated tenantions.** Adding our own DB just to track which sessions belong to which user would duplicate state the SDK already keeps on disk — the `Cwd` convention turns the filesystem itself into our index.
+- **The SDK already persists Conversations.** Adding our own DB just to track which sessions belong to which user would duplicate state the SDK already keeps on disk — the `Cwd` convention turns the filesystem itself into our index.
 - **One surface to clean up.** Delete a user → delete their workdir → all their sessions and their identity record go with it.

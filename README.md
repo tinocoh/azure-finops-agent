@@ -64,7 +64,7 @@ flowchart LR
 
 | Folder | Component | Stack | Purpose |
 | --- | --- | --- | --- |
-| [`agent/`](agent/) | Agent experience | .NET 10, Vue 3 | Converregulated tenantional FinOps orchestration |
+| [`agent/`](agent/) | Agent experience | .NET 10, Vue 3 | Conversational FinOps orchestration |
 | [`cost-mcp/`](cost-mcp/) | Cost intelligence MCP server | TypeScript, Node.js | Cost, pricing, reservation, forecast, and budget tools |
 | [`finopsazure-analyzer/`](finopsazure-analyzer/) | Analyzer | Python, FastAPI, React | Cost and inventory analysis dashboard |
 | [`infra/`](infra/) | Infrastructure as code | Bicep | Azure App Service, Azure OpenAI, Key Vault, networking, monitoring |

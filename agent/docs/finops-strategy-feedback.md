@@ -45,7 +45,7 @@
 | Area                           | Details                                                                 |
 | ------------------------------ | ----------------------------------------------------------------------- |
 | **Vertical Cost Optimization** | Establish FinOps practice per department / LoB / cost area              |
-| **Dashboard-driven**           | Use dashboards to drive cost converregulated tenantions per department / cost center |
+| **Dashboard-driven**           | Use dashboards to drive cost Conversations per department / cost center |
 | **Cost avoidance**             | "Cost drive by not doing stuff" — avoid unnecessary spend proactively   |
 | **Chargeback / Showback**      | Implement cost allocation model so teams own their spend                |
 | **Move up the stack**          | Modernize workloads (PaaS, containers) — acknowledged as hard           |

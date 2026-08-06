@@ -198,16 +198,17 @@ State of the repository before this work, and the resolution applied.
 These cannot be completed from the source tree and must be done by a repository administrator as
 part of the transfer:
 
-1. **Flip visibility to public.** This repository is currently in an Enterprise Managed
-   Organization that rejects public repositories. The source tree and `main` history are ready,
-   but publication requires moving or transferring to an organization that permits public repos
-   (or directly into `Azure-Samples`).
-2. **Submit** the template for review at <https://forms.office.com/r/cy1ACkEGK5>. Only Microsoft
-   employees and approved partners may publish into the curated Azure-Samples collections.
+1. **Azure-Samples review path.** The previously documented Microsoft Forms link now returns 404.
+   Tracking issue: <https://github.com/Azure-Samples/azd-template-artifacts/issues/46>.
+2. **Microsoft OSS portal review.** Prepare and submit the internal Microsoft open source
+   publication packet. See [`OSS-PORTAL-PREP.md`](OSS-PORTAL-PREP.md).
+3. **Transfer to Azure-Samples.** After the current review path is confirmed, transfer from the
+   public staging repository to `Azure-Samples/azure-finops-agent`.
 
 Completed admin actions:
 
 - Repository renamed to `azure-finops-agent`.
+- Public staging repository created at <https://github.com/tinocoh/azure-finops-agent>.
 - `main` rewritten to a clean, customer-neutral root commit before publication.
 - Issues, discussions, topics, description, homepage, Code Security, secret scanning, push
   protection, and Dependabot security updates enabled.

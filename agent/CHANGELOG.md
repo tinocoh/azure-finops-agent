@@ -24,7 +24,7 @@ Persistent sessions, hardened auth, richer chat UX.
 
 ### Added
 
-- **Persistent multi-session chat** — Converregulated tenantions survive browser close, page refresh, container restarts, and slot swaps. Each user keeps a sidebar list of past converregulated tenantions they can resume. Powered by GitHub Copilot SDK 1.0.0-beta.3 with on-disk session state on the App Service `/home` mount. New `SessionEndpoints.cs` exposes `GET/POST/DELETE /api/sessions`.
+- **Persistent multi-session chat** — Conversations survive browser close, page refresh, container restarts, and slot swaps. Each user keeps a sidebar list of past Conversations they can resume. Powered by GitHub Copilot SDK 1.0.0-beta.3 with on-disk session state on the App Service `/home` mount. New `SessionEndpoints.cs` exposes `GET/POST/DELETE /api/sessions`.
 - **FinOps maturity scoring UI** — Crawl / Walk / Run sidebar now ships with score buttons, a playbook section, collapsible maturity cards, and interactive star ratings updated by the agent.
 - **Analyze button in the chat input** — One-click "find cost waste & recommend actions" that also picks up any attached files.
 - **EA / MCA pricesheet support** — Sidebar prompts for downloading negotiated pricesheets and running commitment-aware analysis.
@@ -41,7 +41,7 @@ Persistent sessions, hardened auth, richer chat UX.
 ### Changed
 
 - Upgraded to GitHub Copilot SDK **1.0.0-beta.3** with new session lifecycle.
-- Tool calls and charts are scoped per-session — switching converregulated tenantions no longer mixes up the right sidebar.
+- Tool calls and charts are scoped per-session — switching Conversations no longer mixes up the right sidebar.
 - Mid-turn "thinking" narration is cleared before the final answer streams in.
 - "Top 3 fixes" renders as a markdown table with clearer impact details.
 - Ambiguous-affirmative intent-binding rule in the Copilot SystemPrompt — "yes / go ahead / proceed" now resolves against the most recent in-chat offer instead of the loudest queued sidebar action.

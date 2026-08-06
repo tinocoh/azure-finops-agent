@@ -8,7 +8,7 @@
 [![Open issues](https://img.shields.io/github/issues/Azure-Samples/azure-finops-agent)](https://github.com/Azure-Samples/azure-finops-agent/issues)
 [![Last commit](https://img.shields.io/github/last-commit/Azure-Samples/azure-finops-agent)](https://github.com/Azure-Samples/azure-finops-agent/commits/main)
 
-**Replace a multi-week FinOps assessment with a single converregulated tenantion.**
+**Replace a multi-week FinOps assessment with a single conversation.**
 
 Quantified savings, a FinOps maturity score, a CFO-ready deck, and ready-to-run remediation scripts — in minutes.
 
