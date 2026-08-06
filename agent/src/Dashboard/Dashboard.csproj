@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DashboardFrontendSource Include="webui\index.html;webui\vite.config.ts;webui\tsconfig.json;webui\src\**\*;webui\public\**\*" />
+    <DashboardFrontendSource Include="webui\index.html;webui\vite.config.js;webui\src\**\*;webui\public\**\*" />
   </ItemGroup>
 
   <Target Name="BuildDashboardFrontend"

@@ -3,11 +3,193 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Azure FinOps Agent</title>
-    <meta name="description" content="Azure costs and operations in natural language." />
+    <title>
+      Azure FinOps Agent — AI-Powered Cloud Cost Optimization for Azure
+    </title>
+    <meta
+      name="description"
+      content="Azure FinOps Agent is an AI-powered conversational tool that helps you optimize Azure cloud costs. Identify idle resources, forecast spend, analyze reservations, and get actionable FinOps insights — all through natural language."
+    />
+    <meta
+      name="keywords"
+      content="Azure, FinOps, cloud cost optimization, AI agent, cost management, Azure billing, cloud financial management, Azure Advisor, reservation utilization, savings plans, Azure Monitor"
+    />
+    <meta name="author" content="Azure FinOps Agent contributors" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://github.com/tinocoh/azure-finops-agent" />
+
+    <!-- Google Search Console verification -->
+    <meta
+      name="google-site-verification"
+      content="qkWnL3r3v4pQyztjuakT4NpMC2CWkEdJrUZgcW-YRaM"
+    />
+
+    <!-- Bing Webmaster Tools verification -->
+    <meta name="msvalidate.01" content="76480647C300D975DDA7E7AF3CD2A70B" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://github.com/tinocoh/azure-finops-agent" />
+    <meta
+      property="og:title"
+      content="Azure FinOps Agent — AI-Powered Cloud Cost Optimization"
+    />
+    <meta
+      property="og:description"
+      content="An AI-powered conversational agent that helps Azure customers optimize cloud costs. Get actionable FinOps insights through natural language — identify idle resources, forecast spend, and analyze reservations."
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/tinocoh/azure-finops-agent/main/agent/src/Dashboard/webui/public/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Azure FinOps Agent" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Azure FinOps Agent — AI-Powered Cloud Cost Optimization"
+    />
+    <meta
+      name="twitter:description"
+      content="An AI-powered conversational agent that helps Azure customers optimize cloud costs. Get actionable FinOps insights through natural language."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/tinocoh/azure-finops-agent/main/agent/src/Dashboard/webui/public/og-image.png"
+    />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Azure FinOps Agent",
+        "url": "https://github.com/tinocoh/azure-finops-agent",
+        "description": "AI-powered conversational agent for Azure cloud cost optimization. Provides actionable FinOps insights including idle resource detection, spend forecasting, reservation analysis, and cost management recommendations.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Azure FinOps Agent contributors",
+          "url": "https://github.com/tinocoh"
+        },
+        "license": "https://opensource.org/licenses/MIT",
+        "softwareVersion": "1.0",
+        "featureList": [
+          "Conversational cost analysis",
+          "Live Azure tenant data queries",
+          "Microsoft Graph integration",
+          "Log Analytics & App Insights KQL queries",
+          "Interactive ECharts data visualizations",
+          "Real-time Azure pricing lookup",
+          "Python and bash code execution",
+          "Streaming SSE responses",
+          "Multiple AI model selection"
+        ]
+      }
+    </script>
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/apple-touch-icon.png"
+    />
+
+    <!-- FAQ Structured Data for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much does a D4s_v5 VM cost per month on Azure?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A Standard_D4s_v5 VM (4 vCPUs, 16 GB RAM) on Azure costs approximately $98-$168/month depending on the region. The cheapest regions are typically US Central, US West, and Central India. Pay-as-you-go pricing is calculated at the hourly rate × 730 hours/month."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between Azure spot and on-demand VM pricing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Azure spot VMs offer up to 80% discount compared to on-demand pricing, but can be evicted when Azure needs capacity. On-demand VMs guarantee availability at the standard pay-as-you-go rate. Spot is ideal for fault-tolerant workloads like batch processing and dev/test."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do Azure Reserved Instances compare to pay-as-you-go?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Azure Reserved Instances offer 30-40% savings for 1-year commitments and 55-65% savings for 3-year commitments compared to pay-as-you-go pricing. They're best for predictable, steady-state workloads that run 24/7."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is FinOps and how does it apply to Azure?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FinOps is a cloud financial management discipline that combines finance, technology, and business teams to optimize cloud spending. On Azure, FinOps practices include right-sizing VMs, using reservations and savings plans, cleaning up idle resources, implementing tagging for cost allocation, and setting budgets with alerts."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I find idle or unused Azure resources to reduce costs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use Azure Advisor cost recommendations, check for unattached disks, unused public IPs, empty resource groups, VMs with consistently low CPU usage, and App Service plans with no apps. Azure FinOps Agent can automatically scan your subscriptions and identify these resources with their monthly cost impact."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do Azure Blob Storage tiers compare in pricing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Azure Blob Storage has four tiers: Hot (frequent access, ~$0.018/GB), Cool (infrequent access, ~$0.01/GB, 30-day minimum), Cold (~$0.0036/GB, 90-day minimum), and Archive (~$0.00099/GB, 180-day minimum). Hot has lowest access costs but highest storage costs. Archive is cheapest for storage but has high retrieval costs and hours-long rehydration time."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the cost of running AKS vs Container Apps vs Azure Functions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AKS (Azure Kubernetes Service) charges only for the underlying VMs and infrastructure — the control plane is free. Azure Container Apps has a consumption plan with per-vCPU-second and per-GB-second billing plus a small per-request fee. Azure Functions consumption plan charges per execution and per GB-second of memory. For 20 microservices, AKS is typically cheapest at scale, Container Apps is simplest for moderate traffic, and Functions is cheapest for infrequent/bursty workloads."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does GPU training cost on Azure (A100 vs H100)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The ND96asr_v4 (8x A100 80GB) costs approximately $27-32/hour on-demand. The NC80adis_H100_v5 (8x H100) costs approximately $32-38/hour. Spot pricing can reduce costs by 60-80% when available. Monthly costs for a 4-node training cluster range from $80K-$110K on-demand or $16K-$30K with spot instances."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#0969da" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
