@@ -312,22 +312,22 @@ The production app runs as a Docker container on Azure App Service, fed from Azu
 
 When debugging production issues, use `az monitor app-insights query` to run KQL queries directly against Application Insights — no portal needed. The Azure CLI is already authenticated, so this works immediately.
 
-**App Insights App ID**: `89a08d0e-fb6e-4273-8a94-470699c7cfb2`
+**App Insights App ID**: `<APPLICATION_INSIGHTS_APP_ID>`
 
 Common queries:
 
 ```powershell
 # Recent errors (traces with severityLevel >= 3)
-az monitor app-insights query --app "89a08d0e-fb6e-4273-8a94-470699c7cfb2" --analytics-query "traces | where timestamp > ago(1h) and severityLevel >= 3 | order by timestamp desc | take 20 | project timestamp, message, severityLevel"
+az monitor app-insights query --app "<APPLICATION_INSIGHTS_APP_ID>" --analytics-query "traces | where timestamp > ago(1h) and severityLevel >= 3 | order by timestamp desc | take 20 | project timestamp, message, severityLevel"
 
 # Token/auth issues
-az monitor app-insights query --app "89a08d0e-fb6e-4273-8a94-470699c7cfb2" --analytics-query "traces | where timestamp > ago(1h) and message contains 'token' | order by timestamp desc | take 10 | project timestamp, message"
+az monitor app-insights query --app "<APPLICATION_INSIGHTS_APP_ID>" --analytics-query "traces | where timestamp > ago(1h) and message contains 'token' | order by timestamp desc | take 10 | project timestamp, message"
 
 # All recent traces
-az monitor app-insights query --app "89a08d0e-fb6e-4273-8a94-470699c7cfb2" --analytics-query "traces | where timestamp > ago(30m) | order by timestamp desc | take 50 | project timestamp, message, severityLevel"
+az monitor app-insights query --app "<APPLICATION_INSIGHTS_APP_ID>" --analytics-query "traces | where timestamp > ago(30m) | order by timestamp desc | take 50 | project timestamp, message, severityLevel"
 
 # Failed requests
-az monitor app-insights query --app "89a08d0e-fb6e-4273-8a94-470699c7cfb2" --analytics-query "requests | where timestamp > ago(1h) and success == false | order by timestamp desc | take 20 | project timestamp, name, resultCode, duration"
+az monitor app-insights query --app "<APPLICATION_INSIGHTS_APP_ID>" --analytics-query "requests | where timestamp > ago(1h) and success == false | order by timestamp desc | take 20 | project timestamp, name, resultCode, duration"
 ```
 
 Always prefer this over downloading log files or tailing logs — it's faster, structured, and queryable.
