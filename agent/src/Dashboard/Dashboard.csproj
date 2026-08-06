@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>AzureFinOps.Dashboard</RootNamespace>
-    <UserSecretsId>1190b8a4-6595-436b-9479-b9951bd00f16</UserSecretsId>
+    <UserSecretsId>azure-finops-agent-dashboard</UserSecretsId>
     <FrontendRoot>$(MSBuildProjectDirectory)\webui\</FrontendRoot>
     <FrontendOutput>$(MSBuildProjectDirectory)\wwwroot\</FrontendOutput>
   </PropertyGroup>
