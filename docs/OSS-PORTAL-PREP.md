@@ -223,8 +223,8 @@ to `Azure-Samples`.
 
 ## Pre-submission checklist for the owner
 
-- [ ] Sign in to <https://docs.opensource.microsoft.com/> with `htinoco@microsoft.com`.
-- [ ] Start the Microsoft project / OSS publication flow.
+- [ ] Sign in to <https://repos.opensource.microsoft.com/release> with `htinoco@microsoft.com`.
+- [ ] Choose **Get release pre-approval**.
 - [ ] Use this document as the submission packet.
 - [ ] Include the Azure-Samples tracking issue:
   <https://github.com/Azure-Samples/azd-template-artifacts/issues/46>.
@@ -232,3 +232,68 @@ to `Azure-Samples`.
 - [ ] Ask whether an internal Microsoft-owned staging org is preferred before transfer to
   `Azure-Samples`.
 - [ ] After OSS portal approval, continue Azure-Samples submission/transfer path.
+
+## Exact OSS portal route and field guide
+
+As of 2026-08-06, the current internal route is:
+
+1. Go to <https://repos.opensource.microsoft.com/release>.
+2. Choose **Get release pre-approval**.
+3. The form opens at <https://repos.opensource.microsoft.com/releases>.
+4. Complete the fields below.
+5. Submit with **Submit pre-approval request**.
+
+Use **Get release pre-approval**, not **Create a GitHub repository**, because the public staging
+repository already exists at <https://github.com/tinocoh/azure-finops-agent>.
+
+| Portal field | Recommended answer |
+| --- | --- |
+| Is this going to ship as a public open source-licensed project? | **Yes, creating an open source-licensed project** |
+| What type of open source project will this be? | **Sample code** |
+| What license will you be releasing with? | **MIT** |
+| Did your team write all the code and create all of the assets you are releasing? | **No, created by other teams** |
+| Contains 3rd-party embedded open source code or components? | **No** |
+| Contains Microsoft code owned by another Microsoft team? | **Yes, contains code owned by other teams** |
+| Details | `This sample integrates and adapts Microsoft-owned sample components: a .NET Azure FinOps agent experience, an Azure cost MCP server, and a FastAPI/React Azure FinOps analyzer. The public repository includes upstream attribution and keeps the release under MIT. The intended final destination is Azure-Samples/azure-finops-agent after OSS and Azure-Samples review.` |
+| Does this project send any data or telemetry back to Microsoft? | **Yes, telemetry** |
+| Does this project implement cryptography? | **No** |
+| Please confirm where your project will be published | **GitHub** |
+| Project name | `Azure FinOps Agent` |
+| Project version | `0.1.0` |
+| Project description | See suggested project description below. |
+| Business goals | See suggested business goals below. |
+| Will this be used in a Microsoft product or service? | `No production Microsoft product or service dependency. This is intended as public Azure sample code and an Azure Developer CLI template for eventual publication under Azure-Samples.` |
+
+### Suggested project description for the portal
+
+```text
+Azure FinOps Agent is an Azure Developer CLI (azd) sample that demonstrates how to build a secure, keyless, audit-safe FinOps assistant on Azure. It combines a .NET agent experience, an MCP server for Azure cost intelligence, and a FastAPI/React analyzer for cost, inventory, Azure Advisor recommendations, and optimization opportunities.
+
+The sample provisions Azure OpenAI, Key Vault, virtual networking, Log Analytics, and Application Insights using Bicep and azd. It uses managed identity and RBAC for service-to-service access, disables Azure OpenAI local key authentication, and enables read-only operation by default.
+```
+
+### Suggested business goals for the portal
+
+```text
+The goal is to publish a standards-compliant Azure sample that helps customers, partners, and Microsoft field teams understand how to build AI-assisted FinOps experiences on Azure using secure-by-default patterns.
+
+The sample demonstrates Azure Developer CLI template structure, managed identity, RBAC, Azure OpenAI, Key Vault, Azure Monitor, and Azure cost optimization workflows. It is intended to become Azure-Samples/azure-finops-agent after Microsoft OSS portal approval and Azure-Samples review.
+
+The repository is currently staged publicly at https://github.com/tinocoh/azure-finops-agent because Enterprise Managed User restrictions prevent the Microsoft-managed GitHub organization available to the owner from hosting public repositories. The staging repo has a clean public history, OSS community files, CI, azd validation, and documented real azd up/down validation.
+
+Azure-Samples submission tracking issue: https://github.com/Azure-Samples/azd-template-artifacts/issues/46
+```
+
+## Notes on selected answers
+
+- **Sample code** is the most accurate project type. The project uses Azure OpenAI but does not
+  release an AI/ML model.
+- **No 3rd-party embedded open source code** means no third-party source is vendored directly into
+  the repository. Third-party dependencies are referenced through NuGet, npm, and pip manifests.
+- **Yes, Microsoft code owned by another team** is the safest answer because this repo integrates
+  and adapts Microsoft-owned sample components. The portal may route this for acknowledgment/review.
+- **Yes, telemetry** is conservative because the sample provisions Application Insights and Log
+  Analytics. Telemetry is deployed into the user's Azure subscription; the sample does not phone
+  home to a Microsoft-operated product endpoint outside the Azure resources the user provisions.
+- **No cryptography** means the project does not implement custom cryptographic algorithms. It uses
+  standard platform TLS, Azure SDKs, and dependency libraries.
