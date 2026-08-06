@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://azure-finops-agent.com/sitemap.xml
