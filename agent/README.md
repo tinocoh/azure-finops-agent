@@ -107,8 +107,10 @@ Open **http://localhost:5000**.
 
 User Secrets are stored **outside the repo** — they can never be accidentally committed:
 
-- **Windows:** `%APPDATA%\Microsoft\UserSecrets\1190b8a4-6595-436b-9479-b9951bd00f16\secrets.json`
-- **macOS / Linux:** `~/.microsoft/usersecrets/1190b8a4-6595-436b-9479-b9951bd00f16/secrets.json`
+- **Windows:** `%APPDATA%\Microsoft\UserSecrets\<USER_SECRETS_ID>\secrets.json`
+- **macOS / Linux:** `~/.microsoft/usersecrets/<USER_SECRETS_ID>/secrets.json`
+
+`<USER_SECRETS_ID>` is the `UserSecretsId` value from `src/Dashboard/Dashboard.csproj`.
 
 ### Production
 
