@@ -38,7 +38,7 @@ The branch name is shown in the top-right badge of the running app.
 ### Building & Running
 
 - **Backend**: .NET 10 minimal API in `src/Dashboard/`
-- **Frontend**: Vue 3 + Vite SPA in `src/Dashboard/frontend/`
+- **Frontend**: Vue 3 + Vite SPA in `src/Dashboard/webui/`
 
 ```powershell
 # One-time: Create Entra ID app registration
@@ -47,7 +47,7 @@ cd src/Dashboard
 # Store the output ClientId/ClientSecret via dotnet user-secrets (see README → Running Locally)
 
 # Build the Vue frontend to wwwroot/
-cd frontend
+cd webui
 npm install
 npm run build
 
@@ -78,7 +78,7 @@ src/Dashboard/
 ├── Endpoints/              # Sessions, downloads, uploads, SEO/meta endpoints
 ├── Infrastructure/         # HTTP helper, temp file helper
 ├── Observability/          # OpenTelemetry sources/meters
-├── frontend/src/components/  # Vue 3 components (ChatView, Dashboard)
+├── webui/src/components/  # Vue 3 components (ChatView, Dashboard)
 ├── Dockerfile              # Multi-stage build (frontend + .NET + Python + OTel)
 └── setup-entra-app.ps1     # Entra ID app registration setup (one-time)
 ```

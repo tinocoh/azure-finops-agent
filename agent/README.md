@@ -16,7 +16,7 @@ The agent fixes the issue for you, or hands you the az&nbsp;cli script. Read &am
 
 ## [Try it live →](https://azure-finops-agent.com) &nbsp;&nbsp;&nbsp; [📊 Pitch deck →](https://azure-finops-agent.com/slides)
 
-![Azure FinOps Agent](src/Dashboard/frontend/public/og-image.png)
+![Azure FinOps Agent](src/Dashboard/webui/public/og-image.png)
 
 ![Azure FinOps Agent screenshot](docs/assets/screenshot-portal.png)
 
@@ -86,7 +86,7 @@ Run `dotnet user-secrets list` (from `src/Dashboard`) to verify what's stored.
 ### Build the frontend
 
 ```powershell
-cd src/Dashboard/frontend
+cd src/Dashboard/webui
 npm install
 npm run build    # outputs to src/Dashboard/wwwroot/
 ```

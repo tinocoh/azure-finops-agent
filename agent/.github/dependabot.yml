@@ -14,7 +14,7 @@ updates:
         patterns: ["Azure.*"]
 
   - package-ecosystem: npm
-    directory: /src/Dashboard/frontend
+    directory: /src/Dashboard/webui
     schedule:
       interval: weekly
       day: monday
