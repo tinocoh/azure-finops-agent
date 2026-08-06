@@ -1,15 +1,15 @@
 # syntax=docker/dockerfile:1.7
 # ── Stage 1: Build Vue frontend ──
 FROM node:26-slim AS frontend
-WORKDIR /app/frontend
-COPY frontend/package.json frontend/package-lock.json* ./
+WORKDIR /app/webui
+COPY webui/package.json webui/package-lock.json* ./
 # Use `npm install` instead of `npm ci` so that Linux-only platform-optional
 # deps (e.g. @emnapi/*) that aren't present when the lockfile was last
 # regenerated on a Windows dev machine still resolve cleanly in CI.
 # BuildKit cache mount keeps ~/.npm warm across CI builds.
 RUN --mount=type=cache,target=/root/.npm \
     npm install --no-audit --no-fund --prefer-offline
-COPY frontend/ ./
+COPY webui/ ./
 RUN npx vite build --outDir ../wwwroot
 
 # ── Stage 2: Build .NET backend ──

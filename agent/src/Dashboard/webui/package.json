@@ -1,31 +1,21 @@
 {
-  "name": "finops-chat-webui",
-  "private": true,
+  "name": "finops-dashboard-client",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "description": "Chat UI (Fluent UI) for the FinOps AI Agent — natural-language questions about Azure costs and operations.",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "@fluentui/react-components": "^9.54.0",
-    "@fluentui/react-icons": "^2.0.245",
-    "echarts": "^6.1.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-markdown": "^9.0.1",
-    "remark-gfm": "^4.0.0"
-  },
   "devDependencies": {
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "4.7.0",
-    "typescript": "^5.5.3",
-    "vite": "7.3.5"
+    "@vitejs/plugin-vue": "^6.0.6",
+    "vite": "^8.0.10",
+    "vue": "^3.5.34"
   },
-  "overrides": {
-    "esbuild": "0.28.1"
+  "dependencies": {
+    "@microsoft/applicationinsights-web": "^3.3.11",
+    "echarts": "^6.0.0",
+    "highlight.js": "^11.11.1"
   }
 }
