@@ -37,7 +37,7 @@ __queuestorage__/
 azurite-debug.log
 
 # Generated demo data and large local media
-agent/demo-data/azure-cost-90days.csv
+agent/demo-data/
 agent/src/Dashboard/webui/public/video.mp4
 agent/src/Dashboard/webui/public/video1.mp4
 

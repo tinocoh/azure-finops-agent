@@ -22,10 +22,12 @@ The agent fixes the issue for you, or hands you the az&nbsp;cli script. Read &am
 
 ## Try it without signing in
 
-No Azure tenant? Two ways to demo:
+No Azure tenant? You can still ask public pricing questions:
 
 - **Public pricing questions** — ask about Azure VM SKUs, regions, reservations, savings plans. Agent uses the public Retail Prices API (no auth).
-- **Drop a sample file** — drag any CSV/JSON/XLSX/PDF from [`demo-data/`](demo-data/) into the chat. The agent inspects the schema, runs aggregates, and answers without ever loading the raw payload into the LLM. Includes realistic cost exports, Advisor JSON, audit logs, and FinOps notes.
+
+This release does not include datasets or synthetic datasets. To analyze files, bring your own
+export at runtime using the upload experience in the app.
 
 ## How it works
 
@@ -135,4 +137,6 @@ The deploy workflow (`deploy.yml`) injects secrets into App Service as applicati
 
 ## License
 
-[MIT](LICENSE) · See [CONTRIBUTING.md](CONTRIBUTING.md) · [Code of Conduct](https://opensource.microsoft.com/codeofconduct/)
+Code is licensed under the [MIT License](../LICENSE). Documentation and non-code content are
+licensed under [CC-BY-4.0](../LICENSE-CONTENT.md). See [CONTRIBUTING.md](CONTRIBUTING.md) ·
+[Code of Conduct](https://opensource.microsoft.com/codeofconduct/).

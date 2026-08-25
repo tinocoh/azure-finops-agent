@@ -46,6 +46,12 @@ enabling additional security features.
 - Optional private endpoints for Azure OpenAI and Key Vault.
 - Application Insights and Log Analytics for observability.
 
+## Release scope
+
+This release contains source code, documentation, infrastructure templates, and an MCP server.
+It does **not** include datasets, synthetic datasets, trained models, model weights, model
+components, or fine-tuning techniques. Bring your own Azure subscription and data at runtime.
+
 ### Architecture
 
 ```mermaid
@@ -195,3 +201,8 @@ Authorized use of Microsoft trademarks or logos is subject to and must follow
 Use of Microsoft trademarks or logos in modified versions of this project must not
 cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
+
+## License
+
+Code is licensed under the [MIT License](LICENSE). Documentation and non-code content are
+licensed under [CC-BY-4.0](LICENSE-CONTENT.md).
