@@ -82,7 +82,8 @@ Support channels:
 | Public repository | Complete | <https://github.com/tinocoh/azure-finops-agent> |
 | Issues enabled | Complete | Repository settings |
 | Discussions enabled | Complete | Repository settings |
-| MIT license | Complete | [`LICENSE`](../LICENSE) |
+| MIT license for code | Complete | [`LICENSE`](../LICENSE) |
+| CC-BY-4.0 license for documentation/content | Complete | [`LICENSE-CONTENT.md`](../LICENSE-CONTENT.md) |
 | Code of Conduct | Complete | [`.github/CODE_OF_CONDUCT.md`](../.github/CODE_OF_CONDUCT.md) |
 | Contributing guidance / CLA text | Complete | [`CONTRIBUTING.md`](../CONTRIBUTING.md) |
 | Security policy | Complete | [`SECURITY.md`](../SECURITY.md) |
@@ -96,6 +97,7 @@ Support channels:
 | Real `azd up` / `azd down` performed | Complete | See validation notes below |
 | Sensitive references removed | Complete | Full-tree and history scan completed with zero matches |
 | Large generated assets removed | Complete | No tracked files larger than 5 MB |
+| Datasets excluded from release | Complete | No tracked demo/sample datasets are included in this release |
 
 ## Real azd validation evidence
 
@@ -196,6 +198,12 @@ Yes. It is a new sample intended for public publication and eventual transfer to
 No. Direct customer references, engagement names, tenant identifiers, and generated emulator state
 were removed. The public repository was scanned for sensitive references across the current tree
 and public history.
+
+### Does it include data or datasets?
+
+No. Dataset and synthetic dataset artifacts are excluded from this release. The approved release
+scope is code, documentation/content, infrastructure templates, and the MCP server. Users may bring
+their own Azure subscription data at runtime.
 
 ### Does it include third-party dependencies?
 

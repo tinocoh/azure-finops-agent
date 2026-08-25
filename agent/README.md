@@ -27,6 +27,9 @@ No Azure tenant? You can still ask public pricing questions:
 
 You can also drag your own local CSV/JSON/XLSX/PDF files into the chat. The agent inspects schema and aggregates locally without sending raw file payloads to the LLM.
 
+This release does not include datasets or synthetic datasets. To analyze files, bring your own
+export at runtime using the upload experience in the app.
+
 ## How it works
 
 Vue 3 SPA → .NET 10 minimal API → GitHub Copilot SDK → Azure read APIs (Cost Management, Resource Graph, Microsoft Graph, Log Analytics) using your delegated Entra tokens. Hosted on Azure App Service or Container Apps. OpenTelemetry to your Application Insights.
@@ -135,4 +138,6 @@ The deploy workflow (`deploy.yml`) injects secrets into App Service as applicati
 
 ## License
 
-[MIT](LICENSE) · See [CONTRIBUTING.md](CONTRIBUTING.md) · [Code of Conduct](https://opensource.microsoft.com/codeofconduct/)
+Code is licensed under the [MIT License](../LICENSE). Documentation and non-code content are
+licensed under [CC-BY-4.0](../LICENSE-CONTENT.md). See [CONTRIBUTING.md](CONTRIBUTING.md) ·
+[Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
