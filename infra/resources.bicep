@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 // ============================================================================
 //  azure-finops-agent — resource-group scoped resources
 //

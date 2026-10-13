@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Shared pytest fixtures. Sets a Fernet key and in-memory-ish SQLite before app import."""
 from __future__ import annotations
 

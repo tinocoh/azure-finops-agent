@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Health/version endpoint tests."""
 from __future__ import annotations
 

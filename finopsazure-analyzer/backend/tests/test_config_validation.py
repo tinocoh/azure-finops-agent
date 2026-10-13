@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """GUID validation + client_secret must never be returned by the API."""
 from __future__ import annotations
 

@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Connection configuration endpoints. Secrets are never returned."""
 from __future__ import annotations
 
@@ -68,7 +70,7 @@ def create_connection(payload: ConnectionCreate, db: Session = Depends(get_db)) 
 def get_connection(conn_id: str, db: Session = Depends(get_db)) -> ConnectionOut:
     c = db.get(Connection, conn_id)
     if not c:
-        raise HTTPException(404, "Conexión no encontrada")
+        raise HTTPException(404, "Connection not found")
     return _to_out(c)
 
 
@@ -76,7 +78,7 @@ def get_connection(conn_id: str, db: Session = Depends(get_db)) -> ConnectionOut
 def update_connection(conn_id: str, payload: ConnectionUpdate, db: Session = Depends(get_db)) -> ConnectionOut:
     c = db.get(Connection, conn_id)
     if not c:
-        raise HTTPException(404, "Conexión no encontrada")
+        raise HTTPException(404, "Connection not found")
     if payload.connectionName is not None:
         c.connection_name = payload.connectionName
     if payload.subscriptionIds is not None:
@@ -94,7 +96,7 @@ def update_connection(conn_id: str, payload: ConnectionUpdate, db: Session = Dep
 def delete_connection(conn_id: str, db: Session = Depends(get_db)) -> Response:
     c = db.get(Connection, conn_id)
     if not c:
-        raise HTTPException(404, "Conexión no encontrada")
+        raise HTTPException(404, "Connection not found")
     db.delete(c)
     db.commit()
     return Response(status_code=204)
@@ -104,7 +106,7 @@ def delete_connection(conn_id: str, db: Session = Depends(get_db)) -> Response:
 def rotate_secret(conn_id: str, payload: SecretRotate, db: Session = Depends(get_db)) -> ConnectionOut:
     c = db.get(Connection, conn_id)
     if not c:
-        raise HTTPException(404, "Conexión no encontrada")
+        raise HTTPException(404, "Connection not found")
     c.client_secret_encrypted = encrypt(payload.clientSecret)
     db.commit()
     db.refresh(c)
@@ -115,7 +117,7 @@ def rotate_secret(conn_id: str, payload: SecretRotate, db: Session = Depends(get
 def validate_connection(conn_id: str, db: Session = Depends(get_db)) -> ValidationResult:
     c = db.get(Connection, conn_id)
     if not c:
-        raise HTTPException(404, "Conexión no encontrada")
+        raise HTTPException(404, "Connection not found")
 
     secret = decrypt(c.client_secret_encrypted)
     try:
@@ -138,6 +140,6 @@ def validate_connection(conn_id: str, db: Session = Depends(get_db)) -> Validati
         connectionId=c.id,
         credentialsValid=True,
         status="credentials_valid",
-        message="Credenciales válidas",
+        message="Credentials are valid",
         subscriptions=sub_statuses,
     )

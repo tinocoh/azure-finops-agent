@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Secret resolution helpers.
 
 Local: secrets live encrypted in the DB (Fernet).

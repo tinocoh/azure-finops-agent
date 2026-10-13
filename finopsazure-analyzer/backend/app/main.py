@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """FinOpsAzure Analyzer — FastAPI application entrypoint."""
 from __future__ import annotations
 
@@ -17,7 +19,7 @@ settings = get_settings()
 app = FastAPI(
     title="FinOpsAzure Analyzer API",
     version=settings.app_version,
-    description="Análisis de costos, inventario y recomendaciones de optimización en Azure.",
+    description="Azure cost, inventory, and optimization recommendation analysis.",
 )
 
 app.add_middleware(

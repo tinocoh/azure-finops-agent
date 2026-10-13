@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 using System.Security.Cryptography;
 using System.Text.Json;
 using AzureFinOps.Dashboard.Observability;

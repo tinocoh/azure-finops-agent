@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { useEffect, useState } from 'react';
 import { Link } from '../router';
 import { api } from '../api';

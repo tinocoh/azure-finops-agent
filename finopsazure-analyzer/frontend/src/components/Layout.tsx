@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { useEffect, useState, type ReactNode } from 'react';
 import { NavLink } from '../router';
 

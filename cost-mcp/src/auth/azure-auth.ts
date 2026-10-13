@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { DefaultAzureCredential } from '@azure/identity';
 
 const SCOPE = 'https://management.azure.com/.default';

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 using AzureFinOps.Dashboard.Observability;
 using Xunit;
 

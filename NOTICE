@@ -1,0 +1,18 @@
+Azure FinOps Agent
+Copyright (c) 2026 Azure Samples
+
+This project references third-party open source packages through package
+manager manifests, including NuGet, npm, and pip dependency declarations.
+Third-party source code is not vendored directly in this repository.
+
+Dependency metadata is maintained in:
+
+- agent/src/Dashboard/Dashboard.csproj
+- agent/src/Dashboard/webui/package.json
+- cost-mcp/package.json
+- finopsazure-analyzer/backend/requirements.txt
+- finopsazure-analyzer/frontend/package.json
+
+When redistributing built artifacts, review the resolved dependency license
+metadata produced by the applicable package managers and retain any required
+third-party notices.

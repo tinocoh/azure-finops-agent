@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 // FinOps maturity sidebar categories — extracted from ChatView.vue for maintainability.
 // Pure static data; no runtime dependencies.
 

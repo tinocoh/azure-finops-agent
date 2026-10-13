@@ -43,7 +43,7 @@ Security is central: secrets are **encrypted at rest** (Fernet locally, Key Vaul
                 │  ┌────────────────────────┐  │
                 │  │ api/  services/  security/ │
                 │  └────────────────────────┘  │
-                │  Cifrado Fernet / Key Vault  │
+                │  Fernet encryption / Key Vault │
                 └───┬───────────┬───────────┬──┘
                     │           │           │
           ┌─────────▼──┐ ┌──────▼──────┐ ┌──▼───────────────┐

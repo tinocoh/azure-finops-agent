@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 vi.mock('../../clients/retail-prices.client.js', () => ({

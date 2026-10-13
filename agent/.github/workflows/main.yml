@@ -90,5 +90,5 @@ jobs:
       - name: Verify deployment
         run: |
           curl --retry 10 --retry-delay 5 --retry-connrefused -sf \
-            https://azure-finops-agent.com/api/version | head -c 200
+            "https://${{ env.WEBAPP_NAME }}.azurewebsites.net/api/version" | head -c 200
           echo ""

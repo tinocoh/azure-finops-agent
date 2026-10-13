@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Fernet-based symmetric encryption for secrets at rest.
 
 The key comes from FINOPS_CONFIG_ENCRYPTION_KEY. In Azure this value is
@@ -18,14 +20,14 @@ def _fernet() -> Fernet:
     key = get_settings().finops_config_encryption_key
     if not key:
         raise EncryptionError(
-            "FINOPS_CONFIG_ENCRYPTION_KEY no está configurada. "
-            "Genera una con: python -c \"from cryptography.fernet import Fernet; "
+            "FINOPS_CONFIG_ENCRYPTION_KEY is not configured. "
+            "Generate one with: python -c \"from cryptography.fernet import Fernet; "
             "print(Fernet.generate_key().decode())\""
         )
     try:
         return Fernet(key.encode() if isinstance(key, str) else key)
     except (ValueError, TypeError) as exc:
-        raise EncryptionError("FINOPS_CONFIG_ENCRYPTION_KEY no es una clave Fernet válida") from exc
+        raise EncryptionError("FINOPS_CONFIG_ENCRYPTION_KEY is not a valid Fernet key") from exc
 
 
 def encrypt(plaintext: str) -> str:
@@ -36,4 +38,4 @@ def decrypt(ciphertext: str) -> str:
     try:
         return _fernet().decrypt(ciphertext.encode()).decode()
     except InvalidToken as exc:
-        raise EncryptionError("No se pudo descifrar el secreto (clave incorrecta o dato corrupto)") from exc
+        raise EncryptionError("Could not decrypt the secret (incorrect key or corrupt data)") from exc

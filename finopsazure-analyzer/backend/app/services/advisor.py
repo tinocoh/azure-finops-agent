@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Azure Advisor recommendations client."""
 from __future__ import annotations
 

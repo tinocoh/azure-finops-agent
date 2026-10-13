@@ -1,8 +1,7 @@
 # Azure FinOps Agent
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Code License: MIT](https://img.shields.io/badge/Code%20License-MIT-yellow.svg)](../LICENSE-CODE)
 [![Latest release](https://img.shields.io/github/v/release/Azure-Samples/azure-finops-agent?label=release&color=0078D4)](https://github.com/Azure-Samples/azure-finops-agent/releases/latest)
-[![Live demo](https://img.shields.io/badge/demo-azure--finops--agent.com-0078D4?logo=microsoftazure&logoColor=white)](https://azure-finops-agent.com)
 [![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
 [![Vue 3](https://img.shields.io/badge/Vue-3-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org)
 [![Open issues](https://img.shields.io/github/issues/Azure-Samples/azure-finops-agent)](https://github.com/Azure-Samples/azure-finops-agent/issues)
@@ -14,7 +13,7 @@ Quantified savings, a FinOps maturity score, a CFO-ready deck, and ready-to-run 
 
 The agent fixes the issue for you, or hands you the az&nbsp;cli script. Read &amp; write on your behalf, never delete. Your tenant. Your tokens. Your control.
 
-## [Try it live →](https://azure-finops-agent.com) &nbsp;&nbsp;&nbsp; [📊 Pitch deck →](https://azure-finops-agent.com/slides)
+## Try it locally or deploy it to your Azure subscription
 
 ![Azure FinOps Agent](src/Dashboard/webui/public/og-image.png)
 
@@ -22,10 +21,11 @@ The agent fixes the issue for you, or hands you the az&nbsp;cli script. Read &am
 
 ## Try it without signing in
 
-No Azure tenant? Two ways to demo:
+No Azure tenant? You can still ask public pricing questions:
 
 - **Public pricing questions** — ask about Azure VM SKUs, regions, reservations, savings plans. Agent uses the public Retail Prices API (no auth).
-- **Drop a sample file** — drag any CSV/JSON/XLSX/PDF from [`demo-data/`](demo-data/) into the chat. The agent inspects the schema, runs aggregates, and answers without ever loading the raw payload into the LLM. Includes realistic cost exports, Advisor JSON, audit logs, and FinOps notes.
+
+You can also drag your own local CSV/JSON/XLSX/PDF files into the chat. The agent inspects schema and aggregates locally without sending raw file payloads to the LLM.
 
 ## How it works
 

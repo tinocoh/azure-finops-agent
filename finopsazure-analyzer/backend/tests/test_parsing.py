@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Parsing tests for Cost Management, Resource Graph and Advisor responses."""
 from __future__ import annotations
 

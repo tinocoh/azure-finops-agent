@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Smoke test local: valida /api/health, /docs y la carga del frontend.
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# Local smoke test: validates /api/health, /docs, and frontend loading.
 set -euo pipefail
 
 BACKEND_PORT="${BACKEND_PORT:-8000}"
@@ -10,15 +12,15 @@ FRONTEND="http://localhost:${FRONTEND_PORT}"
 fail() { echo "SMOKE FAIL: $1" >&2; exit 1; }
 
 echo ">> GET $BACKEND/api/health"
-curl -fsS "$BACKEND/api/health" | grep -q '"status":"ok"' || fail "health no respondió ok"
+curl -fsS "$BACKEND/api/health" | grep -q '"status":"ok"' || fail "health did not return ok"
 
 echo ">> GET $BACKEND/api/version"
-curl -fsS "$BACKEND/api/version" | grep -q '"version"' || fail "version no respondió"
+curl -fsS "$BACKEND/api/version" | grep -q '"version"' || fail "version did not respond"
 
 echo ">> GET $BACKEND/docs (Swagger)"
-curl -fsS "$BACKEND/docs" | grep -qi 'swagger' || fail "Swagger no cargó"
+curl -fsS "$BACKEND/docs" | grep -qi 'swagger' || fail "Swagger did not load"
 
 echo ">> GET $FRONTEND (frontend)"
-curl -fsS "$FRONTEND" | grep -qi '<div id="root">' || fail "El frontend no cargó"
+curl -fsS "$FRONTEND" | grep -qi '<div id="root">' || fail "Frontend did not load"
 
-echo ">> SMOKE OK: backend, swagger y frontend responden."
+echo ">> SMOKE OK: backend, Swagger, and frontend are responding."

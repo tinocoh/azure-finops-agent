@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """SQLAlchemy engine, session factory, and Base."""
 from __future__ import annotations
 

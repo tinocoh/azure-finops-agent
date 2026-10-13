@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Azure Resource Graph client for inventory queries."""
 from __future__ import annotations
 

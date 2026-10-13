@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 // ============================================================================
 //  Concrete instantiation of main.bicep used by PSRule so it can analyze the
 //  actual resource properties produced by the template. Not deployed directly.

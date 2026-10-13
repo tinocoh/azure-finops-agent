@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Chat endpoint: natural-language questions over a connection's Azure data."""
 from __future__ import annotations
 
@@ -16,9 +18,9 @@ router = APIRouter(prefix="/api/chat", tags=["chat"])
 def chat(payload: ChatRequest, db: Session = Depends(get_db)) -> ChatResponse:
     c = db.get(Connection, payload.connectionId)
     if not c:
-        raise HTTPException(404, "Conexión no encontrada")
+        raise HTTPException(404, "Connection not found")
     if not c.enabled:
-        raise HTTPException(400, "La conexión está deshabilitada")
+        raise HTTPException(400, "Connection is disabled")
     history = [{"role": m.role, "content": m.content} for m in payload.history]
     result = chat_service.answer(c, payload.message, history)
     return ChatResponse(

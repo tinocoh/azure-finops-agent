@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Chat service tests: rule-based fallback and snapshot sanitization."""
 from __future__ import annotations
 

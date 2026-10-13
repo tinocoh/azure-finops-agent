@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Azure authentication using ClientSecretCredential for saved connections.
 
 Maps low-level failures into clear, user-facing error codes. Never logs secrets.
@@ -42,12 +44,12 @@ def get_token(tenant_id: str, client_id: str, client_secret: str) -> str:
     except ClientAuthenticationError as exc:
         msg = str(exc).lower()
         if "aadsts700016" in msg or "was not found in the directory" in msg or "invalid_client" in msg:
-            raise AzureAuthError("invalid_client", "Client ID o Client Secret inválido") from exc
+            raise AzureAuthError("invalid_client", "Invalid Client ID or Client Secret") from exc
         if "aadsts90002" in msg or "tenant" in msg and "not found" in msg:
-            raise AzureAuthError("invalid_tenant", "Tenant ID inválido o no encontrado") from exc
-        raise AzureAuthError("authorization_failed", "Falló la autenticación con Azure") from exc
+            raise AzureAuthError("invalid_tenant", "Tenant ID is invalid or was not found") from exc
+        raise AzureAuthError("authorization_failed", "Azure authentication failed") from exc
     except Exception as exc:  # noqa: BLE001 — surface as controlled error
-        raise AzureAuthError("timeout", "No se pudo contactar a Entra ID (timeout o red)") from exc
+        raise AzureAuthError("timeout", "Could not contact Entra ID (timeout or network issue)") from exc
 
 
 def check_subscription_access(token: str, subscription_id: str) -> tuple[str, str | None]:
@@ -61,12 +63,12 @@ def check_subscription_access(token: str, subscription_id: str) -> tuple[str, st
     try:
         resp = httpx.get(url, headers=headers, timeout=15.0)
     except httpx.HTTPError:
-        return "error", "Error de red al consultar la suscripción"
+        return "error", "Network error while querying the subscription"
 
     if resp.status_code == 200:
         return "ok", None
     if resp.status_code in (401, 403):
-        return "no_permission", "El service principal no tiene permisos en la suscripción"
+        return "no_permission", "The service principal does not have permissions on the subscription"
     if resp.status_code == 404:
-        return "not_accessible", "Suscripción no encontrada o no accesible"
-    return "error", f"Azure API respondió {resp.status_code}"
+        return "not_accessible", "Subscription not found or not accessible"
+    return "error", f"Azure API returned {resp.status_code}"

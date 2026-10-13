@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../api';
 import Loading from '../components/Loading';

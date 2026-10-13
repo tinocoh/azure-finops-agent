@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { useState } from 'react';
 
 // A password-style input for the client secret. It is NEVER persisted to
@@ -35,10 +37,10 @@ export default function SecureTextInput({
           style={{ flex: 1 }}
         />
         <button type="button" className="btn secondary" onClick={() => setShow((s) => !s)}>
-          {show ? 'Ocultar' : 'Ver'}
+          {show ? 'Hide' : 'Show'}
         </button>
       </div>
-      <div className="hint">El secreto se cifra en el backend y no se vuelve a mostrar.</div>
+      <div className="hint">The secret is encrypted in the backend and is not shown again.</div>
       {error && <div className="error">{error}</div>}
     </div>
   );

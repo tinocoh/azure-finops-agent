@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Natural-language chat grounded on a subscription's FinOps data.
 
 Gathers a compact snapshot (costs + inventory + advisor) for a connection's
@@ -27,11 +29,11 @@ _snapshot_cache: dict[str, tuple[float, dict]] = {}
 _cache_lock = Lock()
 
 _SYSTEM_PROMPT = (
-    "Eres un asistente FinOps de Azure. Respondes en español, de forma breve y precisa, "
-    "ÚNICAMENTE con base en el CONTEXTO de datos de la suscripción que se te entrega "
-    "(costos, inventario y recomendaciones). Si la respuesta no está en el contexto, dilo "
-    "claramente y sugiere ejecutar un análisis o revisar permisos. No inventes cifras. "
-    "No incluyas identificadores sensibles. Cuando cites montos, incluye la moneda si está disponible."
+    "You are an Azure FinOps assistant. Answer in English, briefly and precisely, "
+    "using ONLY the subscription data CONTEXT you are given "
+    "(costs, inventory, and recommendations). If the answer is not in the context, say so "
+    "clearly and suggest running an analysis or reviewing permissions. Do not invent figures. "
+    "Do not include sensitive identifiers. When citing amounts, include the currency when available."
 )
 
 
@@ -80,14 +82,14 @@ def _rule_based_answer(message: str, snapshot: dict) -> dict:
     recs = snapshot.get("recommendations", {})
     top = costs.get("topServices", [])[:3]
     lines = [
-        "IA no configurada; respuesta basada en los datos recopilados:",
-        f"- Costo mes actual: {costs.get('currentMonthCost', 0)} {costs.get('currency') or ''}".strip(),
-        f"- Variación vs mes anterior: {costs.get('deltaPercent')}%",
-        f"- Recursos totales: {inv.get('totalResources', 0)} (sin tags: {inv.get('resourcesWithoutTags', 0)})",
+        "AI is not configured; response based on collected data:",
+        f"- Current month cost: {costs.get('currentMonthCost', 0)} {costs.get('currency') or ''}".strip(),
+        f"- Change vs previous month: {costs.get('deltaPercent')}%",
+        f"- Total resources: {inv.get('totalResources', 0)} (without tags: {inv.get('resourcesWithoutTags', 0)})",
         f"- Recomendaciones: {recs.get('total', 0)} (quick wins: {len(recs.get('quickWins', []))})",
     ]
     if top:
-        lines.append("- Top servicios: " + ", ".join(f"{t['key']} ({t['cost']})" for t in top))
+        lines.append("- Top services: " + ", ".join(f"{t['key']} ({t['cost']})" for t in top))
     return {"reply": "\n".join(lines), "generatedBy": "rules"}
 
 
@@ -97,7 +99,7 @@ def answer(connection, message: str, history: list[dict] | None = None) -> dict:
     try:
         token = azure_auth.get_token(connection.tenant_id, connection.client_id, secret)
     except azure_auth.AzureAuthError as exc:
-        return {"reply": f"No pude autenticar con Azure ({exc.code}: {exc.message}).", "generatedBy": "error"}
+        return {"reply": f"Could not authenticate with Azure ({exc.code}: {exc.message}).", "generatedBy": "error"}
 
     snapshot = get_snapshot(connection, token)
     safe = sanitize_for_ai(snapshot)
@@ -115,7 +117,7 @@ def answer(connection, message: str, history: list[dict] | None = None) -> dict:
     messages.append(
         {
             "role": "user",
-            "content": f"CONTEXTO (datos de la suscripción):\n{json.dumps(safe, ensure_ascii=False)}\n\nPREGUNTA: {message}",
+            "content": f"CONTEXT (subscription data):\n{json.dumps(safe, ensure_ascii=False)}\n\nQUESTION: {message}",
         }
     )
 
@@ -126,7 +128,7 @@ def answer(connection, message: str, history: list[dict] | None = None) -> dict:
         reply = completion.choices[0].message.content or ""
         return {"reply": reply, "generatedBy": "azure_openai"}
     except Exception as exc:  # noqa: BLE001
-        logger.warning("Fallo del chat con IA: %s", type(exc).__name__)
+        logger.warning("AI chat failed: %s", type(exc).__name__)
         result = _rule_based_answer(message, safe)
         result["aiError"] = "ai_unavailable"
         return result

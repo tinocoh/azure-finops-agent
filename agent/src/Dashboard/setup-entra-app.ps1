@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 <#
 .SYNOPSIS
     Creates the Microsoft Entra ID app registration for Azure FinOps Agent.
@@ -16,7 +18,7 @@
     Display name for the app registration (default: "Azure FinOps Agent").
 
 .PARAMETER ProductionUrl
-    Optional production URL (e.g. https://azure-finops-agent.com). If provided,
+    Optional production URL (for example, https://<your-app-host>). If provided,
     adds it as a redirect URI alongside localhost.
 
 .PARAMETER SecretExpiryMonths

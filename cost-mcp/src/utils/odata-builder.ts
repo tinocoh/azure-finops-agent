@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 export type ODataOp = 'eq' | 'ne';
 
 export interface FilterClause {

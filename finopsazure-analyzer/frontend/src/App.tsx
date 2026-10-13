@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { Navigate, Route, Routes } from './router';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';

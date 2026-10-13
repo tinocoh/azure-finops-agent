@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
-# Levanta la app en local con docker compose.
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# Starts the app locally with Docker Compose.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
 if [ ! -f .env ]; then
-  echo "ERROR: falta .env. Copia .env.example a .env y genera FINOPS_CONFIG_ENCRYPTION_KEY." >&2
+  echo "ERROR: .env is missing. Copy .env.example to .env and generate FINOPS_CONFIG_ENCRYPTION_KEY." >&2
   exit 1
 fi
 
-echo ">> Iniciando docker compose (build + up)"
+echo ">> Starting Docker Compose (build + up)"
 docker compose up --build -d
 
 echo ""
@@ -18,4 +20,4 @@ echo "   Frontend: http://localhost:${FRONTEND_PORT:-3000}"
 echo "   Backend:  http://localhost:${BACKEND_PORT:-8000}"
 echo "   Swagger:  http://localhost:${BACKEND_PORT:-8000}/docs"
 echo ""
-echo ">> Logs: docker compose logs -f   |   Detener: docker compose down"
+echo ">> Logs: docker compose logs -f   |   Stop: docker compose down"
