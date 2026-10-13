@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 metadata description = 'Creates a role assignment for a principal on the enclosing resource group.'
 
 @description('Object ID of the principal receiving the role.')

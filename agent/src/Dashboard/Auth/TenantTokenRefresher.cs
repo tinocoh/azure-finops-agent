@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 using AzureFinOps.Dashboard.Observability;
 
 namespace AzureFinOps.Dashboard.Auth;

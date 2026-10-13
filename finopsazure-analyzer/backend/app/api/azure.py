@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Azure passthrough endpoints for ad-hoc queries against a saved connection."""
 from __future__ import annotations
 
@@ -18,7 +20,7 @@ router = APIRouter(prefix="/api/azure", tags=["azure"])
 def _token_for(db: Session, conn_id: str) -> tuple[Connection, str]:
     c = db.get(Connection, conn_id)
     if not c:
-        raise HTTPException(404, "Conexión no encontrada")
+        raise HTTPException(404, "Connection not found")
     secret = decrypt(c.client_secret_encrypted)
     try:
         token = azure_auth.get_token(c.tenant_id, c.client_id, secret)
@@ -34,7 +36,7 @@ def list_subscriptions(conn_id: str, db: Session = Depends(get_db)) -> dict:
     url = f"{settings.arm_endpoint}/subscriptions?api-version=2022-12-01"
     resp = request_with_retry("GET", url, token)
     if resp.status_code != 200:
-        raise HTTPException(resp.status_code, "No se pudieron listar las suscripciones")
+        raise HTTPException(resp.status_code, "Could not list subscriptions")
     data = resp.json().get("value", [])
     return {
         "subscriptions": [

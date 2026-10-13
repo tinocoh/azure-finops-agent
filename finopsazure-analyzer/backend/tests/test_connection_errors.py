@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Invalid connection handling: auth error mapping."""
 from __future__ import annotations
 

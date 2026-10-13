@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Application configuration loaded from environment variables."""
 from __future__ import annotations
 

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 export type ResponseFormat = 'markdown' | 'json';
 
 export function formatAsJSON(data: unknown): string {

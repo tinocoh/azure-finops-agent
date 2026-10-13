@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { COST_MGMT_API_BASE } from '../constants.js';
 import { getAccessToken } from '../auth/azure-auth.js';
 import { QueryResultSchema, normalizeQueryResult } from '../schemas/cost-management.schema.js';

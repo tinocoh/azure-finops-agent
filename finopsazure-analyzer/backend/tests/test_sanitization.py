@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Sanitization tests: GUID masking and forbidden-key stripping before AI."""
 from __future__ import annotations
 

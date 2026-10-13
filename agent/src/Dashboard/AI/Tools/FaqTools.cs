@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Text.Json;
@@ -152,11 +154,16 @@ public class FaqTools
     {
         try
         {
+            var publicBaseUrl = Environment.GetEnvironmentVariable("PUBLIC_BASE_URL")?.TrimEnd('/');
+            if (string.IsNullOrWhiteSpace(publicBaseUrl))
+                return;
+
+            var uri = new Uri(publicBaseUrl);
             using var http = new HttpClient(AzureFinOps.Dashboard.Infrastructure.Ipv4HttpHandler.Create(), disposeHandler: true) { Timeout = TimeSpan.FromSeconds(10) };
             var body = JsonSerializer.Serialize(new
             {
-                host = "azure-finops-agent.com",
-                urlList = new[] { $"https://azure-finops-agent.com/faq/{slug}" },
+                host = uri.Host,
+                urlList = new[] { $"{publicBaseUrl}/faq/{slug}" },
                 key = IndexNowKey
             });
             await http.PostAsync("https://api.indexnow.org/indexnow",

@@ -42,7 +42,7 @@ Invoke-RestMethod "https://finops-agent-container.azurewebsites.net/api/version"
 7. Verify the custom domain:
 
 ```powershell
-Invoke-RestMethod "https://azure-finops-agent.com/api/version"
+Invoke-RestMethod "https://<your-app-host>/api/version"
 ```
 
 ### Rules
@@ -56,7 +56,7 @@ Invoke-RestMethod "https://azure-finops-agent.com/api/version"
 
 - **ACR**: `crfinopsagent.azurecr.io` (Basic SKU, admin enabled)
 - **Container App**: `finops-agent-container` on `ASP-rgfinopsagent-b74f` (P0v3 Premium plan)
-- **Custom Domain**: `https://www.azure-finops-agent.com` and `https://azure-finops-agent.com`
+- **Custom Domain**: configure your approved domain after completing the required naming and domain review.
 - **Container startup timeout**: `WEBSITES_CONTAINER_START_TIME_LIMIT=600`
 
 ### Notes
@@ -64,4 +64,4 @@ Invoke-RestMethod "https://azure-finops-agent.com/api/version"
 - Multi-stage Dockerfile: node:22 (frontend) → dotnet/sdk:10.0 (build) → dotnet/aspnet:10.0 (runtime + Python 3 + pip packages)
 - All Python dependencies (pandas, numpy, openpyxl, pdfminer.six, pyarrow) are baked into the image.
 - `appsettings.Local.json` is excluded via `.dockerignore` — it will NOT be in the container.
-- Microsoft Entra ID OAuth callbacks: `https://azure-finops-agent.com/auth/microsoft/callback`, `https://finops-agent-container.azurewebsites.net/auth/microsoft/callback`
+- Microsoft Entra ID OAuth callbacks: `https://<your-app-host>/auth/microsoft/callback`, `https://finops-agent-container.azurewebsites.net/auth/microsoft/callback`

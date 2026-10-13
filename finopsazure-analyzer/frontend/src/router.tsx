@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 type RouterState = {

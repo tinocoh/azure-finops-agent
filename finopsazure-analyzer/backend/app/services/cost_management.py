@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Azure Cost Management Query API client."""
 from __future__ import annotations
 

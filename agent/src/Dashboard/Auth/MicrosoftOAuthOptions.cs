@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 namespace AzureFinOps.Dashboard.Auth;
 
 using System.Text.RegularExpressions;
@@ -62,7 +64,7 @@ public sealed class MicrosoftOAuthOptions
 
     /// <summary>
     /// Normalize host for OAuth callbacks — strip "www." so callbacks always match
-    /// the registered redirect URIs (e.g. azure-finops-agent.com, not www.azure-finops-agent.com).
+    /// the registered redirect URIs by using the bare host instead of the www host.
     /// </summary>
     public static string NormalizeCallbackHost(HttpContext ctx)
     {

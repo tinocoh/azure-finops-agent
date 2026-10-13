@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """AI executive summary via Azure OpenAI / Foundry.
 
 Falls back to a deterministic rule-based summary when AI is not configured.
@@ -13,11 +15,11 @@ from ..security.sanitization import sanitize_for_ai
 logger = logging.getLogger("finopsazure.ai")
 
 _SYSTEM_PROMPT = (
-    "Eres un analista FinOps senior de Azure. Con base en los datos agregados "
-    "(costos, inventario y recomendaciones) genera un resumen ejecutivo en español, "
-    "claro y accionable. Estructura la respuesta en: Hallazgos principales, Riesgos, "
-    "Oportunidades de ahorro, Acciones recomendadas y Próximos pasos. "
-    "No incluyas identificadores sensibles. Sé conciso."
+    "You are a senior Azure FinOps analyst. Based on the aggregated data "
+    "(costs, inventory, and recommendations), generate a clear and actionable "
+    "executive summary in English. Structure the response as: Key findings, Risks, "
+    "Savings opportunities, Recommended actions, and Next steps. "
+    "Do not include sensitive identifiers. Be concise."
 )
 
 
@@ -36,44 +38,44 @@ def _rule_based_summary(data: dict) -> dict:
     quick_wins = len(recs.get("quickWins", []))
 
     findings = [
-        f"Costo del mes en curso: {current} (mes anterior: {prev}).",
-        f"Variación vs mes anterior: {delta_pct}%." if delta_pct is not None else "Sin comparativa disponible.",
+        f"Current month cost: {current} (previous month: {prev}).",
+        f"Change vs previous month: {delta_pct}%." if delta_pct is not None else "No comparison available.",
     ]
     if top:
-        findings.append("Servicios de mayor costo: " + ", ".join(t["key"] for t in top) + ".")
+        findings.append("Highest-cost services: " + ", ".join(t["key"] for t in top) + ".")
 
     risks = []
     if without_tags:
-        risks.append(f"{without_tags} recursos sin etiquetas (dificulta asignación de costos).")
+        risks.append(f"{without_tags} resources without tags, making cost allocation harder.")
     if not risks:
-        risks.append("No se detectaron riesgos evidentes en los datos recopilados.")
+        risks.append("No evident risks were detected in the collected data.")
 
     savings = []
     if unattached:
-        savings.append(f"{unattached} discos sin adjuntar: candidatos a eliminación.")
+        savings.append(f"{unattached} unattached disks are candidates for deletion.")
     if stopped:
-        savings.append(f"{stopped} VMs detenidas/desasignadas: revisar si siguen generando costo de disco.")
+        savings.append(f"{stopped} stopped/deallocated VMs should be reviewed for ongoing disk costs.")
     if quick_wins:
-        savings.append(f"{quick_wins} quick wins de Advisor en categoría Costo.")
+        savings.append(f"{quick_wins} Advisor quick wins in the Cost category.")
     if not savings:
-        savings.append("Ejecuta Advisor con permisos de lectura para detectar ahorros.")
+        savings.append("Run Advisor with read permissions to detect savings.")
 
     actions = [
-        "Etiquetar recursos sin tags con owner y centro de costos." if without_tags else "Mantener la disciplina de etiquetado.",
-        "Eliminar discos no adjuntos tras validar con los dueños." if unattached else "Revisar inventario periódicamente.",
-        "Aplicar las recomendaciones de Advisor marcadas como quick win." if quick_wins else "Habilitar Advisor.",
+        "Tag untagged resources with owner and cost center." if without_tags else "Maintain tagging discipline.",
+        "Delete unattached disks after validating with owners." if unattached else "Review inventory periodically.",
+        "Apply Advisor recommendations marked as quick wins." if quick_wins else "Enable Advisor.",
     ]
 
     return {
         "generatedBy": "rules",
         "summary": {
-            "hallazgos": findings,
-            "riesgos": risks,
-            "oportunidadesAhorro": savings,
-            "accionesRecomendadas": actions,
-            "proximosPasos": [
-                "Programar análisis recurrente.",
-                "Definir presupuestos y alertas por suscripción.",
+            "findings": findings,
+            "risks": risks,
+            "savingsOpportunities": savings,
+            "recommendedActions": actions,
+            "nextSteps": [
+                "Schedule recurring analysis.",
+                "Define budgets and alerts per subscription.",
             ],
         },
     }
@@ -85,7 +87,7 @@ def generate_ai_summary(data: dict) -> dict:
     safe = sanitize_for_ai(data)
 
     if not settings.azure_openai_endpoint or not settings.azure_openai_deployment:
-        logger.info("Azure OpenAI no configurado; usando resumen basado en reglas.")
+        logger.info("Azure OpenAI is not configured; using rule-based summary.")
         return _rule_based_summary(safe)
 
     try:
@@ -124,7 +126,7 @@ def generate_ai_summary(data: dict) -> dict:
         text = completion.choices[0].message.content or ""
         return {"generatedBy": "azure_openai", "summary": {"text": text}}
     except Exception as exc:  # noqa: BLE001 — never break analysis on AI failure
-        logger.warning("Fallo al generar resumen con IA: %s. Usando reglas.", type(exc).__name__)
+        logger.warning("AI summary generation failed: %s. Using rules.", type(exc).__name__)
         result = _rule_based_summary(safe)
         result["aiError"] = "ai_unavailable"
         return result

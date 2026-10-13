@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { useEffect, useState } from 'react';
 import { api } from '../api';
 import SecureTextInput from '../components/SecureTextInput';

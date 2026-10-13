@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Shared Azure OpenAI client factory.
 
 Returns a configured client + deployment name, or (None, None) when Azure OpenAI
@@ -41,5 +43,5 @@ def get_openai_client():
             )
         return client, settings.azure_openai_deployment
     except Exception as exc:  # noqa: BLE001 — caller degrades gracefully
-        logger.warning("No se pudo crear el cliente de Azure OpenAI: %s", type(exc).__name__)
+        logger.warning("Could not create the Azure OpenAI client: %s", type(exc).__name__)
         return None, None

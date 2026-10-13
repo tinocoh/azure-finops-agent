@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 <#
 .SYNOPSIS
   Starts the FinOps AI Agent locally (backend + web UI) at http://localhost:5180.

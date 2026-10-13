@@ -187,6 +187,10 @@ This sample demonstrates AI-assisted analysis and does not replace human review.
 
 This project welcomes contributions and suggestions. See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution process and the Microsoft CLA requirements.
 
+## License
+
+Code is licensed under the [MIT License](LICENSE-CODE). Documentation and other content are licensed under the [Creative Commons Attribution 4.0 International Public License](LICENSE).
+
 ## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services.

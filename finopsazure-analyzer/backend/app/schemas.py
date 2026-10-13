@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Pydantic schemas for request/response models."""
 from __future__ import annotations
 

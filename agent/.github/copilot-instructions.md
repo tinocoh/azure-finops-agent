@@ -57,7 +57,7 @@ The agent acts as a frontend on top of Azure Cost Management, Billing, ARM REST 
 - **Deployment**: Azure App Service (Linux, P0v3 Premium) via Docker container image from Azure Container Registry (ACR). Multi-stage Dockerfile bakes Python 3, pip packages (pandas, numpy, openpyxl, pdfminer.six, pyarrow), and CLI tools into the image — no runtime install needed.
 - **Container Registry**: Azure Container Registry (`crfinopsagent.azurecr.io`) — Basic SKU, admin credentials, images built via `az acr build`
 - **Container App (staging)**: `finops-agent-container.azurewebsites.net` — Docker container on same P0v3 plan, used for testing before swapping to production
-- **Custom Domain**: `https://azure-finops-agent.com` (Azure DNS → Azure App Service with managed SSL; `www.` redirects to bare domain via middleware)
+- **Custom Domain**: configure an approved domain only after completing naming and domain review.
 - **License**: MIT
 
 ## Azure Icon Assets
@@ -306,7 +306,6 @@ The production app runs as a Docker container on Azure App Service, fed from Azu
 - **FinOps**: Cloud financial management discipline combining finance, technology, and business to optimize cloud spend.
 - **InfraOps**: Infrastructure operations — managing and optimizing cloud infrastructure.
 - **VBD**: Value-Based Delivery — a Microsoft Customer Success engagement model.
-- **MCAPS**: Microsoft Customer & Partner Solutions — the Microsoft org that delivers customer success.
 
 ## Debugging with App Insights via Azure CLI
 
@@ -345,10 +344,10 @@ Always use Playwright when portal interaction is required rather than asking the
 
 ## Custom Domain Setup
 
-The production app is available at `https://azure-finops-agent.com` (canonical) and `https://www.azure-finops-agent.com` (redirects to bare domain).
+The production app URL depends on the host chosen by the deployer.
 
 - **Domain Registrar**: Namecheap (domain registration + WHOIS privacy only)
-- **DNS Provider**: Azure DNS (zone: `azure-finops-agent.com` in `rg-finops-agent`)
+- **DNS Provider**: configure according to your approved deployment domain.
   - Migrated from Namecheap BasicDNS to Azure DNS for better corporate proxy trust scoring (shared `registrar-servers.com` nameservers are low-trust)
 - **Azure DNS Nameservers**: `ns1-04.azure-dns.com`, `ns2-04.azure-dns.net`, `ns3-04.azure-dns.org`, `ns4-04.azure-dns.info`
 - **DNS Records** (managed in Azure DNS zone):
@@ -358,7 +357,7 @@ The production app is available at `https://azure-finops-agent.com` (canonical) 
   - `TXT` `_dmarc` → `v=DMARC1; p=none; rua=mailto:<YOUR_DMARC_CONTACT_EMAIL>` (domain reputation)
 - **Security Headers** (in `Program.cs`): HSTS (1 year, preload), X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, Content-Security-Policy, HTTPS redirection
 - **SSL**: Azure Managed Certificates (auto-renewed) bound via SNI for both `www` and root domain
-- **Microsoft Entra ID callbacks**: `https://azure-finops-agent.com/auth/microsoft/callback`, `https://www.azure-finops-agent.com/auth/microsoft/callback`, `http://localhost:5000/auth/microsoft/callback`, `https://finops-agent-container.azurewebsites.net/auth/microsoft/callback`
+- **Microsoft Entra ID callbacks**: `https://<your-app-host>/auth/microsoft/callback`, `http://localhost:5000/auth/microsoft/callback`, `https://finops-agent-container.azurewebsites.net/auth/microsoft/callback`
 
 ## Self-Maintenance
 

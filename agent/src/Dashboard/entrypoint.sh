@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 # Container entrypoint — starts the OTel collector in the background, then
 # launches the .NET app in the foreground so its stdout/stderr (and exit
 # status) drive container lifecycle.

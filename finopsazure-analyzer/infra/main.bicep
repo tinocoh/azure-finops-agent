@@ -1,53 +1,55 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 // ============================================================================
-//  FinOpsAzure Analyzer — infraestructura (Azure Container Apps)
-//  Despliega: VNet, Log Analytics, App Insights, ACR, Key Vault,
+//  FinOpsAzure Analyzer — infrastructure (Azure Container Apps)
+//  Deploys: VNet, Log Analytics, App Insights, ACR, Key Vault,
 //  User-Assigned Managed Identity, Container Apps Environment + 2 apps,
-//  y Azure OpenAI con un deployment de modelo configurable.
+//  and Azure OpenAI with a configurable model deployment.
 //
-//  El Resource Group (FinOpsAzure) se crea con scripts/bootstrap-azure.sh
-//  porque este template opera a nivel de resource group.
-//  Validar:  az bicep build --file infra/main.bicep
+//  The resource group (FinOpsAzure) is created with scripts/bootstrap-azure.sh
+//  because this template runs at resource-group scope.
+//  Validate: az bicep build --file infra/main.bicep
 // ============================================================================
 
-@description('Región de despliegue.')
+@description('Deployment region.')
 param location string = resourceGroup().location
 
-@description('Prefijo de nombres (minúsculas/números).')
+@description('Name prefix using lowercase letters and numbers.')
 @minLength(3)
 @maxLength(12)
 param namePrefix string = 'finopsazure'
 
-@description('Nombre único global para el Azure Container Registry (sin guiones).')
+@description('Globally unique Azure Container Registry name without hyphens.')
 param acrName string = toLower('${namePrefix}acr${uniqueString(resourceGroup().id)}')
 
-@description('Nombre del recurso Azure OpenAI / AI Foundry.')
+@description('Azure OpenAI / AI Foundry resource name.')
 param aiResourceName string = '${namePrefix}-aoai-${uniqueString(resourceGroup().id)}'
 
-@description('Nombre del deployment del modelo.')
+@description('Model deployment name.')
 param modelDeploymentName string = 'gpt-4o-mini'
 
-@description('Modelo a desplegar. Si no está disponible en la región, cámbialo aquí.')
+@description('Model to deploy. If it is not available in the region, change it here.')
 param modelName string = 'gpt-4o-mini'
 
-@description('Versión del modelo.')
+@description('Model version.')
 param modelVersion string = '2024-07-18'
 
-@description('Capacidad (miles de TPM) del deployment del modelo.')
+@description('Model deployment capacity in thousands of TPM.')
 param modelCapacity int = 20
 
-@description('Versión del API de Azure OpenAI que usa el backend.')
+@description('Azure OpenAI API version used by the backend.')
 param openAiApiVersion string = '2024-10-21'
 
-@description('Imagen del backend (ACR o placeholder MCR para el primer despliegue).')
+@description('Backend image, either ACR or an MCR placeholder for the first deployment.')
 param backendImage string = 'mcr.microsoft.com/azuredocs/aci-helloworld:latest'
 
-@description('Imagen del frontend (ACR o placeholder MCR para el primer despliegue).')
+@description('Frontend image, either ACR or an MCR placeholder for the first deployment.')
 param frontendImage string = 'mcr.microsoft.com/azuredocs/aci-helloworld:latest'
 
-@description('Ingress externo del backend para pruebas (true) o interno (false).')
+@description('External backend ingress for testing (true) or internal ingress (false).')
 param backendExternalIngress bool = true
 
-@description('Clave Fernet para cifrar secretos en reposo. Se entrega como secret seguro de Container App (la plataforma lo cifra). Generar con Fernet.generate_key().')
+@description('Fernet key for encrypting secrets at rest. Delivered as a secure Container App secret encrypted by the platform. Generate with Fernet.generate_key().')
 @secure()
 param finopsEncryptionKey string
 
@@ -67,7 +69,7 @@ var kvSecretsUserRole = subscriptionResourceId('Microsoft.Authorization/roleDefi
 var cognitiveUserRole = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a97b65f3-24c7-4388-baec-2e87135dc908')
 
 // ---------------------------------------------------------------------------
-// Networking — VNet con subred dedicada para el Container Apps Environment
+// Networking — VNet with a dedicated subnet for the Container Apps Environment
 // ---------------------------------------------------------------------------
 resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: vnetName
@@ -122,7 +124,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
 }
 
 // ---------------------------------------------------------------------------
-// User-Assigned Managed Identity (compartida por las Container Apps)
+// User-Assigned Managed Identity shared by the Container Apps
 // ---------------------------------------------------------------------------
 resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: uamiName
@@ -143,7 +145,7 @@ resource acr 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   }
 }
 
-// La UAMI puede hacer pull desde el ACR.
+// The UAMI can pull from ACR.
 resource acrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: acr
   name: guid(acr.id, uami.id, acrPullRole)
@@ -155,7 +157,7 @@ resource acrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 }
 
 // ---------------------------------------------------------------------------
-// Key Vault (RBAC) — la app referencia secretos vía Managed Identity
+// Key Vault (RBAC) — the app references secrets through Managed Identity
 // ---------------------------------------------------------------------------
 resource keyVault 'Microsoft.KeyVault/vaults@2024-11-01' = {
   name: kvName
@@ -205,7 +207,7 @@ resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-
   }
 }
 
-// La UAMI puede invocar el modelo (RBAC en lugar de API key).
+// The UAMI can invoke the model with RBAC instead of an API key.
 resource cognitiveUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: openAi
   name: guid(openAi.id, uami.id, cognitiveUserRole)
@@ -217,7 +219,7 @@ resource cognitiveUser 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 }
 
 // ---------------------------------------------------------------------------
-// Container Apps Environment (integrado a la VNet)
+// Container Apps Environment integrated with the VNet
 // ---------------------------------------------------------------------------
 resource caeEnv 'Microsoft.App/managedEnvironments@2024-03-01' = {
   name: envName
@@ -264,8 +266,8 @@ resource backendApp 'Microsoft.App/containerApps@2024-03-01' = {
           identity: uami.id
         }
       ]
-      // Clave de cifrado como secret de plataforma (cifrado por Container Apps).
-      // Key Vault queda provisto para migrar este secret a referencia KV en producción.
+      // Encryption key as a platform secret encrypted by Container Apps.
+      // Key Vault is provisioned so this secret can be migrated to a Key Vault reference in production.
       secrets: [
         {
           name: 'finops-encryption-key'

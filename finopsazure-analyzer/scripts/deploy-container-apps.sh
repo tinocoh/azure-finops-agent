@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Actualiza las Container Apps con las imágenes nuevas del ACR.
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# Updates the Container Apps with new ACR images.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -11,19 +13,19 @@ BACKEND_APP="${3:-finopsazure-backend}"
 FRONTEND_APP="${4:-finopsazure-frontend}"
 
 if [ -z "$ACR_NAME" ]; then
-  echo "Uso: $0 <acrName> [tag] [backendAppName] [frontendAppName]" >&2
+  echo "Usage: $0 <acrName> [tag] [backendAppName] [frontendAppName]" >&2
   exit 1
 fi
 
 LOGIN_SERVER="$(az acr show -n "$ACR_NAME" --query loginServer -o tsv)"
 
-echo ">> Actualizando backend Container App con la imagen nueva"
+echo ">> Updating backend Container App with the new image"
 az containerapp update \
   --name "$BACKEND_APP" \
   --resource-group "$RG_NAME" \
   --image "$LOGIN_SERVER/finopsazure-backend:$TAG"
 
-echo ">> Actualizando frontend Container App con la imagen nueva"
+echo ">> Updating frontend Container App with the new image"
 az containerapp update \
   --name "$FRONTEND_APP" \
   --resource-group "$RG_NAME" \

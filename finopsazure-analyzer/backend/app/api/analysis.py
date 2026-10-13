@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Analysis endpoints: run analyses and fetch results."""
 from __future__ import annotations
 
@@ -30,7 +32,7 @@ def _to_out(r: AnalysisRun) -> AnalysisRunOut:
 def _get_run(db: Session, run_id: str) -> AnalysisRun:
     r = db.get(AnalysisRun, run_id)
     if not r:
-        raise HTTPException(404, "Análisis no encontrado")
+        raise HTTPException(404, "Analysis not found")
     return r
 
 
@@ -38,9 +40,9 @@ def _get_run(db: Session, run_id: str) -> AnalysisRun:
 def run(payload: AnalysisRequest, db: Session = Depends(get_db)) -> AnalysisRunOut:
     c = db.get(Connection, payload.connectionId)
     if not c:
-        raise HTTPException(404, "Conexión no encontrada")
+        raise HTTPException(404, "Connection not found")
     if not c.enabled:
-        raise HTTPException(400, "La conexión está deshabilitada")
+        raise HTTPException(400, "Connection is disabled")
     r = analysis_runner.run_analysis(db, c, payload.subscriptionIds, payload.dateFrom, payload.dateTo)
     return _to_out(r)
 

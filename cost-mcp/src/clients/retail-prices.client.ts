@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { RETAIL_API_BASE, RETAIL_API_VERSION, DEFAULT_RETAIL_CURRENCY, SUPPORTED_RETAIL_CURRENCIES } from '../constants.js';
 import type { PriceItem } from '../schemas/retail-prices.schema.js';
 import { RetailPricesResponseSchema } from '../schemas/retail-prices.schema.js';

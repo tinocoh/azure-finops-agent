@@ -1,3 +1,7 @@
+<!--
+Copyright (c) Microsoft Corporation.
+Licensed under the MIT license.
+-->
 <template>
   <div class="app">
     <Dashboard :user="user" @logout="logout" @login="checkAuth" />

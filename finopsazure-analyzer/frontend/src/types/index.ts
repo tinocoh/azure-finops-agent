@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 // Type definitions shared across the app.
 
 export interface Connection {

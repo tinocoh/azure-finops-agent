@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """
 file_inspect.py — uploaded-file preview + query helper for the Azure FinOps Agent.
 

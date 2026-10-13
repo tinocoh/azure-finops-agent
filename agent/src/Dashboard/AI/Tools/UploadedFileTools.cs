@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Diagnostics;

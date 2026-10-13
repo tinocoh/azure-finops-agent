@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import { createApp } from "vue";
 import App from "./App.vue";

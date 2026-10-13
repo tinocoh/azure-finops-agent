@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Analysis runner: orchestrates cost + inventory + advisor + AI per connection.
 
 Handles partial failures per subscription so one bad sub doesn't fail the run.

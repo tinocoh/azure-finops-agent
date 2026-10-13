@@ -1,23 +1,25 @@
-// Private Endpoint + Private DNS zone + zone group + VNet link (reutilizable).
-@description('Región.')
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+// Reusable Private Endpoint, Private DNS zone, zone group, and VNet link.
+@description('Region.')
 param location string
 
-@description('Nombre del private endpoint.')
+@description('Private endpoint name.')
 param peName string
 
-@description('Subred donde crear el PE.')
+@description('Subnet where the private endpoint will be created.')
 param subnetId string
 
-@description('VNet a enlazar con la zona DNS privada.')
+@description('VNet to link with the private DNS zone.')
 param vnetId string
 
-@description('Resource ID del servicio (OpenAI, Key Vault, ...).')
+@description('Resource ID of the service, such as OpenAI or Key Vault.')
 param privateLinkServiceId string
 
-@description('groupId del servicio (p.ej. account para OpenAI, vault para Key Vault).')
+@description('Service groupId, such as account for OpenAI or vault for Key Vault.')
 param groupId string
 
-@description('Nombre de la zona DNS privada (p.ej. privatelink.openai.azure.com).')
+@description('Private DNS zone name, such as privatelink.openai.azure.com.')
 param dnsZoneName string
 
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {

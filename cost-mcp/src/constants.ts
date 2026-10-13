@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 export const RETAIL_API_BASE = 'https://prices.azure.com/api/retail/prices';
 export const RETAIL_API_VERSION = '2023-01-01-preview';
 export const COST_MGMT_API_BASE = 'https://management.azure.com';

@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Sanitization helpers to strip/ mask sensitive identifiers before they
 leave the trust boundary (e.g. sent to the AI model or returned by the API).
 """

@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 """Shared HTTP helper with exponential backoff for Azure Management APIs."""
 from __future__ import annotations
 

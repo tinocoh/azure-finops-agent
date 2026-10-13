@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
 

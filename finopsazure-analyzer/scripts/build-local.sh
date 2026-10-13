@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
-# Construye las imágenes locales de backend y frontend.
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# Builds the local backend and frontend images.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-echo ">> Construyendo finopsazure-backend:local"
+echo ">> Building finopsazure-backend:local"
 docker build -t finopsazure-backend:local ./backend
 
-echo ">> Construyendo finopsazure-frontend:local"
+echo ">> Building finopsazure-frontend:local"
 docker build -t finopsazure-frontend:local ./frontend
 
-echo ">> Imágenes locales listas:"
+echo ">> Local images are ready:"
 docker images | grep finopsazure || true
