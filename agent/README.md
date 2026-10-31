@@ -1,6 +1,6 @@
 # Azure FinOps Agent
 
-[![Code License: MIT](https://img.shields.io/badge/Code%20License-MIT-yellow.svg)](../LICENSE-CODE)
+[![Code License: MIT](https://img.shields.io/badge/Code%20License-MIT-yellow.svg)](../LICENSE)
 [![Latest release](https://img.shields.io/github/v/release/Azure-Samples/azure-finops-agent?label=release&color=0078D4)](https://github.com/Azure-Samples/azure-finops-agent/releases/latest)
 [![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
 [![Vue 3](https://img.shields.io/badge/Vue-3-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org)
@@ -139,5 +139,5 @@ The deploy workflow (`deploy.yml`) injects secrets into App Service as applicati
 ## License
 
 Code is licensed under the [MIT License](../LICENSE). Documentation and non-code content are
-licensed under [CC-BY-4.0](../LICENSE-CONTENT.md). See [CONTRIBUTING.md](CONTRIBUTING.md) ·
+licensed under [CC-BY-4.0](../LICENSE-CODE). See [CONTRIBUTING.md](CONTRIBUTING.md) ·
 [Code of Conduct](https://opensource.microsoft.com/codeofconduct/).

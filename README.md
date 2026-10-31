@@ -195,7 +195,7 @@ This project welcomes contributions and suggestions. See [CONTRIBUTING.md](CONTR
 
 ## License
 
-Code is licensed under the [MIT License](LICENSE-CODE). Documentation and other content are licensed under the [Creative Commons Attribution 4.0 International Public License](LICENSE).
+Code is licensed under the [MIT License](LICENSE). Documentation and other content are licensed under the [Creative Commons Attribution 4.0 International Public License](LICENSE-CODE).
 
 ## Trademarks
 
@@ -209,4 +209,4 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 ## License
 
 Code is licensed under the [MIT License](LICENSE). Documentation and non-code content are
-licensed under [CC-BY-4.0](LICENSE-CONTENT.md).
+licensed under [CC-BY-4.0](LICENSE-CODE).
