@@ -36,6 +36,8 @@ __blobstorage__/
 __queuestorage__/
 azurite-debug.log
 
+# Generated demo data and large local media
+agent/demo-data/
 # Generated local media
 agent/src/Dashboard/webui/public/video.mp4
 agent/src/Dashboard/webui/public/video1.mp4

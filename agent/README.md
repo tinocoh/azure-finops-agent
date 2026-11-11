@@ -1,6 +1,6 @@
 # Azure FinOps Agent
 
-[![Code License: MIT](https://img.shields.io/badge/Code%20License-MIT-yellow.svg)](../LICENSE-CODE)
+[![Code License: MIT](https://img.shields.io/badge/Code%20License-MIT-yellow.svg)](../LICENSE)
 [![Latest release](https://img.shields.io/github/v/release/Azure-Samples/azure-finops-agent?label=release&color=0078D4)](https://github.com/Azure-Samples/azure-finops-agent/releases/latest)
 [![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
 [![Vue 3](https://img.shields.io/badge/Vue-3-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org)
@@ -26,6 +26,9 @@ No Azure tenant? You can still ask public pricing questions:
 - **Public pricing questions** — ask about Azure VM SKUs, regions, reservations, savings plans. Agent uses the public Retail Prices API (no auth).
 
 You can also drag your own local CSV/JSON/XLSX/PDF files into the chat. The agent inspects schema and aggregates locally without sending raw file payloads to the LLM.
+
+This release does not include datasets or synthetic datasets. To analyze files, bring your own
+export at runtime using the upload experience in the app.
 
 ## How it works
 
@@ -135,4 +138,6 @@ The deploy workflow (`deploy.yml`) injects secrets into App Service as applicati
 
 ## License
 
-[MIT](LICENSE) · See [CONTRIBUTING.md](CONTRIBUTING.md) · [Code of Conduct](https://opensource.microsoft.com/codeofconduct/)
+Code is licensed under the [MIT License](../LICENSE). Documentation and non-code content are
+licensed under [CC-BY-4.0](../LICENSE-CODE). See [CONTRIBUTING.md](CONTRIBUTING.md) ·
+[Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
